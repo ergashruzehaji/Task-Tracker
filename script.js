@@ -1,32 +1,60 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
-</head>
-<body>
-<p class="p1">const form = document.getElementById('task-form');</p>
-<p class="p1">const input = document.getElementById('task-input');</p>
-<p class="p1">const list = document.getElementById('task-list');</p>
-<p class="p2"><br></p>
-<p class="p1">form.addEventListener('submit', function(e) {</p>
-<p class="p1"><span class="Apple-converted-space">  </span>e.preventDefault(); // Prevent page reload</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>const taskText = input.value.trim();</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if (taskText === '') return;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>const li = document.createElement('li');</p>
-<p class="p1"><span class="Apple-converted-space">  </span>li.textContent = taskText;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>list.appendChild(li);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>input.value = ''; // Clear input</p>
-<p class="p1">});</p>
-</body>
-</html>
+const form = document.getElementById('task-form');
+const input = document.getElementById('task-input');
+const list = document.getElementById('task-list');
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault(); // Prevent page reload
+  const taskText = input.value.trim();
+  if (taskText === '') return;
+
+  const li = document.createElement('li');
+
+  // Create completion toggle
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.className = 'task-complete-toggle';
+  checkbox.addEventListener('change', function() {
+    li.classList.toggle('completed', checkbox.checked);
+  });
+
+  // Task text span
+  const span = document.createElement('span');
+  span.textContent = taskText;
+
+  // Create delete button
+  const deleteBtn = document.createElement('button');
+  deleteBtn.textContent = 'Delete';
+  deleteBtn.className = 'delete-task';
+  deleteBtn.addEventListener('click', function() {
+    list.removeChild(li);
+  });
+
+  li.appendChild(checkbox);
+  li.appendChild(span);
+  li.appendChild(deleteBtn);
+  list.appendChild(li);
+
+  input.value = ''; // Clear input
+});
+
+// Optional: visually mark completed tasks
+const style = document.createElement('style');
+style.textContent = `
+  .completed span {
+    text-decoration: line-through;
+    color: #888;
+  }
+  .delete-task {
+    margin-left: 10px;
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 3px 8px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  .task-complete-toggle {
+    margin-right: 8px;
+  }
+`;
+document.head.appendChild(style);
