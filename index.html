@@ -1,23 +1,38 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta charset="UTF-8">
   <meta http-equiv="Content-Style-Type" content="text/css">
   <title>Task Tracker</title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Helvetica, Arial, sans-serif; background: #f4f6f8; }
+    .container { max-width: 400px; margin: 40px auto; background: #fff; padding: 24px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);}
+    h1 { text-align: center; }
+    ul { list-style: none; padding: 0; }
+    li { display: flex; align-items: center; justify-content: space-between; margin: 6px 0; }
+    .completed span { text-decoration: line-through; color: #888; }
+    .delete-task { margin-left: 10px; background: #e74c3c; color: #fff; border: none; padding: 3px 8px; cursor: pointer; border-radius: 3px;}
+    .task-complete-toggle { margin-right: 8px; }
+    .section-title { margin-top: 24px; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Task Tracker</h1>
     <form id="task-form">
+      <label for="task-input">Add a Task:</label>
       <input type="text" id="task-input" placeholder="Enter a task..." required />
+      <select id="day-select">
+        <option value="1">Day 1</option>
+        <option value="2" disabled>Day 2</option>
+      </select>
       <button type="submit">Add Task</button>
     </form>
-    <ul id="task-list"></ul>
+    <h2 class="section-title">Day 1 Tasks</h2>
+    <ul id="day1-list"></ul>
+    <h2 class="section-title">Day 2 Tasks</h2>
+    <ul id="day2-list"></ul>
   </div>
   <script src="script.js"></script>
 </body>
