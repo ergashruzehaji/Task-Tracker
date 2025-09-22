@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Weekly Task Tracker</h1>
+  <form id="task-form">
+    <input type="text" id="task-input" placeholder="New Task" required>
+    <select id="day-select" required>
+      <option value="" disabled selected>Select a day</option>
+      <option value="Sunday">Sunday</option>
+      <option value="Monday">Monday</option>
+      <option value="Tuesday">Tuesday</option>
+      <option value="Wednesday">Wednesday</option>
+      <option value="Thursday">Thursday</option>
+      <option value="Friday">Friday</option>
+      <option value="Saturday">Saturday</option>
+    </select>
+    <button type="submit">Add Task</button>
+  </form>
+  <div id="week">
+    <div class="day-section" id="Sunday-section">
+      <h2>Sunday</h2>
+      <ul id="Sunday-list"></ul>
+    </div>
+    <div class="day-section" id="Monday-section">
+      <h2>Monday</h2>
+      <ul id="Monday-list"></ul>
+    </div>
+    <div class="day-section" id="Tuesday-section">
+      <h2>Tuesday</h2>
+      <ul id="Tuesday-list"></ul>
+    </div>
+    <div class="day-section" id="Wednesday-section">
+      <h2>Wednesday</h2>
+      <ul id="Wednesday-list"></ul>
+    </div>
+    <div class="day-section" id="Thursday-section">
+      <h2>Thursday</h2>
+      <ul id="Thursday-list"></ul>
+    </div>
+    <div class="day-section" id="Friday-section">
+      <h2>Friday</h2>
+      <ul id="Friday-list"></ul>
+    </div>
+    <div class="day-section" id="Saturday-section">
+      <h2>Saturday</h2>
+      <ul id="Saturday-list"></ul>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
