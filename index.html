@@ -1,20 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Task Tracker</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Task Tracker</h1>
-    <form id="task-form">
-      <input type="text" id="task-input" placeholder="Enter a task..." required />
-      <button type="submit">Add Task</button>
-    </form>
-    <ul id="task-list"></ul>
-  </div>
-  <script src="script.js"></script>
+    <div class="container">
+        <h1>Task Tracker</h1>
+        
+        <form id="task-form">
+            <input type="text" id="task-input" placeholder="Enter a task..." required>
+            <select id="day-select" required>
+                <option value="">Select Day</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+            </select>
+            <button type="submit">Add Task</button>
+        </form>
+
+        <div class="days-container">
+            <div class="day-section" data-day="Monday">
+                <h2>Monday</h2>
+                <ul class="tasks-list" id="Monday-tasks"></ul>
+            </div>
+            <div class="day-section" data-day="Tuesday">
+                <h2>Tuesday</h2>
+                <ul class="tasks-list" id="Tuesday-tasks"></ul>
+            </div>
+            <div class="day-section" data-day="Wednesday">
+                <h2>Wednesday</h2>
+                <ul class="tasks-list" id="Wednesday-tasks"></ul>
+            </div>
+            <div class="day-section" data-day="Thursday">
+                <h2>Thursday</h2>
+                <ul class="tasks-list" id="Thursday-tasks"></ul>
+            </div>
+            <div class="day-section" data-day="Friday">
+                <h2>Friday</h2>
+                <ul class="tasks-list" id="Friday-tasks"></ul>
+            </div>
+            <div class="day-section" data-day="Saturday">
+                <h2>Saturday</h2>
+                <ul class="tasks-list" id="Saturday-tasks"></ul>
+            </div>
+            <div class="day-section" data-day="Sunday">
+                <h2>Sunday</h2>
+                <ul class="tasks-list" id="Sunday-tasks"></ul>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
 </body>
 </html>

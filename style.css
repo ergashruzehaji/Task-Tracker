@@ -54,13 +54,13 @@ form button:hover {
     background: #246b45;
 }
 
-tasks-container {
+.days-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
 }
 
-day-section {
+.day-section {
     background: #f8f9fa;
     border: 1px solid #e9ecef;
     border-radius: 8px;
@@ -68,7 +68,7 @@ day-section {
     min-height: 200px;
 }
 
-day-section h2 {
+.day-section h2 {
     margin: 0 0 15px 0;
     color: #495057;
     border-bottom: 2px solid #dee2e6;
@@ -76,13 +76,13 @@ day-section h2 {
     font-size: 18px;
 }
 
-tasks-list {
+.tasks-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-task {
+.task {
     background: #fff;
     border: 1px solid #eee;
     padding: 12px;
@@ -94,31 +94,31 @@ task {
     transition: all 0.2s;
 }
 
-task:hover {
+.task:hover {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-task.completed {
+.task.completed {
     background: #e0ffe0;
     text-decoration: line-through;
     color: #888;
 }
 
-task-info {
+.task-info {
     flex: 1;
     cursor: pointer;
     padding: 5px;
 }
 
-task-text {
+.task-text {
     font-size: 14px;
 }
 
-task-actions {
+.task-actions {
     margin-left: 10px;
 }
 
-delete-btn {
+.delete-btn {
     background: #dc3545;
     color: #fff;
     border: none;
@@ -128,7 +128,7 @@ delete-btn {
     font-size: 12px;
 }
 
-delete-btn:hover {
+.delete-btn:hover {
     background: #c82333;
 }
 
