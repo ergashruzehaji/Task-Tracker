@@ -1,174 +1,99 @@
-body {
-HEAD
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    background: url('background.jpg') no-repeat center center fixed;
-    background-size: cover;
-    background-attachment: fixed;
-}
-
-.container {
-    max-width: 1200px;
-    background: rgba(255, 255, 255, 0.95);
-    margin: 20px auto;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
-}
-
-form {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-}
-
-form input, form select {
-    flex: 1;
-    min-width: 200px;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-form button {
-    padding: 12px 20px;
-    background: #2e8b57;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-form button:hover {
-    background: #246b45;
-}
-
-tasks-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-}
-
-day-section {
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    padding: 20px;
-    min-height: 200px;
-}
-
-day-section h2 {
-    margin: 0 0 15px 0;
-    color: #495057;
-    border-bottom: 2px solid #dee2e6;
-    padding-bottom: 8px;
-    font-size: 18px;
-}
-
-tasks-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-task {
-    background: #fff;
-    border: 1px solid #eee;
-    padding: 12px;
-    margin-bottom: 8px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: all 0.2s;
-}
-
-task:hover {
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-task.completed {
-    background: #e0ffe0;
-    text-decoration: line-through;
-    color: #888;
-}
-
-task-info {
-    flex: 1;
-    cursor: pointer;
-    padding: 5px;
-}
-
-task-text {
-    font-size: 14px;
-}
-
-task-actions {
-    margin-left: 10px;
-}
-
-delete-btn {
-    background: #dc3545;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 6px 12px;
-    cursor: pointer;
-    font-size: 12px;
-}
-
-delete-btn:hover {
-    background: #c82333;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .container {
-        margin: 10px;
-        padding: 20px;
-    }
-
-    .days-container {
-        grid-template-columns: 1fr;
-    }
-
-    form {
-        flex-direction: column;
-    }
-
-    form input, form select, form button {
-        min-width: 100%;
-    }
-
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+* {
   margin: 0;
-  padding: 20px;
+  padding: 0;
   box-sizing: border-box;
 }
 
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: #333;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Days sidebar */
+.days-sidebar {
+  width: 250px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid #e1e5e9;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.days-sidebar h2 {
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: 300;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 10px;
+}
+
+.days-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.day-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+.day-item:hover {
+  background: rgba(102, 126, 234, 0.1);
+  border-left-color: #667eea;
+  transform: translateX(5px);
+}
+
+.day-item.active {
+  background: rgba(102, 126, 234, 0.2);
+  border-left-color: #667eea;
+  font-weight: bold;
+}
+
+.day-name {
+  font-size: 16px;
+  color: #333;
+}
+
+.task-count {
+  background: #667eea;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
 .container {
-  background: white;
+  max-width: 800px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
   padding: 30px;
   border-radius: 15px;
-  width: 100%;
-  max-width: 400px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
 }
@@ -177,7 +102,7 @@ h1 {
   text-align: center;
   color: #333;
   margin-bottom: 30px;
-  font-size: 2em;
+  font-size: 2.5em;
   font-weight: 300;
 }
 
@@ -185,10 +110,12 @@ form {
   display: flex;
   gap: 10px;
   margin-bottom: 30px;
+  flex-wrap: wrap;
 }
 
-input {
+input, select {
   flex: 1;
+  min-width: 150px;
   padding: 12px 15px;
   border: 2px solid #e1e5e9;
   border-radius: 8px;
@@ -197,8 +124,13 @@ input {
   transition: border-color 0.3s ease;
 }
 
-input:focus {
+input:focus, select:focus {
   border-color: #667eea;
+}
+
+#alarm-time {
+  flex: 0 1 auto;
+  min-width: 120px;
 }
 
 button {
@@ -219,6 +151,14 @@ button:hover {
 
 button:active {
   transform: translateY(0);
+}
+
+.current-day-tasks h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  font-weight: 300;
+  text-align: center;
 }
 
 ul {
@@ -244,17 +184,54 @@ li:hover {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
-.task-text {
+li.has-alarm {
+  border-left-color: #ff6b6b;
+  background: #fff5f5;
+}
+
+.task-content {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.task-text {
   color: #333;
   font-size: 16px;
+}
+
+.task-details {
+  display: flex;
+  gap: 15px;
+  font-size: 12px;
+  color: #666;
+}
+
+.task-day {
+  background: #667eea;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.task-alarm {
+  background: #ff6b6b;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.task-actions {
+  display: flex;
+  gap: 5px;
 }
 
 .delete-btn {
   background: #e74c3c;
   padding: 6px 12px;
   font-size: 14px;
-  margin-left: 10px;
+  border-radius: 6px;
 }
 
 .delete-btn:hover {
@@ -271,5 +248,74 @@ li:hover {
   color: #999;
   font-style: italic;
   padding: 30px;
-4577c22 (Update Task Tracker files, ready for deployment)
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  
+  .days-sidebar {
+    width: 100%;
+    padding: 15px;
+  }
+  
+  .days-list {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 5px;
+  }
+  
+  .day-item {
+    flex-shrink: 0;
+    min-width: 80px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+  
+  .day-name {
+    font-size: 12px;
+  }
+  
+  .main-content {
+    padding: 15px;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  form {
+    flex-direction: column;
+  }
+  
+  input, select, button {
+    min-width: 100%;
+  }
+}
+
+/* Alarm notification */
+.alarm-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #ff6b6b;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+  z-index: 1000;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

@@ -7,14 +7,77 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Task Tracker</h1>
-    <form id="task-form">
-      <input type="text" id="task-input" placeholder="Enter a task..." required />
-      <button type="submit">Add Task</button>
-    </form>
-    <ul id="task-list"></ul>
+  <div class="app-container">
+    <!-- Days of the week sidebar -->
+    <div class="days-sidebar">
+      <h2>Days of the Week</h2>
+      <div class="days-list">
+        <div class="day-item" data-day="monday">
+          <span class="day-name">Monday</span>
+          <span class="task-count">0</span>
+        </div>
+        <div class="day-item" data-day="tuesday">
+          <span class="day-name">Tuesday</span>
+          <span class="task-count">0</span>
+        </div>
+        <div class="day-item" data-day="wednesday">
+          <span class="day-name">Wednesday</span>
+          <span class="task-count">0</span>
+        </div>
+        <div class="day-item" data-day="thursday">
+          <span class="day-name">Thursday</span>
+          <span class="task-count">0</span>
+        </div>
+        <div class="day-item" data-day="friday">
+          <span class="day-name">Friday</span>
+          <span class="task-count">0</span>
+        </div>
+        <div class="day-item" data-day="saturday">
+          <span class="day-name">Saturday</span>
+          <span class="task-count">0</span>
+        </div>
+        <div class="day-item" data-day="sunday">
+          <span class="day-name">Sunday</span>
+          <span class="task-count">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content area -->
+    <div class="main-content">
+      <div class="container">
+        <h1>Task Tracker</h1>
+        <form id="task-form">
+          <input type="text" id="task-input" placeholder="Enter a task..." required />
+          <select id="day-select">
+            <option value="">Select Day</option>
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tuesday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+            <option value="sunday">Sunday</option>
+          </select>
+          <input type="time" id="alarm-time" />
+          <button type="submit">Add Task</button>
+        </form>
+        
+        <!-- Current day's tasks -->
+        <div class="current-day-tasks">
+          <h2 id="current-day-title">All Tasks</h2>
+          <ul id="task-list"></ul>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Audio element for alarm -->
+  <audio id="alarm-audio" preload="auto">
+    <source src="task-alarm.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
   <script src="script.js"></script>
 </body>
 </html>
