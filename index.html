@@ -8,97 +8,32 @@
 </head>
 <body>
   <div class="app-container">
-    <!-- Smart Dashboard sidebar -->
-    <div class="dashboard-sidebar">
-      <h2>📊 Dashboard</h2>
-      
-      <!-- Quick Stats -->
-      <div class="stats-section">
-        <h3>📈 Quick Stats</h3>
-        <div class="stat-item">
-          <span class="stat-label">Today's Tasks</span>
-          <span class="stat-value" id="today-count">0</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-label">This Week</span>
-          <span class="stat-value" id="week-count">0</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-label">High Priority</span>
-          <span class="stat-value high" id="high-priority-count">0</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-label">Total Tasks</span>
-          <span class="stat-value" id="total-count">0</span>
-        </div>
-      </div>
-
-      <!-- Upcoming Tasks -->
-      <div class="upcoming-section">
-        <h3>⏰ Next Up</h3>
-        <div id="upcoming-tasks" class="upcoming-list">
-          <div class="no-upcoming">No upcoming tasks</div>
-        </div>
-      </div>
-
-      <!-- Quick Actions -->
-      <div class="actions-section">
-        <h3>⚡ Quick Actions</h3>
-        <button class="quick-action" onclick="addQuickTask('Today')">+ Add Today</button>
-        <button class="quick-action" onclick="addQuickTask('Tomorrow')">+ Add Tomorrow</button>
-        <button class="quick-action" onclick="showOverdue()">⚠️ Show Overdue</button>
-        <button class="quick-action" onclick="clearCompleted()">🗑️ Clear Done</button>
-      </div>
-
-      <!-- Progress Ring -->
-      <div class="progress-section">
-        <h3>🎯 Today's Progress</h3>
-        <div class="progress-ring-container">
-          <svg class="progress-ring" width="80" height="80">
-            <circle class="progress-ring-circle" cx="40" cy="40" r="30" fill="transparent" 
-                    stroke="rgba(255,255,255,0.3)" stroke-width="6"/>
-            <circle class="progress-ring-fill" cx="40" cy="40" r="30" fill="transparent" 
-                    stroke="#667eea" stroke-width="6" stroke-linecap="round"
-                    stroke-dasharray="188.4" stroke-dashoffset="188.4"/>
-          </svg>
-          <div class="progress-text">
-            <span id="progress-percent">0%</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Main content area -->
+    <!-- Streamlined Main Content -->
     <div class="main-content">
       <div class="container">
-        <h1>Task Tracker</h1>
-        <form id="task-form">
-          <input type="text" id="task-input" placeholder="Enter a task..." required />
-          <select id="day-select">
-            <option value="">Select Day</option>
-            <option value="monday">Monday</option>
-            <option value="tuesday">Tuesday</option>
-            <option value="wednesday">Wednesday</option>
-            <option value="thursday">Thursday</option>
-            <option value="friday">Friday</option>
-            <option value="saturday">Saturday</option>
-            <option value="sunday">Sunday</option>
-          </select>
-          <input type="date" id="task-date" />
-          <input type="time" id="alarm-time" />
-          <select id="priority-select">
-            <option value="low">Low Priority</option>
-            <option value="medium" selected>Medium Priority</option>
-            <option value="high">High Priority</option>
-          </select>
-          <button type="submit">Add Task</button>
-        </form>
+        <!-- Quick Task Form - Initially Hidden -->
+        <div id="quick-task-form" class="quick-form" style="display: none;">
+          <h3 id="form-title">Add Task for <span id="selected-date"></span></h3>
+          <form id="task-form">
+            <input type="text" id="task-input" placeholder="Enter a task..." required />
+            <input type="time" id="alarm-time" placeholder="Set alarm time (optional)" />
+            <select id="priority-select">
+              <option value="low">Low Priority</option>
+              <option value="medium" selected>Medium Priority</option>
+              <option value="high">High Priority</option>
+            </select>
+            <div class="form-actions">
+              <button type="submit">Add Task</button>
+              <button type="button" id="cancel-form">Cancel</button>
+            </div>
+          </form>
+        </div>
 
         <!-- Calendar Component -->
         <div class="calendar-container">
           <div class="calendar-header">
             <button id="prev-month">‹</button>
-            <h3 id="current-month">October 2025</h3>
+            <h2 id="current-month">October 2025</h2>
             <button id="next-month">›</button>
           </div>
           <div class="calendar-grid">
@@ -116,15 +51,9 @@
           </div>
         </div>
         
-        <!-- Current day's tasks -->
-        <div class="current-day-tasks">
-          <h2 id="current-day-title">All Tasks</h2>
-          <div class="task-filters">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="today">Today</button>
-            <button class="filter-btn" data-filter="week">This Week</button>
-            <button class="filter-btn" data-filter="month">This Month</button>
-          </div>
+        <!-- Selected Day's Tasks -->
+        <div class="selected-day-tasks" id="task-display" style="display: none;">
+          <h3 id="selected-day-title">Tasks</h3>
           <ul id="task-list"></ul>
         </div>
       </div>

@@ -3,23 +3,23 @@ const API_BASE = window.location.origin;
 
 const form = document.getElementById('task-form');
 const input = document.getElementById('task-input');
-const daySelect = document.getElementById('day-select');
-const taskDate = document.getElementById('task-date');
 const alarmTime = document.getElementById('alarm-time');
 const prioritySelect = document.getElementById('priority-select');
 const list = document.getElementById('task-list');
-const currentDayTitle = document.getElementById('current-day-title');
 const alarmAudio = document.getElementById('alarm-audio');
+const quickForm = document.getElementById('quick-task-form');
+const cancelFormBtn = document.getElementById('cancel-form');
+const selectedDateTitle = document.getElementById('selected-date');
+const taskDisplay = document.getElementById('task-display');
+const selectedDayTitle = document.getElementById('selected-day-title');
 
 // Calendar elements
 const prevMonthBtn = document.getElementById('prev-month');
 const nextMonthBtn = document.getElementById('next-month');
 const currentMonthDisplay = document.getElementById('current-month');
 const calendarDays = document.getElementById('calendar-days');
-const filterBtns = document.querySelectorAll('.filter-btn');
 
 let tasks = [];
-let currentFilter = 'all'; // Current filter: all, today, week, month, or specific day
 let currentCalendarDate = new Date(); // Current calendar view
 let selectedDate = null; // Selected calendar date
 let alarmTimeouts = []; // Store alarm timeouts
@@ -27,31 +27,99 @@ let alarmTimeouts = []; // Store alarm timeouts
 // Load tasks when page loads
 document.addEventListener('DOMContentLoaded', function() {
     loadTasks();
-    updateDashboard();
     initializeCalendar();
+    setupFormHandlers();
 });
 
-// Setup day item click handlers
-function setupDayItems() {
-  const dayItems = document.querySelectorAll('.day-item');
-  dayItems.forEach(item => {
-    item.addEventListener('click', function() {
-      const day = this.dataset.day;
-      filterTasksByDay(day);
-      
-      // Update active state
-      dayItems.forEach(d => d.classList.remove('active'));
-      this.classList.add('active');
+// Setup form handlers
+function setupFormHandlers() {
+    // Quick form submission
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const taskText = input.value.trim();
+        const selectedTime = alarmTime.value;
+        const selectedPriority = prioritySelect.value;
+        
+        if (taskText === '' || !selectedDate) return;
+        
+        const task = {
+            id: Date.now(),
+            text: taskText,
+            date: selectedDate,
+            alarmTime: selectedTime,
+            priority: selectedPriority,
+            completed: false,
+            createdAt: new Date().toISOString()
+        };
+        
+        addTask(task);
+        
+        // Clear form and hide it
+        input.value = '';
+        alarmTime.value = '';
+        prioritySelect.value = 'medium';
+        hideQuickForm();
     });
-  });
+    
+    // Cancel form handler
+    cancelFormBtn.addEventListener('click', hideQuickForm);
 }
 
-// Filter tasks by day
-function filterTasksByDay(day) {
-  currentFilter = day;
-  const dayName = day.charAt(0).toUpperCase() + day.slice(1);
-  currentDayTitle.textContent = `${dayName} Tasks`;
-  displayTasks();
+// Show quick form for selected date
+function showQuickForm(dateString) {
+    selectedDate = dateString;
+    const date = new Date(dateString);
+    selectedDateTitle.textContent = date.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+    quickForm.style.display = 'block';
+    input.focus();
+}
+
+// Hide quick form
+function hideQuickForm() {
+    quickForm.style.display = 'none';
+    selectedDate = null;
+}
+
+// Display tasks for selected date
+function displayTasksForDate(dateString) {
+    const filteredTasks = tasks.filter(task => task.date === dateString);
+    const date = new Date(dateString);
+    
+    selectedDayTitle.textContent = `Tasks for ${date.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        month: 'short', 
+        day: 'numeric' 
+    })}`;
+    
+    list.innerHTML = '';
+    
+    if (filteredTasks.length === 0) {
+        list.innerHTML = '<li style="text-align: center; opacity: 0.6;">No tasks for this day</li>';
+    } else {
+        filteredTasks.sort((a, b) => {
+            // Sort by priority, then by alarm time
+            const priorityOrder = { high: 0, medium: 1, low: 2 };
+            if (a.priority !== b.priority) {
+                return priorityOrder[a.priority] - priorityOrder[b.priority];
+            }
+            if (a.alarmTime && b.alarmTime) {
+                return a.alarmTime.localeCompare(b.alarmTime);
+            }
+            return 0;
+        });
+        
+        filteredTasks.forEach(task => {
+            displayTask(task);
+        });
+    }
+    
+    taskDisplay.style.display = 'block';
 }
 
 // Form submission
@@ -114,8 +182,11 @@ async function addTask(task) {
     saveTasksToLocalStorage();
   }
   
-  displayTasks();
-  updateDayCounters();
+  // Refresh calendar and task display
+  renderCalendar();
+  if (selectedDate === task.date) {
+    displayTasksForDate(task.date);
+  }
   setupAlarmForTask(task);
 }
 
@@ -134,8 +205,8 @@ async function loadTasks() {
     loadTasksFromLocalStorage();
   }
   
-  displayTasks();
-  updateDayCounters();
+  // Initialize calendar with loaded tasks
+  renderCalendar();
   setupAllAlarms();
 }
 
@@ -230,8 +301,10 @@ async function toggleTaskCompletion(id) {
   }
   
   saveTasksToLocalStorage();
-  displayTasks();
-  updateDashboard();
+  renderCalendar();
+  if (selectedDate === task.date) {
+    displayTasksForDate(task.date);
+  }
   renderCalendar();
 }
 
@@ -252,8 +325,12 @@ async function deleteTask(id) {
   // Remove from local array
   tasks = tasks.filter(task => task.id !== id);
   saveTasksToLocalStorage();
-  displayTasks();
-  updateDayCounters();
+  
+  // Refresh calendar and task display
+  renderCalendar();
+  if (selectedDate) {
+    displayTasksForDate(selectedDate);
+  }
   
   // Clear any alarms for this task
   clearAlarmForTask(id);
@@ -472,13 +549,12 @@ function createCalendarDay(date, otherMonth) {
     
     // Add selection to clicked day
     dayElement.classList.add('selected');
-    selectedDate = dateString;
     
-    // Update task display
-    filterTasksByDate(dateString);
+    // Show quick form for adding tasks to this date
+    showQuickForm(dateString);
     
-    // Update form date input
-    taskDate.value = dateString;
+    // Display existing tasks for this date
+    displayTasksForDate(dateString);
   });
   
   return dayElement;
