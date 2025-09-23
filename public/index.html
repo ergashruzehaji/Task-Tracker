@@ -22,6 +22,7 @@
                 <option value="Saturday">Saturday</option>
                 <option value="Sunday">Sunday</option>
             </select>
+            <input type="time" id="alarm-time-input" placeholder="Alarm time (optional)">
             <button type="submit">Add Task</button>
         </form>
 
@@ -54,6 +55,19 @@
                 <h2>Sunday</h2>
                 <ul class="tasks-list" id="Sunday-tasks"></ul>
             </div>
+        </div>
+    </div>
+    
+    <!-- Alarm Modal -->
+    <div id="alarm-modal" class="alarm-modal hidden">
+        <div class="alarm-modal-content">
+            <div class="alarm-header">
+                <h2 id="alarm-task-name">Alarm for: Task Name</h2>
+            </div>
+            <div class="alarm-countdown">
+                <p id="alarm-countdown-text">Alarm will auto-stop in 8 seconds...</p>
+            </div>
+            <button id="turn-off-alarm-btn" class="turn-off-alarm-btn">Turn Off Alarm</button>
         </div>
     </div>
     

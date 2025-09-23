@@ -24,13 +24,14 @@ app.get('/api/tasks', (req, res) => {
 });
 
 app.post('/api/tasks', (req, res) => {
-  const { text, day } = req.body;
+  const { text, day, alarmTime } = req.body;
   const tasks = readTasks();
   const newTask = {
     id: Date.now().toString(),
     text,
     day,
-    completed: false
+    completed: false,
+    alarmTime: alarmTime || null
   };
   tasks.push(newTask);
   writeTasks(tasks);
@@ -39,10 +40,13 @@ app.post('/api/tasks', (req, res) => {
 
 app.put('/api/tasks/:id', (req, res) => {
   const { id } = req.params;
-  const { completed } = req.body;
+  const { completed, alarmTime } = req.body;
   const tasks = readTasks();
   const task = tasks.find(t => t.id === id);
-  if (task) task.completed = completed;
+  if (task) {
+    if (completed !== undefined) task.completed = completed;
+    if (alarmTime !== undefined) task.alarmTime = alarmTime;
+  }
   writeTasks(tasks);
   res.json(task);
 });

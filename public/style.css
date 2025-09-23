@@ -114,6 +114,16 @@ form button:hover {
     font-size: 14px;
 }
 
+.alarm-time {
+    font-size: 12px;
+    color: #007bff;
+    margin-left: 8px;
+    background: rgba(0, 123, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 123, 255, 0.2);
+}
+
 .task-actions {
     margin-left: 10px;
 }
@@ -149,5 +159,181 @@ form button:hover {
 
     form input, form select, form button {
         min-width: 100%;
+    }
+}
+
+/* Alarm Modal Styles */
+.alarm-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+.alarm-modal.hidden {
+    display: none;
+}
+
+.alarm-modal-content {
+    background: rgba(15, 15, 35, 0.85);
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 
+        0 0 50px rgba(0, 255, 255, 0.2),
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    position: relative;
+    animation: modalSlideIn 0.5s ease-out, glowPulse 2s ease-in-out infinite;
+}
+
+.alarm-modal-content::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+        rgba(0, 255, 255, 0.5), 
+        rgba(255, 0, 255, 0.5), 
+        rgba(0, 255, 0, 0.5),
+        rgba(255, 255, 0, 0.5)
+    );
+    border-radius: 20px;
+    z-index: -1;
+    filter: blur(1px);
+    animation: borderGlow 3s linear infinite;
+}
+
+.alarm-header h2 {
+    color: #ffffff;
+    font-size: 24px;
+    margin: 0 0 20px 0;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+    font-weight: bold;
+}
+
+.alarm-countdown p {
+    color: #ff6b6b;
+    font-size: 18px;
+    margin: 20px 0 30px 0;
+    text-shadow: 0 0 8px rgba(255, 107, 107, 0.6);
+    font-weight: 500;
+}
+
+.turn-off-alarm-btn {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 
+        0 0 30px rgba(255, 107, 107, 0.4),
+        0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.turn-off-alarm-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #ff5252, #ff7043);
+    box-shadow: 
+        0 0 40px rgba(255, 107, 107, 0.6),
+        0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.turn-off-alarm-btn:active {
+    transform: translateY(0);
+}
+
+.turn-off-alarm-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.turn-off-alarm-btn:hover::before {
+    left: 100%;
+}
+
+/* Animations */
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes modalSlideIn {
+    from { 
+        transform: scale(0.7) translateY(-50px);
+        opacity: 0;
+    }
+    to { 
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes glowPulse {
+    0%, 100% { 
+        box-shadow: 
+            0 0 50px rgba(0, 255, 255, 0.2),
+            0 20px 40px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    50% { 
+        box-shadow: 
+            0 0 60px rgba(0, 255, 255, 0.4),
+            0 20px 40px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+}
+
+@keyframes borderGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Mobile responsiveness for alarm modal */
+@media (max-width: 768px) {
+    .alarm-modal-content {
+        padding: 30px 20px;
+        margin: 20px;
+    }
+    
+    .alarm-header h2 {
+        font-size: 20px;
+    }
+    
+    .alarm-countdown p {
+        font-size: 16px;
+    }
+    
+    .turn-off-alarm-btn {
+        padding: 12px 30px;
+        font-size: 16px;
     }
 }
