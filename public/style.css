@@ -32,11 +32,15 @@ form {
 
 form input, form select {
     flex: 1;
-    min-width: 200px;
+    min-width: 150px;
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 14px;
+}
+
+input[type="time"] {
+    min-width: 120px;
 }
 
 form button {
@@ -108,10 +112,20 @@ form button:hover {
     flex: 1;
     cursor: pointer;
     padding: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .task-text {
     font-size: 14px;
+    font-weight: 500;
+}
+
+.task-time {
+    font-size: 12px;
+    color: #666;
+    font-style: italic;
 }
 
 .task-actions {

@@ -11,7 +11,7 @@
         <h1>Task Tracker</h1>
         
         <form id="task-form">
-            <input type="text" id="task-input" placeholder="Enter a task..." required>
+            <input type="text" id="task-input" placeholder="Enter a task..." required autocomplete="off">
             <select id="day-select" required>
                 <option value="">Select Day</option>
                 <option value="Monday">Monday</option>
@@ -22,8 +22,15 @@
                 <option value="Saturday">Saturday</option>
                 <option value="Sunday">Sunday</option>
             </select>
+            <input type="time" id="time-input" placeholder="Select time..." required>
             <button type="submit">Add Task</button>
         </form>
+
+        <!-- Audio element for task alarm -->
+        <audio id="task-alarm" preload="auto">
+            <source src="task-alarm.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
 
         <div class="days-container">
             <div class="day-section" data-day="Monday">

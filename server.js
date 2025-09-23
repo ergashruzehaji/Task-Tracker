@@ -24,12 +24,13 @@ app.get('/api/tasks', (req, res) => {
 });
 
 app.post('/api/tasks', (req, res) => {
-  const { text, day } = req.body;
+  const { text, day, time } = req.body;
   const tasks = readTasks();
   const newTask = {
     id: Date.now().toString(),
     text,
     day,
+    time,
     completed: false
   };
   tasks.push(newTask);
