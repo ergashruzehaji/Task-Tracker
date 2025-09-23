@@ -1,1 +1,80 @@
-/* Contents of style.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  /* Full page background image */
+  background: url('background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.container {
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.88); /* semi-transparent for readability */
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+h1 {
+  text-align: center;
+  color: #333;
+}
+form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+form input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+form button {
+  padding: 10px 18px;
+  background: #2e8b57;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+form button:hover {
+  background: #246b45;
+}
+ul#tasks-list {
+  list-style: none;
+  padding: 0;
+}
+li.task {
+  background: #f9f9f9;
+  border: 1px solid #eee;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.2s;
+}
+li.task.completed {
+  background: #e0ffe0;
+  text-decoration: line-through;
+  color: #888;
+}
+.task-info {
+  flex: 1;
+  cursor: pointer;
+}
+.task-actions button {
+  background: #ff6b6b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 7px 12px;
+  margin-left: 8px;
+  cursor: pointer;
+}
+.task-actions button:hover {
+  background: #c0392b;
+}
