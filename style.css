@@ -21,9 +21,9 @@ body {
 /* Days sidebar */
 .days-sidebar {
   width: 250px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-right: 1px solid #e1e5e9;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+  border-right: 1px solid rgba(225, 229, 233, 0.5);
   padding: 20px;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -49,7 +49,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 15px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -93,11 +93,11 @@ body {
 .container {
   max-width: 800px;
   margin: 0 auto;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.25);
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
 }
 
 h1 {
@@ -170,7 +170,7 @@ ul {
 }
 
 li {
-  background: #f8f9fa;
+  background: rgba(248, 249, 250, 0.6);
   margin-bottom: 12px;
   padding: 15px;
   border-radius: 8px;
@@ -179,6 +179,7 @@ li {
   justify-content: space-between;
   align-items: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  backdrop-filter: blur(3px);
 }
 
 li:hover {
@@ -188,7 +189,7 @@ li:hover {
 
 li.has-alarm {
   border-left-color: #ff6b6b;
-  background: #fff5f5;
+  background: rgba(255, 245, 245, 0.6);
 }
 
 .task-content {
