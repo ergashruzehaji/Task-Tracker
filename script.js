@@ -5,13 +5,16 @@ const form = document.getElementById('task-form');
 const input = document.getElementById('task-input');
 const alarmTime = document.getElementById('alarm-time');
 const prioritySelect = document.getElementById('priority-select');
-const list = document.getElementById('task-list');
 const alarmAudio = document.getElementById('alarm-audio');
 const quickForm = document.getElementById('quick-task-form');
 const cancelFormBtn = document.getElementById('cancel-form');
 const selectedDateTitle = document.getElementById('selected-date');
-const taskDisplay = document.getElementById('task-display');
-const selectedDayTitle = document.getElementById('selected-day-title');
+
+// Notification sidebar elements
+const notificationSidebar = document.getElementById('notification-sidebar');
+const closeNotificationsBtn = document.getElementById('close-notifications');
+const activeNotifications = document.getElementById('active-notifications');
+const mainContent = document.querySelector('.main-content');
 
 // Calendar elements
 const prevMonthBtn = document.getElementById('prev-month');
@@ -24,11 +27,16 @@ let currentCalendarDate = new Date(); // Current calendar view
 let selectedDate = null; // Selected calendar date
 let alarmTimeouts = []; // Store alarm timeouts
 
+let activeTaskNotifications = []; // Store active notifications
+let notificationCheckInterval; // Store interval for checking notifications
+
 // Load tasks when page loads
 document.addEventListener('DOMContentLoaded', function() {
     loadTasks();
     initializeCalendar();
     setupFormHandlers();
+    setupNotificationSystem();
+    startNotificationChecker();
 });
 
 // Setup form handlers
@@ -50,6 +58,7 @@ function setupFormHandlers() {
             alarmTime: selectedTime,
             priority: selectedPriority,
             completed: false,
+            acknowledged: false,
             createdAt: new Date().toISOString()
         };
         
@@ -86,40 +95,154 @@ function hideQuickForm() {
     selectedDate = null;
 }
 
-// Display tasks for selected date
-function displayTasksForDate(dateString) {
-    const filteredTasks = tasks.filter(task => task.date === dateString);
-    const date = new Date(dateString);
+// Notification System Functions
+function setupNotificationSystem() {
+    // Close sidebar handler
+    closeNotificationsBtn.addEventListener('click', hideSidebar);
     
-    selectedDayTitle.textContent = `Tasks for ${date.toLocaleDateString('en-US', { 
-        weekday: 'long', 
-        month: 'short', 
-        day: 'numeric' 
-    })}`;
+    // Click outside to close
+    document.addEventListener('click', (e) => {
+        if (notificationSidebar.classList.contains('show') && 
+            !notificationSidebar.contains(e.target) && 
+            !e.target.closest('.calendar-day')) {
+            hideSidebar();
+        }
+    });
+}
+
+function startNotificationChecker() {
+    // Check for active tasks every minute
+    notificationCheckInterval = setInterval(checkForActiveNotifications, 60000);
+    // Initial check
+    checkForActiveNotifications();
+}
+
+function checkForActiveNotifications() {
+    const now = new Date();
+    const currentTime = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+    const today = now.toISOString().split('T')[0];
     
-    list.innerHTML = '';
-    
-    if (filteredTasks.length === 0) {
-        list.innerHTML = '<li style="text-align: center; opacity: 0.6;">No tasks for this day</li>';
-    } else {
-        filteredTasks.sort((a, b) => {
-            // Sort by priority, then by alarm time
-            const priorityOrder = { high: 0, medium: 1, low: 2 };
-            if (a.priority !== b.priority) {
-                return priorityOrder[a.priority] - priorityOrder[b.priority];
-            }
-            if (a.alarmTime && b.alarmTime) {
-                return a.alarmTime.localeCompare(b.alarmTime);
-            }
-            return 0;
-        });
+    // Find tasks that are due now or within the next 15 minutes
+    const activeTasksToday = tasks.filter(task => {
+        if (task.completed || !task.alarmTime || task.acknowledged) return false;
         
-        filteredTasks.forEach(task => {
-            displayTask(task);
-        });
+        const taskDate = new Date(task.date);
+        const isToday = taskDate.toDateString() === now.toDateString();
+        
+        if (!isToday) return false;
+        
+        const [taskHour, taskMinute] = task.alarmTime.split(':').map(Number);
+        const taskTime = new Date(now);
+        taskTime.setHours(taskHour, taskMinute, 0, 0);
+        
+        const timeDiff = taskTime.getTime() - now.getTime();
+        const minutesDiff = timeDiff / (1000 * 60);
+        
+        // Show if due now or within next 15 minutes
+        return minutesDiff >= -5 && minutesDiff <= 15;
+    });
+    
+    if (activeTasksToday.length > 0) {
+        updateNotificationSidebar(activeTasksToday);
+        showSidebar();
+    } else {
+        hideSidebar();
+    }
+}
+
+function updateNotificationSidebar(activeTasks) {
+    activeNotifications.innerHTML = '';
+    
+    activeTasks.forEach(task => {
+        const notificationItem = createNotificationItem(task);
+        activeNotifications.appendChild(notificationItem);
+    });
+}
+
+function createNotificationItem(task) {
+    const now = new Date();
+    const [taskHour, taskMinute] = task.alarmTime.split(':').map(Number);
+    const taskTime = new Date(now);
+    taskTime.setHours(taskHour, taskMinute, 0, 0);
+    
+    const timeDiff = taskTime.getTime() - now.getTime();
+    const minutesDiff = Math.round(timeDiff / (1000 * 60));
+    
+    let urgencyClass = '';
+    let timeText = '';
+    
+    if (minutesDiff <= 0) {
+        urgencyClass = 'urgent';
+        timeText = 'Due now!';
+    } else if (minutesDiff <= 5) {
+        urgencyClass = 'due-soon';
+        timeText = `Due in ${minutesDiff} minute${minutesDiff !== 1 ? 's' : ''}`;
+    } else {
+        timeText = `Due in ${minutesDiff} minutes`;
     }
     
-    taskDisplay.style.display = 'block';
+    const notificationDiv = document.createElement('div');
+    notificationDiv.className = `notification-item ${urgencyClass}`;
+    notificationDiv.innerHTML = `
+        <div class="notification-task-name">${task.text}</div>
+        <div class="notification-time">
+            <span>🕐 ${task.alarmTime}</span>
+            <span style="margin-left: 10px; font-weight: bold;">${timeText}</span>
+        </div>
+        <div class="notification-actions">
+            <button class="acknowledge-btn" onclick="acknowledgeTask(${task.id})">Acknowledge</button>
+            <button class="snooze-btn" onclick="snoozeTask(${task.id})">Snooze 5m</button>
+            <button class="complete-btn" onclick="completeTaskFromNotification(${task.id})">Complete</button>
+        </div>
+    `;
+    
+    return notificationDiv;
+}
+
+function showSidebar() {
+    notificationSidebar.classList.add('show');
+    mainContent.classList.add('sidebar-open');
+}
+
+function hideSidebar() {
+    notificationSidebar.classList.remove('show');
+    mainContent.classList.remove('sidebar-open');
+}
+
+// Task Action Functions
+function acknowledgeTask(taskId) {
+    const task = tasks.find(t => t.id === taskId);
+    if (task) {
+        // Mark as acknowledged (prevent future notifications for today)
+        task.acknowledged = true;
+        saveTasksToLocalStorage();
+        checkForActiveNotifications(); // Refresh sidebar
+    }
+}
+
+function snoozeTask(taskId) {
+    const task = tasks.find(t => t.id === taskId);
+    if (task) {
+        // Snooze for 5 minutes by updating alarm time
+        const [hours, minutes] = task.alarmTime.split(':').map(Number);
+        const newTime = new Date();
+        newTime.setHours(hours, minutes + 5);
+        
+        task.alarmTime = newTime.getHours().toString().padStart(2, '0') + ':' + 
+                        newTime.getMinutes().toString().padStart(2, '0');
+        
+        saveTasksToLocalStorage();
+        checkForActiveNotifications(); // Refresh sidebar
+        
+        // Update alarm timeout
+        clearAlarmForTask(taskId);
+        setupAlarmForTask(task);
+    }
+}
+
+function completeTaskFromNotification(taskId) {
+    toggleTaskCompletion(taskId);
+    checkForActiveNotifications(); // Refresh sidebar
 }
 
 // Form submission
@@ -182,12 +305,10 @@ async function addTask(task) {
     saveTasksToLocalStorage();
   }
   
-  // Refresh calendar and task display
+  // Refresh calendar and check for notifications
   renderCalendar();
-  if (selectedDate === task.date) {
-    displayTasksForDate(task.date);
-  }
   setupAlarmForTask(task);
+  checkForActiveNotifications();
 }
 
 // Load tasks
@@ -302,10 +423,7 @@ async function toggleTaskCompletion(id) {
   
   saveTasksToLocalStorage();
   renderCalendar();
-  if (selectedDate === task.date) {
-    displayTasksForDate(task.date);
-  }
-  renderCalendar();
+  checkForActiveNotifications();
 }
 
 // Delete task
@@ -326,11 +444,9 @@ async function deleteTask(id) {
   tasks = tasks.filter(task => task.id !== id);
   saveTasksToLocalStorage();
   
-  // Refresh calendar and task display
+  // Refresh calendar and notifications
   renderCalendar();
-  if (selectedDate) {
-    displayTasksForDate(selectedDate);
-  }
+  checkForActiveNotifications();
   
   // Clear any alarms for this task
   clearAlarmForTask(id);
@@ -412,8 +528,8 @@ function triggerAlarm(task) {
   alarmAudio.currentTime = 0;
   alarmAudio.play().catch(e => console.log('Could not play alarm sound'));
   
-  // Show notification
-  showAlarmNotification(task);
+  // Check for active notifications and show sidebar if needed
+  checkForActiveNotifications();
   
   // Remove this alarm from timeouts
   clearAlarmForTask(task.id);
@@ -552,9 +668,6 @@ function createCalendarDay(date, otherMonth) {
     
     // Show quick form for adding tasks to this date
     showQuickForm(dateString);
-    
-    // Display existing tasks for this date
-    displayTasksForDate(dateString);
   });
   
   return dayElement;
