@@ -1,15 +1,20 @@
 # Task Tracker
 
-A simple web app to track tasks for each day of the week.
+A beautiful task tracking application with day-based organization and alarm functionality.
 
 ## Features
 
-- Add, view, mark complete, and delete tasks for any day of the week.
-- Modern UI and responsive layout.
-- Persistent storage using a local JSON file (easy to swap for a database).
-- Node.js + Express backend API.
+- 📅 **Day-based Task Organization**: Organize tasks by days of the week
+- ⏰ **Alarm System**: Set alarms for your tasks with audio notifications  
+- 🎨 **Modern UI**: Beautiful gradient background with responsive design
+- 📱 **Mobile Friendly**: Responsive layout that works on all devices
+- 💾 **Persistent Storage**: Tasks are saved and persist between sessions
 
-## Setup
+## Live Demo
+
+🚀 **Deploy to Render**: This app is ready for deployment to Render.com
+
+## Local Development
 
 1. **Clone the repository**
    ```bash
@@ -19,37 +24,50 @@ A simple web app to track tasks for each day of the week.
 
 2. **Install dependencies**
    ```bash
-   npm install express
+   npm install
    ```
 
 3. **Run the server**
    ```bash
-   node server.js
+   npm start
    ```
 
 4. **Open your browser**
-   - Visit [http://localhost:3001](http://localhost:3001)
+   - Visit [http://localhost:3000](http://localhost:3000)
+
+## Deployment to Render
+
+This application is configured for easy deployment to Render:
+
+1. Connect your GitHub repository to Render
+2. Select "Web Service" 
+3. Use these settings:
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+   - **Environment**: Node
 
 ## File Structure
 
-- `public/index.html` – Main UI
-- `public/style.css` – Styling
-- `public/script.js` – Frontend logic
-- `server.js` – Backend API
+- `index.html` – Main UI with sidebar and modern design
+- `style.css` – Modern styling with gradients and animations
+- `script.js` – Frontend logic with alarm functionality
+- `server.js` – Express backend API
+- `task-alarm.mp3` – Alarm sound file
 - `tasks.json` – Task storage (auto-created)
-- `README.md` – Documentation
 
 ## API Endpoints
 
-- `GET /api/tasks` – Get all tasks
-- `POST /api/tasks` – Create a task (`{ text, day }`)
-- `PUT /api/tasks/:id` – Update task completion (`{ completed }`)
-- `DELETE /api/tasks/:id` – Delete a task
+- `GET /tasks` – Get all tasks
+- `POST /tasks` – Create a task (`{ text, day, alarmTime }`)
+- `PUT /tasks/:id` – Update a task
+- `DELETE /tasks/:id` – Delete a task
 
-## Customization
+## Technology Stack
 
-- Swap `tasks.json` for a real database for production.
-- Extend the data model with priorities, notes, etc.
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **Backend**: Node.js, Express.js
+- **Storage**: JSON file storage
+- **Deployment**: Render
 
 ## License
 

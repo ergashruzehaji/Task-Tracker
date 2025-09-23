@@ -1,4 +1,5 @@
-const API_BASE = 'http://localhost:3000';
+// Use relative URLs for API calls so it works both locally and in production
+const API_BASE = window.location.origin;
 
 const form = document.getElementById('task-form');
 const input = document.getElementById('task-input');
