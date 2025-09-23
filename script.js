@@ -26,17 +26,9 @@ let alarmTimeouts = []; // Store alarm timeouts
 
 // Load tasks when page loads
 document.addEventListener('DOMContentLoaded', function() {
-  loadTasks();
-  setupDayItems();
-  setupCalendar();
-  setupFilters();
-  checkAlarms();
-  
-  // Set default date to today
-  taskDate.value = new Date().toISOString().split('T')[0];
-  
-  // Check alarms every minute
-  setInterval(checkAlarms, 60000);
+    loadTasks();
+    updateDashboard();
+    initializeCalendar();
 });
 
 // Setup day item click handlers
@@ -167,6 +159,9 @@ function displayTask(task) {
   if (task.alarmTime) {
     li.classList.add('has-alarm');
   }
+  if (task.completed) {
+    li.classList.add('completed');
+  }
   
   const taskDetails = [];
   
@@ -194,8 +189,10 @@ function displayTask(task) {
   li.innerHTML = `
     <div class="task-content">
       <div style="display: flex; align-items: center;">
+        <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''} 
+               onchange="toggleTaskCompletion(${task.id})" style="margin-right: 10px;">
         <div class="task-priority ${task.priority || 'medium'}"></div>
-        <div class="task-text">${task.text}</div>
+        <div class="task-text ${task.completed ? 'completed' : ''}">${task.text}</div>
       </div>
       <div class="task-details">
         ${taskDetails.join('')}
@@ -207,6 +204,35 @@ function displayTask(task) {
   `;
   
   list.appendChild(li);
+}
+
+// Toggle task completion
+async function toggleTaskCompletion(id) {
+  const task = tasks.find(t => t.id === id);
+  if (!task) return;
+  
+  task.completed = !task.completed;
+  
+  try {
+    const response = await fetch(`${API_BASE}/tasks/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(task),
+    });
+    
+    if (!response.ok) {
+      throw new Error('Backend not available');
+    }
+  } catch (error) {
+    console.error('Error updating task:', error);
+  }
+  
+  saveTasksToLocalStorage();
+  displayTasks();
+  updateDashboard();
+  renderCalendar();
 }
 
 // Delete task
@@ -609,3 +635,211 @@ function loadTasksFromLocalStorage() {
 function saveTasksToLocalStorage() {
   localStorage.setItem('taskTrackerTasks', JSON.stringify(tasks));
 }
+
+// Dashboard Functions
+function updateDashboard() {
+    updateDashboardStats();
+    renderUpcomingTasks();
+    updateProgressRing();
+}
+
+function updateDashboardStats() {
+    const today = new Date().toISOString().split('T')[0];
+    const todayTasks = tasks.filter(task => task.date === today);
+    const completedToday = todayTasks.filter(task => task.completed).length;
+    
+    const thisWeek = getWeekTasks();
+    const highPriorityTasks = tasks.filter(task => task.priority === 'high' && !task.completed);
+    
+    const todayCountEl = document.getElementById('today-count');
+    const weekCountEl = document.getElementById('week-count');
+    const highPriorityCountEl = document.getElementById('high-priority-count');
+    const totalCountEl = document.getElementById('total-count');
+    
+    if (todayCountEl) todayCountEl.textContent = completedToday + '/' + todayTasks.length;
+    if (weekCountEl) weekCountEl.textContent = thisWeek.length;
+    if (highPriorityCountEl) highPriorityCountEl.textContent = highPriorityTasks.length;
+    if (totalCountEl) totalCountEl.textContent = tasks.length;
+}
+
+function getWeekTasks() {
+    const today = new Date();
+    const weekStart = new Date(today);
+    weekStart.setDate(today.getDate() - today.getDay());
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 6);
+    
+    return tasks.filter(task => {
+        const taskDate = new Date(task.date);
+        return taskDate >= weekStart && taskDate <= weekEnd;
+    });
+}
+
+function renderUpcomingTasks() {
+    const upcomingContainer = document.querySelector('.upcoming-tasks');
+    if (!upcomingContainer) return;
+    
+    const today = new Date();
+    const upcoming = tasks
+        .filter(task => !task.completed && new Date(task.date) >= today)
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .slice(0, 3);
+    
+    if (upcoming.length === 0) {
+        upcomingContainer.innerHTML = '<p style="opacity: 0.6; font-size: 14px;">No upcoming tasks</p>';
+        return;
+    }
+    
+    upcomingContainer.innerHTML = upcoming.map(task => `
+        <div class="upcoming-task" onclick="selectTaskDate('${task.date}')">
+            <div class="task-name">${task.text}</div>
+            <div class="task-due">${formatDateForDisplay(new Date(task.date))}</div>
+        </div>
+    `).join('');
+}
+
+function selectTaskDate(dateString) {
+    // Select the date in calendar and filter tasks
+    selectedDate = dateString;
+    taskDate.value = dateString;
+    filterTasksByDate(dateString);
+    
+    // Update calendar display if needed
+    const targetDate = new Date(dateString);
+    if (targetDate.getMonth() !== currentCalendarDate.getMonth() || 
+        targetDate.getFullYear() !== currentCalendarDate.getFullYear()) {
+        currentCalendarDate = new Date(targetDate);
+        renderCalendar();
+    }
+}
+
+function updateProgressRing() {
+    const today = new Date().toISOString().split('T')[0];
+    const todayTasks = tasks.filter(task => task.date === today);
+    const completedToday = todayTasks.filter(task => task.completed).length;
+    const percentage = todayTasks.length > 0 ? (completedToday / todayTasks.length) * 100 : 0;
+    
+    const progressRing = document.querySelector('.progress-ring-circle');
+    const progressText = document.querySelector('.progress-text');
+    
+    if (progressRing) {
+        const radius = progressRing.r.baseVal.value;
+        const circumference = radius * 2 * Math.PI;
+        const offset = circumference - (percentage / 100) * circumference;
+        
+        progressRing.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressRing.style.strokeDashoffset = offset;
+    }
+    
+    if (progressText) {
+        progressText.textContent = Math.round(percentage) + '%';
+    }
+}
+
+// Quick Action Functions
+function addQuickTask(daysFromToday = 0) {
+    const taskText = prompt('Enter task:');
+    if (taskText) {
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + daysFromToday);
+        
+        const task = {
+            id: Date.now(),
+            text: taskText,
+            completed: false,
+            priority: 'medium',
+            date: targetDate.toISOString().split('T')[0],
+            day: ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'][targetDate.getDay()],
+            createdAt: new Date().toISOString()
+        };
+        
+        addTask(task);
+    }
+}
+
+function showOverdue() {
+    const today = new Date().toISOString().split('T')[0];
+    
+    const overdueFilter = tasks.filter(task => 
+        !task.completed && task.date < today
+    );
+    
+    if (overdueFilter.length === 0) {
+        alert('No overdue tasks!');
+        return;
+    }
+    
+    // Create a custom filter for overdue tasks
+    currentFilter = 'overdue';
+    currentDayTitle.textContent = 'Overdue Tasks';
+    
+    // Display only overdue tasks
+    list.innerHTML = '';
+    overdueFilter.forEach(task => {
+        displayTask(task);
+    });
+}
+
+function clearCompleted() {
+    const completedTasks = tasks.filter(task => task.completed);
+    
+    if (completedTasks.length === 0) {
+        alert('No completed tasks to clear!');
+        return;
+    }
+    
+    if (confirm(`Remove ${completedTasks.length} completed task(s)?`)) {
+        // Delete completed tasks from backend
+        completedTasks.forEach(async (task) => {
+            try {
+                await fetch(`${API_BASE}/tasks/${task.id}`, {
+                    method: 'DELETE'
+                });
+            } catch (error) {
+                console.error('Error deleting completed task:', error);
+            }
+        });
+        
+        // Remove from local array
+        tasks = tasks.filter(task => !task.completed);
+        saveTasksToLocalStorage();
+        displayTasks();
+        updateDashboard();
+        renderCalendar();
+    }
+}
+
+function formatDateForDisplay(date) {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    
+    if (date.toDateString() === today.toDateString()) {
+        return 'Today';
+    } else if (date.toDateString() === tomorrow.toDateString()) {
+        return 'Tomorrow';
+    } else {
+        return date.toLocaleDateString();
+    }
+}
+
+// Initialize calendar and setup other components
+function initializeCalendar() {
+    setupCalendar();
+    setupFilters();
+    setupDayItems();
+}
+
+// Override the existing displayTasks function to include dashboard updates
+const originalDisplayTasks = displayTasks;
+displayTasks = function() {
+    originalDisplayTasks.call(this);
+    updateDashboard();
+};
+
+// Override the existing addTask function to include dashboard updates
+const originalAddTask = addTask;
+addTask = async function(task) {
+    await originalAddTask.call(this, task);
+    updateDashboard();
+};

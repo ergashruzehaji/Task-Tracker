@@ -8,37 +8,62 @@
 </head>
 <body>
   <div class="app-container">
-    <!-- Days of the week sidebar -->
-    <div class="days-sidebar">
-      <h2>Days of the Week</h2>
-      <div class="days-list">
-        <div class="day-item" data-day="monday">
-          <span class="day-name">Monday</span>
-          <span class="task-count">0</span>
+    <!-- Smart Dashboard sidebar -->
+    <div class="dashboard-sidebar">
+      <h2>📊 Dashboard</h2>
+      
+      <!-- Quick Stats -->
+      <div class="stats-section">
+        <h3>📈 Quick Stats</h3>
+        <div class="stat-item">
+          <span class="stat-label">Today's Tasks</span>
+          <span class="stat-value" id="today-count">0</span>
         </div>
-        <div class="day-item" data-day="tuesday">
-          <span class="day-name">Tuesday</span>
-          <span class="task-count">0</span>
+        <div class="stat-item">
+          <span class="stat-label">This Week</span>
+          <span class="stat-value" id="week-count">0</span>
         </div>
-        <div class="day-item" data-day="wednesday">
-          <span class="day-name">Wednesday</span>
-          <span class="task-count">0</span>
+        <div class="stat-item">
+          <span class="stat-label">High Priority</span>
+          <span class="stat-value high" id="high-priority-count">0</span>
         </div>
-        <div class="day-item" data-day="thursday">
-          <span class="day-name">Thursday</span>
-          <span class="task-count">0</span>
+        <div class="stat-item">
+          <span class="stat-label">Total Tasks</span>
+          <span class="stat-value" id="total-count">0</span>
         </div>
-        <div class="day-item" data-day="friday">
-          <span class="day-name">Friday</span>
-          <span class="task-count">0</span>
+      </div>
+
+      <!-- Upcoming Tasks -->
+      <div class="upcoming-section">
+        <h3>⏰ Next Up</h3>
+        <div id="upcoming-tasks" class="upcoming-list">
+          <div class="no-upcoming">No upcoming tasks</div>
         </div>
-        <div class="day-item" data-day="saturday">
-          <span class="day-name">Saturday</span>
-          <span class="task-count">0</span>
-        </div>
-        <div class="day-item" data-day="sunday">
-          <span class="day-name">Sunday</span>
-          <span class="task-count">0</span>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="actions-section">
+        <h3>⚡ Quick Actions</h3>
+        <button class="quick-action" onclick="addQuickTask('Today')">+ Add Today</button>
+        <button class="quick-action" onclick="addQuickTask('Tomorrow')">+ Add Tomorrow</button>
+        <button class="quick-action" onclick="showOverdue()">⚠️ Show Overdue</button>
+        <button class="quick-action" onclick="clearCompleted()">🗑️ Clear Done</button>
+      </div>
+
+      <!-- Progress Ring -->
+      <div class="progress-section">
+        <h3>🎯 Today's Progress</h3>
+        <div class="progress-ring-container">
+          <svg class="progress-ring" width="80" height="80">
+            <circle class="progress-ring-circle" cx="40" cy="40" r="30" fill="transparent" 
+                    stroke="rgba(255,255,255,0.3)" stroke-width="6"/>
+            <circle class="progress-ring-fill" cx="40" cy="40" r="30" fill="transparent" 
+                    stroke="#667eea" stroke-width="6" stroke-linecap="round"
+                    stroke-dasharray="188.4" stroke-dashoffset="188.4"/>
+          </svg>
+          <div class="progress-text">
+            <span id="progress-percent">0%</span>
+          </div>
         </div>
       </div>
     </div>

@@ -19,72 +19,206 @@ body {
   min-height: 100vh;
 }
 
-/* Days sidebar */
-.days-sidebar {
-  width: 250px;
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(5px);
-  border-right: 1px solid rgba(225, 229, 233, 0.5);
+/* Smart Dashboard Sidebar */
+.dashboard-sidebar {
+  width: 280px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  border-right: 1px solid rgba(225, 229, 233, 0.4);
   padding: 20px;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
 }
 
-.days-sidebar h2 {
+.dashboard-sidebar h2 {
   color: #1a1a1a;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   text-align: center;
-  font-size: 1.5em;
-  font-weight: 600;
-  border-bottom: 2px solid #667eea;
+  font-size: 1.4em;
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+  border-bottom: 2px solid rgba(102, 126, 234, 0.6);
   padding-bottom: 10px;
-  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9), 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
-.days-list {
+.dashboard-sidebar h3 {
+  color: #1a1a1a;
+  font-size: 1em;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  gap: 8px;
 }
 
-.day-item {
+/* Stats Section */
+.stats-section {
+  margin-bottom: 25px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 15px;
+  backdrop-filter: blur(3px);
+}
+
+.stat-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border-left: 4px solid transparent;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.day-item:hover {
-  background: rgba(102, 126, 234, 0.1);
-  border-left-color: #667eea;
-  transform: translateX(5px);
+.stat-item:last-child {
+  border-bottom: none;
 }
 
-.day-item.active {
-  background: rgba(102, 126, 234, 0.2);
-  border-left-color: #667eea;
-  font-weight: bold;
-}
-
-.day-name {
-  font-size: 16px;
+.stat-label {
   color: #1a1a1a;
-  font-weight: 600;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  font-size: 0.9em;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
 }
 
-.task-count {
-  background: #667eea;
+.stat-value {
+  background: rgba(102, 126, 234, 0.8);
   color: white;
   padding: 4px 8px;
   border-radius: 12px;
-  font-size: 12px;
-  min-width: 20px;
+  font-size: 0.9em;
+  font-weight: 600;
+  min-width: 24px;
   text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.stat-value.high {
+  background: rgba(255, 71, 87, 0.8);
+}
+
+/* Upcoming Tasks Section */
+.upcoming-section {
+  margin-bottom: 25px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 15px;
+  backdrop-filter: blur(3px);
+}
+
+.upcoming-list {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.upcoming-task {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-left: 3px solid #667eea;
+}
+
+.upcoming-task.high {
+  border-left-color: #ff4757;
+}
+
+.upcoming-task.medium {
+  border-left-color: #ffa726;
+}
+
+.upcoming-task.low {
+  border-left-color: #26a69a;
+}
+
+.upcoming-task-text {
+  color: #1a1a1a;
+  font-size: 0.85em;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
+  margin-bottom: 4px;
+}
+
+.upcoming-task-time {
+  color: #444;
+  font-size: 0.75em;
+  font-weight: 400;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+.no-upcoming {
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 0.9em;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+/* Quick Actions */
+.actions-section {
+  margin-bottom: 25px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 15px;
+  backdrop-filter: blur(3px);
+}
+
+.quick-action {
+  width: 100%;
+  background: rgba(102, 126, 234, 0.8);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  font-size: 0.85em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.quick-action:hover {
+  background: rgba(102, 126, 234, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.quick-action:last-child {
+  margin-bottom: 0;
+}
+
+/* Progress Ring */
+.progress-section {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 15px;
+  backdrop-filter: blur(3px);
+  text-align: center;
+}
+
+.progress-ring-container {
+  position: relative;
+  display: inline-block;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-fill {
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 0.9em;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
 }
 
 /* Main content */
@@ -216,6 +350,22 @@ li.has-alarm {
   font-size: 16px;
   font-weight: 500;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.task-text.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.task-checkbox {
+  margin-right: 10px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+li.completed {
+  opacity: 0.7;
 }
 
 .task-details {
@@ -485,26 +635,42 @@ form {
     flex-direction: column;
   }
   
-  .days-sidebar {
+  .dashboard-sidebar {
     width: 100%;
     padding: 15px;
+    border-right: none;
+    border-bottom: 1px solid rgba(225, 229, 233, 0.4);
   }
   
-  .days-list {
-    flex-direction: row;
-    overflow-x: auto;
-    gap: 5px;
+  .dashboard-sidebar h2 {
+    font-size: 1.2em;
+    margin-bottom: 20px;
   }
   
-  .day-item {
-    flex-shrink: 0;
-    min-width: 80px;
-    padding: 10px 8px;
+  .stats-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .stat-item {
+    flex-direction: column;
     text-align: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    border-bottom: none;
   }
   
-  .day-name {
-    font-size: 12px;
+  .upcoming-section, .actions-section {
+    margin-bottom: 20px;
+  }
+  
+  .actions-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
   
   .main-content {
