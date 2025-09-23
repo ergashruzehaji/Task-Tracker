@@ -1,12 +1,16 @@
 {
   "name": "task-tracker",
-  "version": "1.0.0",
-  "description": "A simple web app to track tasks for each day of the week.",
-  "main": "server.js",
+  "version": "2.0.0",
+  "description": "A modern weekly task planner with hourly scheduling support.",
+  "main": "backend/server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js"
   },
   "dependencies": {
     "express": "^4.18.2"
-  }
+  },
+  "keywords": ["task", "tracker", "planner", "weekly", "hourly", "schedule"],
+  "author": "Task Tracker Team",
+  "license": "MIT"
 }
