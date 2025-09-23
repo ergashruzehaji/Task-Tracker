@@ -1,57 +1,196 @@
+/* Sci-Fi Futuristic Task Tracker Styles */
+
+:root {
+    --neon-cyan: #00ffff;
+    --neon-blue: #0099ff;
+    --neon-purple: #9933ff;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --dark-glass: rgba(0, 0, 0, 0.3);
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --glow-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    --glow-shadow-intense: 0 0 30px rgba(0, 255, 255, 0.8);
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Orbitron', 'Courier New', 'Lucida Console', monospace;
     margin: 0;
     padding: 0;
     min-height: 100vh;
     background: url('background.jpg') no-repeat center center fixed;
     background-size: cover;
     background-attachment: fixed;
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+/* Add subtle animated gradient overlay */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        rgba(0, 255, 255, 0.1) 0%, 
+        rgba(0, 153, 255, 0.05) 25%, 
+        rgba(153, 51, 255, 0.1) 50%, 
+        rgba(0, 255, 255, 0.05) 75%, 
+        rgba(0, 255, 255, 0.1) 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .container {
     max-width: 1200px;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px) brightness(1.1);
+    -webkit-backdrop-filter: blur(15px) brightness(1.1);
     margin: 20px auto;
     padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glow-shadow), 
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(0, 255, 255, 0.1) 0%, 
+        transparent 50%, 
+        rgba(153, 51, 255, 0.1) 100%);
+    border-radius: 20px;
+    pointer-events: none;
+    z-index: -1;
 }
 
 h1 {
     text-align: center;
-    color: #333;
+    color: var(--text-primary);
     margin-bottom: 30px;
+    font-family: 'Orbitron', 'Courier New', 'Lucida Console', monospace;
+    font-weight: 900;
+    font-size: 2.5rem;
+    text-shadow: 0 0 20px var(--neon-cyan), 
+                 0 0 40px var(--neon-cyan);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    position: relative;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    box-shadow: 0 0 10px var(--neon-cyan);
 }
 
 form {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     margin-bottom: 30px;
     flex-wrap: wrap;
+    padding: 20px;
+    background: var(--dark-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid var(--glass-border);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 form input, form select {
     flex: 1;
     min-width: 200px;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 15px 20px;
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
     font-size: 14px;
+    font-family: 'Orbitron', sans-serif;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+form input:focus, form select:focus {
+    outline: none;
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+form input::placeholder {
+    color: var(--text-secondary);
+    font-family: 'Orbitron', 'Courier New', 'Lucida Console', monospace;
 }
 
 form button {
-    padding: 12px 20px;
-    background: #2e8b57;
-    color: #fff;
+    padding: 15px 25px;
+    background: linear-gradient(45deg, var(--neon-cyan), var(--neon-blue));
+    color: #000;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+form button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+}
+
+form button:hover::before {
+    left: 100%;
 }
 
 form button:hover {
-    background: #246b45;
+    transform: translateY(-3px);
+    box-shadow: var(--glow-shadow-intense);
+    background: linear-gradient(45deg, var(--neon-blue), var(--neon-cyan));
 }
 
 .days-container {
@@ -61,19 +200,46 @@ form button:hover {
 }
 
 .day-section {
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px) brightness(1.1);
+    -webkit-backdrop-filter: blur(15px) brightness(1.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
     padding: 20px;
     min-height: 200px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.day-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+    box-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.day-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+    border-color: var(--neon-cyan);
 }
 
 .day-section h2 {
     margin: 0 0 15px 0;
-    color: #495057;
-    border-bottom: 2px solid #dee2e6;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--glass-border);
     padding-bottom: 8px;
     font-size: 18px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px var(--neon-cyan);
 }
 
 .tasks-list {
@@ -83,25 +249,47 @@ form button:hover {
 }
 
 .task {
-    background: #fff;
-    border: 1px solid #eee;
-    padding: 12px;
-    margin-bottom: 8px;
-    border-radius: 4px;
+    background: var(--dark-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.task::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--neon-cyan), var(--neon-blue));
+    opacity: 0.7;
 }
 
 .task:hover {
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transform: translateX(5px);
+    box-shadow: 0 5px 20px rgba(0, 255, 255, 0.3);
+    border-color: var(--neon-cyan);
 }
 
 .task.completed {
-    background: #e0ffe0;
+    background: var(--glass-bg);
+    opacity: 0.6;
     text-decoration: line-through;
-    color: #888;
+    color: var(--text-secondary);
+}
+
+.task.completed::before {
+    background: linear-gradient(180deg, var(--neon-purple), var(--text-secondary));
 }
 
 .task-info {
@@ -112,6 +300,8 @@ form button:hover {
 
 .task-text {
     font-size: 14px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 400;
 }
 
 .task-actions {
@@ -119,17 +309,25 @@ form button:hover {
 }
 
 .delete-btn {
-    background: #dc3545;
+    background: linear-gradient(45deg, #ff3366, #ff0040);
     color: #fff;
     border: none;
-    border-radius: 4px;
-    padding: 6px 12px;
+    border-radius: 8px;
+    padding: 8px 15px;
     cursor: pointer;
     font-size: 12px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 51, 102, 0.3);
 }
 
 .delete-btn:hover {
-    background: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(255, 51, 102, 0.6);
+    background: linear-gradient(45deg, #ff0040, #ff3366);
 }
 
 /* Responsive design */
@@ -139,15 +337,39 @@ form button:hover {
         padding: 20px;
     }
 
+    h1 {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+
     .days-container {
         grid-template-columns: 1fr;
     }
 
     form {
         flex-direction: column;
+        padding: 15px;
     }
 
     form input, form select, form button {
         min-width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .task {
+        padding: 12px;
+    }
+}
+
+/* Enhanced accessibility and visual improvements */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    body::before {
+        animation: none;
     }
 }
