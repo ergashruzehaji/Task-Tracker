@@ -163,6 +163,23 @@ function toggleTimeFormat() {
     console.log('Time format toggled to', is24HourFormat ? '24h' : '12h');
 }
 
+// Update priority select color based on selected value
+function updatePrioritySelectColor() {
+    if (!prioritySelect) return;
+    
+    const selectedPriority = prioritySelect.value;
+    
+    // Remove existing data-priority attributes
+    prioritySelect.removeAttribute('data-priority');
+    
+    // Set new data-priority attribute based on selection
+    if (selectedPriority) {
+        prioritySelect.setAttribute('data-priority', selectedPriority);
+    }
+    
+    console.log('Priority select color updated to:', selectedPriority);
+}
+
 // Load tasks when page loads
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, initializing components...');
@@ -225,6 +242,15 @@ document.addEventListener('DOMContentLoaded', function() {
     if (timeFormatToggle) {
         timeFormatToggle.addEventListener('click', toggleTimeFormat);
         console.log('Time format toggle event listener added');
+    }
+    
+    // Add priority select color functionality
+    if (prioritySelect) {
+        // Set initial color based on default selection
+        updatePrioritySelectColor();
+        
+        prioritySelect.addEventListener('change', updatePrioritySelectColor);
+        console.log('Priority select color functionality added');
     }
     
     console.log('All components initialized');

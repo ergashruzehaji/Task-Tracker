@@ -479,6 +479,53 @@ input:focus, select:focus {
   border-color: #DAA520;
 }
 
+/* Priority Select Color Coding */
+#priority-select {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #DAA520;
+  transition: all 0.3s ease;
+}
+
+#priority-select[data-priority="high"] {
+  background: rgba(255, 71, 87, 0.1);
+  border-color: #ff4757;
+  color: #ff4757;
+  font-weight: bold;
+}
+
+#priority-select[data-priority="medium"] {
+  background: rgba(218, 165, 32, 0.1);
+  border-color: #DAA520;
+  color: #DAA520;
+  font-weight: bold;
+}
+
+#priority-select[data-priority="low"] {
+  background: rgba(38, 166, 154, 0.1);
+  border-color: #26a69a;
+  color: #26a69a;
+  font-weight: bold;
+}
+
+/* Priority Select Options Styling */
+#priority-select option[value="high"] {
+  background-color: rgba(255, 71, 87, 0.1);
+  color: #ff4757;
+  font-weight: bold;
+}
+
+#priority-select option[value="medium"] {
+  background-color: rgba(218, 165, 32, 0.1);
+  color: #DAA520;
+  font-weight: bold;
+}
+
+#priority-select option[value="low"] {
+  background-color: rgba(38, 166, 154, 0.1);
+  color: #26a69a;
+  font-weight: bold;
+}
+
 /* Time Selector Styling */
 .time-selector-container {
   width: 100%;
