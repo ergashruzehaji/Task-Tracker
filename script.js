@@ -12,6 +12,7 @@ let tasks = [];
 let currentCalendarDate = new Date(); // Current calendar view
 let selectedDate = null; // Selected calendar date
 let alarmTimeouts = []; // Store alarm timeouts
+let currentFilter = 'all'; // Current sidebar filter
 
 let activeTaskNotifications = []; // Store active notifications
 let notificationCheckInterval; // Store interval for checking notifications
@@ -360,6 +361,33 @@ function updateSidebarTasks() {
             highlightTaskInCalendar(taskId);
         });
     });
+    
+    // Update stats panel
+    updateStatsPanel();
+}
+
+// Update stats panel
+function updateStatsPanel() {
+    const totalTasksEl = document.querySelector('#total-tasks');
+    const completedTasksEl = document.querySelector('#completed-tasks');
+    const thisMonthTasksEl = document.querySelector('#this-month-tasks');
+    
+    if (!totalTasksEl || !completedTasksEl || !thisMonthTasksEl) return;
+    
+    const totalTasks = tasks.length;
+    const completedTasks = tasks.filter(task => task.completed).length;
+    
+    // Calculate this month's tasks
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+    const thisMonthTasks = tasks.filter(task => {
+        const taskDate = new Date(task.date);
+        return taskDate.getMonth() === currentMonth && taskDate.getFullYear() === currentYear;
+    }).length;
+    
+    totalTasksEl.textContent = totalTasks;
+    completedTasksEl.textContent = completedTasks;
+    thisMonthTasksEl.textContent = thisMonthTasks;
 }
 
 // Highlight task in calendar when clicked from sidebar
@@ -412,7 +440,7 @@ function updatePrioritySelectColor() {
 // Initialize when both DOM and window are fully loaded
 function initializeApp() {
     console.log('🚀 Initializing Task Tracker App...');
-    console.log('🔧 Script version: 2025-09-24-v7 - FIXED INITIALIZATION');
+    console.log('🔧 Script version: 2025-09-24-v8 - FIXED BUGS & LAYOUT');
     
     try {
     console.log('🚀 DOM loaded, initializing Task Tracker components...');
@@ -500,7 +528,8 @@ function initializeApp() {
         setTimeout(() => {
             console.log('📊 Dropdown population status:');
             console.log('Year options:', yearSelect ? yearSelect.options.length : 'null');
-            console.log('Minute options:', minuteSelect ? minuteSelect.options.length : 'null');
+            console.log('Minute input exists:', !!minuteSelect);
+            console.log('Hour options:', hourSelect ? hourSelect.options.length : 'null');
         }, 100);
     }, 100);
     

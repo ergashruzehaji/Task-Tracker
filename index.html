@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Cache Buster: 1758740997 - Force Complete Refresh -->
+<!-- Cache Buster: 1758741198 - Force Complete Refresh -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -7,7 +7,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <meta name="cache-buster" content="1758740997" />
+  <meta name="cache-buster" content="1758741198" />
   <title>Task Tracker - Latest Updates</title>
   <link rel="stylesheet" href="style.css?v=1758746135&cb=force-refresh" />
 </head>
@@ -16,103 +16,149 @@
     <!-- Streamlined Main Content -->
     <div class="main-content" id="main-content">
       <div class="container">
-        <!-- Quick Task Form - Initially Hidden -->
+        <!-- Compact Task Form - Initially Hidden -->
         <div id="quick-task-form" class="quick-form" style="display: none;">
-          <h3 id="form-title">Add Task for <span id="selected-date"></span></h3>
+          <div class="form-header">
+            <h3 id="form-title">Add Task for <span id="selected-date"></span></h3>
+            <button type="button" id="cancel-form" class="close-btn">✕</button>
+          </div>
           <form id="task-form">
-            <input type="text" id="task-input" placeholder="Enter a task..." required />
-            <div class="time-selector-container">
-              <label class="time-label">Alarm Time (optional):</label>
-              <div class="time-dropdowns">
-                <select id="hour-select" class="time-dropdown">
-                  <option value="">Hour</option>
-                  <option value="00">12 AM</option>
-                  <option value="01">1 AM</option>
-                  <option value="02">2 AM</option>
-                  <option value="03">3 AM</option>
-                  <option value="04">4 AM</option>
-                  <option value="05">5 AM</option>
-                  <option value="06">6 AM</option>
-                  <option value="07">7 AM</option>
-                  <option value="08">8 AM</option>
-                  <option value="09">9 AM</option>
-                  <option value="10">10 AM</option>
-                  <option value="11">11 AM</option>
-                  <option value="12">12 PM</option>
-                  <option value="13">1 PM</option>
-                  <option value="14">2 PM</option>
-                  <option value="15">3 PM</option>
-                  <option value="16">4 PM</option>
-                  <option value="17">5 PM</option>
-                  <option value="18">6 PM</option>
-                  <option value="19">7 PM</option>
-                  <option value="20">8 PM</option>
-                  <option value="21">9 PM</option>
-                  <option value="22">10 PM</option>
-                  <option value="23">11 PM</option>
-                </select>
-                <span class="time-separator">:</span>
-                <div class="minute-selector-container">
-                  <input type="number" id="minute-select" class="minute-input" min="0" max="59" placeholder="00" title="Enter custom minutes (0-59)">
-                  <div class="minute-quick-buttons">
-                    <button type="button" class="minute-btn" data-minute="00">00</button>
-                    <button type="button" class="minute-btn" data-minute="05">05</button>
-                    <button type="button" class="minute-btn" data-minute="10">10</button>
-                    <button type="button" class="minute-btn" data-minute="15">15</button>
-                    <button type="button" class="minute-btn" data-minute="20">20</button>
-                    <button type="button" class="minute-btn" data-minute="25">25</button>
-                    <button type="button" class="minute-btn" data-minute="30">30</button>
-                    <button type="button" class="minute-btn" data-minute="35">35</button>
-                    <button type="button" class="minute-btn" data-minute="40">40</button>
-                    <button type="button" class="minute-btn" data-minute="45">45</button>
-                    <button type="button" class="minute-btn" data-minute="50">50</button>
-                    <button type="button" class="minute-btn" data-minute="55">55</button>
+            <div class="form-row">
+              <input type="text" id="task-input" placeholder="Enter a task..." required />
+            </div>
+            
+            <div class="form-row">
+              <div class="form-section">
+                <label class="form-label">⏰ Alarm Time:</label>
+                <div class="time-controls">
+                  <select id="hour-select" class="time-dropdown compact">
+                    <option value="">Hour</option>
+                    <option value="00">12 AM</option>
+                    <option value="01">1 AM</option>
+                    <option value="02">2 AM</option>
+                    <option value="03">3 AM</option>
+                    <option value="04">4 AM</option>
+                    <option value="05">5 AM</option>
+                    <option value="06">6 AM</option>
+                    <option value="07">7 AM</option>
+                    <option value="08">8 AM</option>
+                    <option value="09">9 AM</option>
+                    <option value="10">10 AM</option>
+                    <option value="11">11 AM</option>
+                    <option value="12">12 PM</option>
+                    <option value="13">1 PM</option>
+                    <option value="14">2 PM</option>
+                    <option value="15">3 PM</option>
+                    <option value="16">4 PM</option>
+                    <option value="17">5 PM</option>
+                    <option value="18">6 PM</option>
+                    <option value="19">7 PM</option>
+                    <option value="20">8 PM</option>
+                    <option value="21">9 PM</option>
+                    <option value="22">10 PM</option>
+                    <option value="23">11 PM</option>
+                  </select>
+                  <span class="time-separator">:</span>
+                  <div class="minute-selector-container">
+                    <input type="number" id="minute-select" class="minute-input compact" min="0" max="59" placeholder="00" title="Enter custom minutes (0-59)">
+                    <div class="minute-quick-buttons">
+                      <button type="button" class="minute-btn" data-minute="00">00</button>
+                      <button type="button" class="minute-btn" data-minute="05">05</button>
+                      <button type="button" class="minute-btn" data-minute="10">10</button>
+                      <button type="button" class="minute-btn" data-minute="15">15</button>
+                      <button type="button" class="minute-btn" data-minute="20">20</button>
+                      <button type="button" class="minute-btn" data-minute="25">25</button>
+                      <button type="button" class="minute-btn" data-minute="30">30</button>
+                      <button type="button" class="minute-btn" data-minute="35">35</button>
+                      <button type="button" class="minute-btn" data-minute="40">40</button>
+                      <button type="button" class="minute-btn" data-minute="45">45</button>
+                      <button type="button" class="minute-btn" data-minute="50">50</button>
+                      <button type="button" class="minute-btn" data-minute="55">55</button>
+                    </div>
                   </div>
+                  <button type="button" id="time-format-toggle" class="time-format-btn compact" title="Switch between 12h and 24h format">
+                    12h
+                  </button>
                 </div>
-                <button type="button" id="time-format-toggle" class="time-format-btn" title="Switch between 12h and 24h format">
-                  12h
-                </button>
+              </div>
+              
+              <div class="form-section">
+                <label class="form-label">🎯 Priority:</label>
+                <select id="priority-select" class="priority-dropdown">
+                  <option value="low">Low Priority</option>
+                  <option value="medium" selected>Medium Priority</option>
+                  <option value="high">High Priority</option>
+                </select>
               </div>
             </div>
-            <select id="priority-select">
-              <option value="low">Low Priority</option>
-              <option value="medium" selected>Medium Priority</option>
-              <option value="high">High Priority</option>
-            </select>
+            
             <div class="form-actions">
-              <button type="submit">Add Task</button>
-              <button type="button" id="cancel-form">Cancel</button>
+              <button type="submit" class="btn-primary">Add Task</button>
+              <button type="button" class="btn-secondary" onclick="document.getElementById('cancel-form').click()">Cancel</button>
             </div>
           </form>
         </div>
 
-        <!-- Calendar Component -->
-        <div class="calendar-container">
-          <div class="calendar-header">
-            <button id="prev-month">‹</button>
-            <h2 id="current-month">October 2025</h2>
-            <button id="next-month">›</button>
-            <div class="year-selector-inline">
-              <select id="year-select" class="year-dropdown-inline">
-                <!-- Years will be populated by JavaScript -->
-              </select>
+        <!-- Calendar Component with Right Sidebar -->
+        <div class="calendar-layout">
+          <div class="calendar-main">
+            <div class="calendar-header">
+              <button id="prev-month">‹</button>
+              <h2 id="current-month">October 2025</h2>
+              <button id="next-month">›</button>
+              <div class="year-selector-inline">
+                <select id="year-select" class="year-dropdown-inline">
+                  <!-- Years will be populated by JavaScript -->
+                </select>
+              </div>
             </div>
-          </div>
-          <div class="calendar-grid">
-            <div class="calendar-weekdays">
-              <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+            <div class="calendar-grid">
+              <div class="calendar-weekdays">
+                <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+              </div>
+              <div class="calendar-days" id="calendar-days">
+                <!-- Calendar days will be generated by JavaScript -->
+              </div>
             </div>
-            <div class="calendar-days" id="calendar-days">
-              <!-- Calendar days will be generated by JavaScript -->
-            </div>
-          </div>
-          <div class="calendar-legend">
-            <span class="legend-item"><span class="legend-dot high"></span>High Priority</span>
-            <span class="legend-item"><span class="legend-dot medium"></span>Medium Priority</span>
-            <span class="legend-item"><span class="legend-dot low"></span>Low Priority</span>
           </div>
           
-          <!-- Filter buttons moved to left sidebar -->
+          <!-- Right Side Legend Panel -->
+          <div class="calendar-right-panel">
+            <div class="panel-header">
+              <h4>📊 Priority Legend</h4>
+            </div>
+            <div class="calendar-legend vertical">
+              <div class="legend-item">
+                <span class="legend-dot high"></span>
+                <span class="legend-text">High Priority</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot medium"></span>
+                <span class="legend-text">Medium Priority</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot low"></span>
+                <span class="legend-text">Low Priority</span>
+              </div>
+            </div>
+            
+            <!-- Quick Stats Panel -->
+            <div class="stats-panel">
+              <h5>📈 Quick Stats</h5>
+              <div class="stat-item">
+                <span class="stat-label">Total Tasks:</span>
+                <span class="stat-value" id="total-tasks">0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">This Month:</span>
+                <span class="stat-value" id="month-tasks">0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Completed:</span>
+                <span class="stat-value" id="completed-tasks">0</span>
+              </div>
+            </div>
+          </div>
         </div>
         
       </div>
