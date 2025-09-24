@@ -22,18 +22,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 20px;
+  padding: 10px;
   box-sizing: border-box;
   overflow-x: hidden;
 }
 
 .main-content {
   width: 100%;
-  max-width: 1200px;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 20px;
-  border: 1px solid rgba(218, 165, 32, 0.3);
-  box-shadow: 0 4px 16px rgba(218, 165, 32, 0.2);
+  max-width: 1600px;
+  background: transparent;
   padding: 0;
   transition: transform 0.3s ease-in-out;
   overflow-x: hidden;
@@ -44,7 +41,7 @@ body {
 }
 
 .container {
-  padding: 30px;
+  padding: 20px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -230,23 +227,22 @@ body {
 .calendar-layout {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
-  margin: 20px 0;
+  gap: 10px;
+  margin: 10px 0;
   max-width: 100%;
+  width: 100%;
   overflow: hidden;
 }
 
 .calendar-main {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 18px;
   padding: 28px;
-  border: 1px solid rgba(218, 165, 32, 0.35);
-  box-shadow: 0 6px 24px rgba(218, 165, 32, 0.15);
   flex: 1;
-  min-width: 300px;
-  max-width: calc(100% - 240px);
+  min-width: 400px;
+  width: 100%;
   overflow: hidden;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
 }
 
 .calendar-right-panel {
@@ -1382,12 +1378,10 @@ li.completed {
   justify-content: center;
   align-items: center;
   padding: 20px;
-  background: linear-gradient(135deg, rgba(218, 165, 32, 0.12), rgba(218, 165, 32, 0.08));
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   margin-bottom: 15px;
-  border: 1px solid rgba(218, 165, 32, 0.25);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 3px 15px rgba(218, 165, 32, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 /* Task Sidebar */
@@ -1517,12 +1511,10 @@ body.sidebar-open .calendar-layout {
   justify-content: center;
   align-items: center;
   padding: 15px;
-  background: linear-gradient(135deg, rgba(218, 165, 32, 0.08), rgba(218, 165, 32, 0.04));
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   margin-bottom: 25px;
-  border: 1px solid rgba(218, 165, 32, 0.2);
-  backdrop-filter: blur(4px);
-  box-shadow: 0 2px 10px rgba(218, 165, 32, 0.08);
+  backdrop-filter: blur(8px);
 }
 
 /* Legacy calendar-controls for any remaining references */
@@ -1588,11 +1580,10 @@ body.sidebar-open .calendar-layout {
 
 /* Time-Slot Calendar Grid */
 .timeslot-calendar {
-  background: white;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(218, 165, 32, 0.1);
-  border: 1px solid rgba(218, 165, 32, 0.2);
+  backdrop-filter: blur(10px);
   width: 100%;
   max-width: 100%;
 }

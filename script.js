@@ -465,10 +465,15 @@ function initializeTaskSidebar() {
 }
 
 function showTaskSidebar(dateString) {
+    console.log('🎯 showTaskSidebar called with date:', dateString);
     const sidebar = document.getElementById('task-sidebar');
     const sidebarSelectedDate = document.getElementById('sidebar-selected-date');
     
-    if (!sidebar) return;
+    console.log('🔍 Sidebar element found:', !!sidebar);
+    if (!sidebar) {
+        console.error('❌ Sidebar element not found!');
+        return;
+    }
     
     selectedSidebarDate = dateString;
     const date = new Date(dateString);
@@ -482,9 +487,13 @@ function showTaskSidebar(dateString) {
         });
     }
     
+    console.log('✅ Adding show class to sidebar');
     sidebar.classList.add('show');
     document.body.classList.add('sidebar-open');
     sidebarOpen = true;
+    
+    // Force display in case CSS isn't working
+    sidebar.style.display = 'block';
     
     // Focus on task input
     setTimeout(() => {
@@ -926,22 +935,41 @@ function getTasksForTimeSlot(dateStr, hour) {
 
 // Add click handlers for time blocks
 function addTimeBlockHandlers() {
+    // Add handlers for time blocks
     document.querySelectorAll('.time-block').forEach(block => {
         block.addEventListener('click', function() {
             const date = this.dataset.date;
             const hour = parseInt(this.dataset.hour);
             
-            // Set selected date and show form
-            selectedDate = date;
+            console.log('🕐 Time block clicked:', date, hour);
             
-            // Pre-fill start time
-            const startTimeInput = document.getElementById('start-time');
-            if (startTimeInput) {
-                startTimeInput.value = `${hour.toString().padStart(2, '0')}:00`;
-            }
+            // Show sidebar with pre-filled time
+            showTaskSidebar(date);
             
-            showTaskForm();
+            // Pre-fill start time in sidebar
+            setTimeout(() => {
+                const sidebarStartTime = document.getElementById('sidebar-start-time');
+                if (sidebarStartTime) {
+                    sidebarStartTime.value = `${hour.toString().padStart(2, '0')}:00`;
+                }
+            }, 100);
         });
+    });
+    
+    // Add handlers for day headers
+    document.querySelectorAll('.day-header').forEach(header => {
+        const dayColumn = header.closest('.day-column');
+        if (dayColumn) {
+            header.addEventListener('click', function() {
+                const date = dayColumn.dataset.date;
+                console.log('📅 Day header clicked:', date);
+                showTaskSidebar(date);
+            });
+            
+            // Make header look clickable
+            header.style.cursor = 'pointer';
+            header.title = 'Click to add task for this day';
+        }
     });
 }
 
@@ -1193,6 +1221,7 @@ function setupFormHandlers() {
 
 // Show quick form for selected date
 function showQuickForm(dateString) {
+    console.log('🚀 showQuickForm called with date:', dateString);
     // Use sidebar instead of old quick form
     showTaskSidebar(dateString);
 }
