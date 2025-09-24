@@ -123,7 +123,38 @@ body {
 
 .calendar-header button:hover {
   background: rgba(218, 165, 32, 1);
-  transform: scale(1.1);
+  transform: scale(1.05);
+}
+
+/* Inline Year Selector in Calendar Header */
+.year-selector-inline {
+  margin-left: 15px;
+}
+
+.year-dropdown-inline {
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid #DAA520;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+  min-width: 80px;
+}
+
+.year-dropdown-inline:hover {
+  background: rgba(218, 165, 32, 0.1);
+  border-color: #B8860B;
+  transform: translateY(-1px);
+}
+
+.year-dropdown-inline:focus {
+  background: rgba(218, 165, 32, 0.15);
+  border-color: #DAA520;
+  box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.2);
 }
 
 .calendar-day {

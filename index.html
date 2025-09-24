@@ -7,22 +7,12 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>Task Tracker</title>
-  <link rel="stylesheet" href="style.css?v=1758726111" />
+  <link rel="stylesheet" href="style.css?v=1758740850" />
 </head>
 <body>
   <div class="app-container">
     <!-- Streamlined Main Content -->
     <div class="main-content">
-      <!-- Year Selector Sidebar -->
-      <div id="year-selector-sidebar" class="year-sidebar">
-        <div class="year-selector-container">
-          <label class="year-label">Year</label>
-          <select id="year-select" class="year-dropdown">
-            <!-- Years will be populated by JavaScript -->
-          </select>
-        </div>
-      </div>
-      
       <div class="container">
         <!-- Quick Task Form - Initially Hidden -->
         <div id="quick-task-form" class="quick-form" style="display: none;">
@@ -86,6 +76,11 @@
             <button id="prev-month">‹</button>
             <h2 id="current-month">October 2025</h2>
             <button id="next-month">›</button>
+            <div class="year-selector-inline">
+              <select id="year-select" class="year-dropdown-inline">
+                <!-- Years will be populated by JavaScript -->
+              </select>
+            </div>
           </div>
           <div class="calendar-grid">
             <div class="calendar-weekdays">
@@ -123,6 +118,6 @@
     Your browser does not support the audio element.
   </audio>
 
-  <script src="script.js?v=1758726111"></script>
+  <script src="script.js?v=1758740850"></script>
 </body>
 </html>
