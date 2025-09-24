@@ -1,19 +1,11 @@
-services:services:
-
-  - type: web  - type: web
-
-    name: task-tracker    name: task-tracker
-
-    env: node    env: node
-
-    plan: free    buildCommand: npm install
-
-    buildCommand: npm install --production    startCommand: npm start
-
-    startCommand: npm start    envVars:
-
-    envVars:      - key: NODE_ENV
-
-      - key: NODE_ENV        value: production
+services:
+  - type: web
+    name: task-tracker
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
         value: production
     autoDeploy: true
