@@ -1309,6 +1309,268 @@ li.completed {
   font-size: 13px;
 }
 
+/* Time Input Styling */
+.time-input {
+  padding: 8px 12px;
+  border: 2px solid rgba(218, 165, 32, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #1a1a1a;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  width: 120px;
+}
+
+.time-input:focus {
+  outline: none;
+  border-color: #DAA520;
+  box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.2);
+}
+
+/* Enhanced Calendar Controls */
+.calendar-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(218, 165, 32, 0.1), rgba(218, 165, 32, 0.05));
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(218, 165, 32, 0.2);
+}
+
+.view-controls {
+  display: flex;
+  gap: 5px;
+}
+
+.view-btn {
+  padding: 8px 16px;
+  border: 2px solid rgba(218, 165, 32, 0.3);
+  background: rgba(255, 255, 255, 0.9);
+  color: #1a1a1a;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.view-btn:hover {
+  background: rgba(218, 165, 32, 0.1);
+  border-color: #DAA520;
+}
+
+.view-btn.active {
+  background: #DAA520;
+  color: white;
+  border-color: #DAA520;
+}
+
+.navigation-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.period-display h2 {
+  margin: 0;
+  color: #1a1a1a;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Time-Slot Calendar Grid */
+.timeslot-calendar {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(218, 165, 32, 0.1);
+  border: 1px solid rgba(218, 165, 32, 0.2);
+}
+
+.calendar-grid-container {
+  display: flex;
+  min-height: 600px;
+}
+
+.time-column {
+  width: 80px;
+  background: linear-gradient(180deg, #f8f9fa, #f1f3f4);
+  border-right: 2px solid rgba(218, 165, 32, 0.2);
+}
+
+.time-header {
+  height: 50px;
+  border-bottom: 1px solid rgba(218, 165, 32, 0.2);
+}
+
+.time-slot {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: #666;
+  border-bottom: 1px solid rgba(218, 165, 32, 0.1);
+}
+
+.days-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.day-column {
+  border-right: 1px solid rgba(218, 165, 32, 0.1);
+}
+
+.day-column:last-child {
+  border-right: none;
+}
+
+.day-header {
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(218, 165, 32, 0.1), rgba(218, 165, 32, 0.05));
+  border-bottom: 2px solid rgba(218, 165, 32, 0.2);
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.day-name {
+  font-size: 11px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.day-number {
+  font-size: 16px;
+}
+
+.time-block {
+  height: 60px;
+  border-bottom: 1px solid rgba(218, 165, 32, 0.1);
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.time-block:hover {
+  background-color: rgba(218, 165, 32, 0.05);
+}
+
+.time-block.has-task {
+  background: linear-gradient(135deg, var(--task-color, #DAA520), var(--task-color-light, rgba(218, 165, 32, 0.7)));
+  border-left: 4px solid var(--task-color, #DAA520);
+}
+
+.task-block {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: 2px;
+  bottom: 2px;
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.task-block.high-priority {
+  background: linear-gradient(135deg, #ff4757, #ff6b7a);
+  --task-color: #ff4757;
+  --task-color-light: rgba(255, 71, 87, 0.7);
+}
+
+.task-block.medium-priority {
+  background: linear-gradient(135deg, #DAA520, #f1c40f);
+  --task-color: #DAA520;
+  --task-color-light: rgba(218, 165, 32, 0.7);
+}
+
+.task-block.low-priority {
+  background: linear-gradient(135deg, #2ed573, #7bed9f);
+  --task-color: #2ed573;
+  --task-color-light: rgba(46, 213, 115, 0.7);
+}
+
+/* Hidden states */
+.hidden {
+  display: none !important;
+}
+
+/* Responsive Design for Time-Slot Calendar */
+@media (max-width: 768px) {
+  .calendar-controls {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .view-controls {
+    order: 2;
+  }
+  
+  .navigation-controls {
+    order: 1;
+    justify-content: center;
+  }
+  
+  .days-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .time-column {
+    width: 60px;
+  }
+  
+  .time-slot {
+    font-size: 10px;
+    height: 40px;
+  }
+  
+  .time-block {
+    height: 40px;
+  }
+  
+  .task-block {
+    font-size: 10px;
+    padding: 2px 4px;
+  }
+  
+  .sidebar-toggle-btn {
+    left: 5px;
+    top: 15px;
+    padding: 10px;
+    font-size: 12px;
+  }
+  
+  .sidebar-toggle-btn .toggle-text {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .days-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .view-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
 /* Stats Panel */
 .stats-panel {
   margin-top: 25px;
@@ -1454,10 +1716,37 @@ li.completed {
   width: 320px;
   background: linear-gradient(180deg, rgba(218, 165, 32, 0.95), rgba(218, 165, 32, 0.85));
   backdrop-filter: blur(15px);
-  transform: translateX(-280px);
+  transform: translateX(-270px);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 100;
+  z-index: 1000;
   box-shadow: 4px 0 20px rgba(218, 165, 32, 0.3);
+}
+
+/* Always visible sidebar toggle button */
+.sidebar-toggle-btn {
+  position: fixed;
+  left: 10px;
+  top: 20px;
+  background: linear-gradient(135deg, rgba(218, 165, 32, 0.9), rgba(218, 165, 32, 0.7));
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(218, 165, 32, 0.4);
+  z-index: 1002;
+  font-size: 14px;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-toggle-btn:hover {
+  background: linear-gradient(135deg, rgba(218, 165, 32, 1), rgba(218, 165, 32, 0.9));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(218, 165, 32, 0.6);
 }
 
 .task-sidebar:not(.collapsed) {
@@ -1466,7 +1755,7 @@ li.completed {
 
 .sidebar-toggle {
   position: absolute;
-  right: -40px;
+  right: -50px;
   top: 20px;
   background: rgba(218, 165, 32, 0.9);
   color: white;
@@ -1479,6 +1768,7 @@ li.completed {
   gap: 5px;
   transition: all 0.3s ease;
   box-shadow: 2px 0 10px rgba(218, 165, 32, 0.4);
+  z-index: 1001;
 }
 
 .sidebar-toggle:hover {

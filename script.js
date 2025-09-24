@@ -13,6 +13,8 @@ let currentCalendarDate = new Date(); // Current calendar view
 let selectedDate = null; // Selected calendar date
 let alarmTimeouts = []; // Store alarm timeouts
 let currentFilter = 'all'; // Current sidebar filter
+let currentView = 'week'; // Current calendar view (day, week, month, year)
+let timeSlots = []; // Time slots for the calendar
 
 let activeTaskNotifications = []; // Store active notifications
 let notificationCheckInterval; // Store interval for checking notifications
@@ -227,28 +229,49 @@ function clearMinuteButtonStates() {
 function initializeSidebar() {
     const sidebar = document.getElementById('task-sidebar');
     const toggle = document.getElementById('sidebar-toggle');
+    const toggleBtn = document.getElementById('sidebar-toggle-btn');
     const mainContent = document.getElementById('main-content');
     
-    if (!sidebar || !toggle) return;
+    if (!sidebar) return;
     
-    // Toggle sidebar
-    toggle.addEventListener('click', function() {
+    // Function to toggle sidebar
+    function toggleSidebar() {
         sidebar.classList.toggle('collapsed');
         document.body.classList.toggle('sidebar-open');
         
-        // Update toggle icon
-        const icon = toggle.querySelector('.toggle-icon');
-        if (sidebar.classList.contains('collapsed')) {
-            icon.textContent = '📋';
-        } else {
-            icon.textContent = '✖️';
-        }
+        // Update toggle icons
+        const updateIcons = (isCollapsed) => {
+            if (toggle) {
+                const icon = toggle.querySelector('.toggle-icon');
+                if (icon) {
+                    icon.textContent = isCollapsed ? '📋' : '✖️';
+                }
+            }
+            if (toggleBtn) {
+                const icon = toggleBtn.querySelector('.toggle-icon');
+                const text = toggleBtn.querySelector('.toggle-text');
+                if (icon && text) {
+                    icon.textContent = isCollapsed ? '📋' : '✖️';
+                    text.textContent = isCollapsed ? 'Tasks' : 'Close';
+                }
+            }
+        };
+        
+        updateIcons(sidebar.classList.contains('collapsed'));
         
         // Refresh task list when opening
         if (!sidebar.classList.contains('collapsed')) {
             updateSidebarTasks();
         }
-    });
+    }
+    
+    // Add event listeners to both toggle buttons
+    if (toggle) {
+        toggle.addEventListener('click', toggleSidebar);
+    }
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', toggleSidebar);
+    }
     
     // Initialize sidebar filters
     initializeSidebarFilters();
@@ -466,6 +489,277 @@ function updateStatsPanel() {
     monthTasksEl.textContent = thisMonthTasks;
 }
 
+// Initialize Time-Slot Calendar
+function initializeTimeslotCalendar() {
+    // Generate time slots (6 AM to 11 PM in 1-hour intervals)
+    timeSlots = [];
+    for (let hour = 6; hour <= 23; hour++) {
+        timeSlots.push({
+            hour: hour,
+            display: formatHour(hour)
+        });
+    }
+    
+    setupViewControls();
+    renderCurrentView();
+}
+
+// Format hour for display
+function formatHour(hour) {
+    if (hour === 0) return '12 AM';
+    if (hour < 12) return `${hour} AM`;
+    if (hour === 12) return '12 PM';
+    return `${hour - 12} PM`;
+}
+
+// Setup view control buttons
+function setupViewControls() {
+    const viewBtns = document.querySelectorAll('.view-btn');
+    const prevBtn = document.getElementById('prev-period');
+    const nextBtn = document.getElementById('next-period');
+    
+    viewBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            viewBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentView = btn.dataset.view;
+            renderCurrentView();
+        });
+    });
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            navigatePeriod(-1);
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            navigatePeriod(1);
+        });
+    }
+}
+
+// Navigate to previous/next period
+function navigatePeriod(direction) {
+    const currentDate = new Date(currentCalendarDate);
+    
+    switch (currentView) {
+        case 'day':
+            currentDate.setDate(currentDate.getDate() + direction);
+            break;
+        case 'week':
+            currentDate.setDate(currentDate.getDate() + (direction * 7));
+            break;
+        case 'month':
+            currentDate.setMonth(currentDate.getMonth() + direction);
+            break;
+        case 'year':
+            currentDate.setFullYear(currentDate.getFullYear() + direction);
+            break;
+    }
+    
+    currentCalendarDate = currentDate;
+    renderCurrentView();
+}
+
+// Render current view
+function renderCurrentView() {
+    const timeslotCalendar = document.getElementById('timeslot-calendar');
+    const monthView = document.getElementById('month-view');
+    
+    if (currentView === 'month' || currentView === 'year') {
+        timeslotCalendar.classList.add('hidden');
+        monthView.classList.remove('hidden');
+        renderTraditionalCalendar();
+    } else {
+        monthView.classList.add('hidden');
+        timeslotCalendar.classList.remove('hidden');
+        renderTimeslotView();
+    }
+    
+    updatePeriodDisplay();
+}
+
+// Update period display text
+function updatePeriodDisplay() {
+    const periodDisplay = document.getElementById('current-period');
+    if (!periodDisplay) return;
+    
+    const date = new Date(currentCalendarDate);
+    let displayText = '';
+    
+    switch (currentView) {
+        case 'day':
+            displayText = date.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            break;
+        case 'week':
+            const weekStart = new Date(date);
+            weekStart.setDate(date.getDate() - date.getDay());
+            const weekEnd = new Date(weekStart);
+            weekEnd.setDate(weekStart.getDate() + 6);
+            
+            displayText = `${weekStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${weekEnd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+            break;
+        case 'month':
+            displayText = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+            break;
+        case 'year':
+            displayText = date.getFullYear().toString();
+            break;
+    }
+    
+    periodDisplay.textContent = displayText;
+}
+
+// Render timeslot view (day/week)
+function renderTimeslotView() {
+    const container = document.querySelector('.calendar-grid-container');
+    if (!container) return;
+    
+    // Create time column
+    const timeColumn = container.querySelector('.time-column');
+    if (timeColumn) {
+        let timeHtml = '<div class="time-header"></div>';
+        timeSlots.forEach(slot => {
+            timeHtml += `<div class="time-slot">${slot.display}</div>`;
+        });
+        timeColumn.innerHTML = timeHtml;
+    }
+    
+    // Create days grid
+    const daysGrid = container.querySelector('.days-grid');
+    if (daysGrid) {
+        const days = getDaysForView();
+        daysGrid.style.gridTemplateColumns = `repeat(${days.length}, 1fr)`;
+        
+        let daysHtml = '';
+        days.forEach(day => {
+            daysHtml += createDayColumn(day);
+        });
+        
+        daysGrid.innerHTML = daysHtml;
+        
+        // Add click handlers for time blocks
+        addTimeBlockHandlers();
+    }
+}
+
+// Get days for current view
+function getDaysForView() {
+    const days = [];
+    const baseDate = new Date(currentCalendarDate);
+    
+    if (currentView === 'day') {
+        days.push(new Date(baseDate));
+    } else if (currentView === 'week') {
+        // Start from Sunday of the current week
+        const startOfWeek = new Date(baseDate);
+        startOfWeek.setDate(baseDate.getDate() - baseDate.getDay());
+        
+        for (let i = 0; i < 7; i++) {
+            const day = new Date(startOfWeek);
+            day.setDate(startOfWeek.getDate() + i);
+            days.push(day);
+        }
+    }
+    
+    return days;
+}
+
+// Create day column HTML
+function createDayColumn(date) {
+    const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+    const dayNumber = date.getDate();
+    const dateStr = date.toISOString().split('T')[0];
+    
+    let html = `
+        <div class="day-column" data-date="${dateStr}">
+            <div class="day-header">
+                <div class="day-name">${dayName}</div>
+                <div class="day-number">${dayNumber}</div>
+            </div>
+    `;
+    
+    // Add time blocks for each hour
+    timeSlots.forEach(slot => {
+        const tasksForSlot = getTasksForTimeSlot(dateStr, slot.hour);
+        const hasTask = tasksForSlot.length > 0;
+        
+        html += `
+            <div class="time-block ${hasTask ? 'has-task' : ''}" 
+                 data-date="${dateStr}" 
+                 data-hour="${slot.hour}">
+        `;
+        
+        // Add task blocks
+        tasksForSlot.forEach(task => {
+            html += `
+                <div class="task-block ${task.priority}-priority" title="${task.text}">
+                    ${task.text}
+                </div>
+            `;
+        });
+        
+        html += '</div>';
+    });
+    
+    html += '</div>';
+    return html;
+}
+
+// Get tasks for specific time slot
+function getTasksForTimeSlot(dateStr, hour) {
+    return tasks.filter(task => {
+        if (task.date !== dateStr) return false;
+        
+        // Check if task falls in this hour slot
+        if (task.startTime) {
+            const taskHour = parseInt(task.startTime.split(':')[0]);
+            if (task.endTime) {
+                const endHour = parseInt(task.endTime.split(':')[0]);
+                return hour >= taskHour && hour < endHour;
+            } else {
+                return hour === taskHour;
+            }
+        }
+        
+        return false;
+    });
+}
+
+// Add click handlers for time blocks
+function addTimeBlockHandlers() {
+    document.querySelectorAll('.time-block').forEach(block => {
+        block.addEventListener('click', function() {
+            const date = this.dataset.date;
+            const hour = parseInt(this.dataset.hour);
+            
+            // Set selected date and show form
+            selectedDate = date;
+            
+            // Pre-fill start time
+            const startTimeInput = document.getElementById('start-time');
+            if (startTimeInput) {
+                startTimeInput.value = `${hour.toString().padStart(2, '0')}:00`;
+            }
+            
+            showTaskForm();
+        });
+    });
+}
+
+// Render traditional calendar (month view)
+function renderTraditionalCalendar() {
+    // Use existing renderCalendar function for month view
+    renderCalendar();
+}
+
 // Highlight task in calendar when clicked from sidebar
 function highlightTaskInCalendar(taskId) {
     const task = tasks.find(t => t.id.toString() === taskId);
@@ -516,7 +810,7 @@ function updatePrioritySelectColor() {
 // Initialize when both DOM and window are fully loaded
 function initializeApp() {
     console.log('🚀 Initializing Task Tracker App...');
-    console.log('🔧 Script version: 2025-09-24-v9 - ENHANCED SIDEBAR & STATS');
+    console.log('🔧 Script version: 2025-09-24-v11 - FIXED SIDEBAR VISIBILITY');
     
     try {
     console.log('🚀 DOM loaded, initializing Task Tracker components...');
@@ -655,6 +949,8 @@ function setupFormHandlers() {
         const taskText = input.value.trim();
         const selectedTime = getSelectedTime();
         const selectedPriority = prioritySelect.value;
+        const startTime = document.getElementById('start-time')?.value || '';
+        const endTime = document.getElementById('end-time')?.value || '';
         
         if (taskText === '' || !selectedDate) return;
         
@@ -662,6 +958,8 @@ function setupFormHandlers() {
             id: Date.now(),
             text: taskText,
             date: selectedDate,
+            startTime: startTime,
+            endTime: endTime,
             alarmTime: selectedTime,
             priority: selectedPriority,
             completed: false,
@@ -673,6 +971,8 @@ function setupFormHandlers() {
         
         // Clear form and hide it
         input.value = '';
+        document.getElementById('start-time').value = '';
+        document.getElementById('end-time').value = '';
         hourSelect.value = '';
         minuteSelect.value = '';
         clearMinuteButtonStates(); // Clear minute button highlights
@@ -698,6 +998,13 @@ function showQuickForm(dateString) {
     });
     quickForm.style.display = 'block';
     input.focus();
+}
+
+// Alternative function name for consistency
+function showTaskForm() {
+    if (selectedDate) {
+        showQuickForm(selectedDate);
+    }
 }
 
 // Hide quick form
@@ -920,6 +1227,7 @@ async function addTask(task) {
   
   // Refresh calendar and check for notifications
   renderCalendar();
+  renderCurrentView(); // Also refresh timeslot view
   setupAlarmForTask(task);
   checkForActiveNotifications();
   
@@ -1839,6 +2147,7 @@ function initializeCalendar() {
     setupCalendar();
     setupFilters();
     setupDayItems();
+    initializeTimeslotCalendar();
 }
 
 // Override the existing displayTasks function to include dashboard updates
