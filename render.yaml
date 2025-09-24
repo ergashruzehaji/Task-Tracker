@@ -3,7 +3,7 @@ services:
     name: task-tracker
     env: node
     buildCommand: npm install
-    startCommand: node backend/server.js
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
