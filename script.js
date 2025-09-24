@@ -2,10 +2,11 @@
 const API_BASE = window.location.origin;
 
 // Initialize these inside DOMContentLoaded to ensure elements exist
-let form, input, hourSelect, minuteSelect, prioritySelect, yearSelect, timeFormatToggle, alarmAudio;
+let form, input, prioritySelect, yearSelect, timeFormatToggle, alarmAudio;
 // Initialize these inside DOMContentLoaded to ensure elements exist
 let quickForm, cancelFormBtn, selectedDateTitle;
 let notificationSidebar, closeNotificationsBtn, activeNotifications, mainContent;
+let list; // Optional task list element (may not exist after sidebar removal)
 let prevMonthBtn, nextMonthBtn, currentMonthDisplay, calendarDays;
 
 let tasks = [];
@@ -18,16 +19,22 @@ let timeSlots = []; // Time slots for the calendar
 
 let activeTaskNotifications = []; // Store active notifications
 let notificationCheckInterval; // Store interval for checking notifications
-let is24HourFormat = false; // Track current time format (false = 12h, true = 24h)
+let is24HourFormat = false; // Track current time format (false = AM/PM, true = 24h)
 
-// Helper function to get combined time from dropdowns
-function getSelectedTime() {
-    const hour = hourSelect.value;
-    const minute = minuteSelect.value;
+// Helper function to format time inputs based on current format
+function formatTimeDisplay(timeString) {
+    if (!timeString) return timeString;
     
-    if (!hour || !minute) return '';
+    const [hours, minutes] = timeString.split(':');
+    const hour = parseInt(hours);
     
-    return `${hour}:${minute}`;
+    if (is24HourFormat) {
+        return `${hours}:${minutes}`;
+    } else {
+        const suffix = hour < 12 ? 'AM' : 'PM';
+        const displayHour = hour % 12 === 0 ? 12 : hour % 12;
+        return `${displayHour}:${minutes} ${suffix}`;
+    }
 }
 
 // Initialize year selector with current year and future years
@@ -66,400 +73,24 @@ function initializeYearSelector() {
 function handleYearChange() {
     const selectedYear = parseInt(yearSelect.value);
     currentCalendarDate.setFullYear(selectedYear);
-    updateCalendar();
+  renderCurrentView();
 }
 
-// Initialize time selectors
-function initializeTimeSelectors() {
-    console.log('Initializing time selectors...');
-    populateHourDropdown();
-    populateMinuteDropdown();
-    console.log('Time selectors initialization complete');
+// Initialize time format toggle
+function initializeTimeFormatToggle() {
+    console.log('Initializing time format toggle...');
+    updateTimeFormatToggle();
+    console.log('Time format toggle initialization complete');
 }
 
-// Populate hour dropdown based on current format
-function populateHourDropdown() {
-    console.log('Populating hour dropdown in', is24HourFormat ? '24h' : '12h', 'format');
-    
-    if (!hourSelect) {
-        console.error('Hour select element not found');
-        return;
-    }
-    
-    const selectedValue = hourSelect.value; // Preserve selection
-    hourSelect.innerHTML = '<option value="">Hour</option>';
-    
-    if (is24HourFormat) {
-        // 24-hour format (00-23)
-        for (let i = 0; i < 24; i++) {
-            const hour = i.toString().padStart(2, '0');
-            const option = document.createElement('option');
-            option.value = hour;
-            option.textContent = hour + ':00';
-            if (hour === selectedValue) option.selected = true;
-            hourSelect.appendChild(option);
-        }
-        console.log('Added 24 hours in 24h format');
-    } else {
-        // 12-hour format with AM/PM
-        const hours = [
-            {value: '00', label: '12 AM'}, {value: '01', label: '1 AM'}, {value: '02', label: '2 AM'},
-            {value: '03', label: '3 AM'}, {value: '04', label: '4 AM'}, {value: '05', label: '5 AM'},
-            {value: '06', label: '6 AM'}, {value: '07', label: '7 AM'}, {value: '08', label: '8 AM'},
-            {value: '09', label: '9 AM'}, {value: '10', label: '10 AM'}, {value: '11', label: '11 AM'},
-            {value: '12', label: '12 PM'}, {value: '13', label: '1 PM'}, {value: '14', label: '2 PM'},
-            {value: '15', label: '3 PM'}, {value: '16', label: '4 PM'}, {value: '17', label: '5 PM'},
-            {value: '18', label: '6 PM'}, {value: '19', label: '7 PM'}, {value: '20', label: '8 PM'},
-            {value: '21', label: '9 PM'}, {value: '22', label: '10 PM'}, {value: '23', label: '11 PM'}
-        ];
-        
-        hours.forEach(hour => {
-            const option = document.createElement('option');
-            option.value = hour.value;
-            option.textContent = hour.label;
-            if (hour.value === selectedValue) option.selected = true;
-            hourSelect.appendChild(option);
-        });
-        console.log('Added 24 hours in 12h format');
-    }
-    
-    console.log(`Hour dropdown populated with ${hourSelect.options.length - 1} options`);
-}
-
-// Populate minute dropdown (5-minute increments)
-function populateMinuteDropdown() {
-    console.log('Populating minute dropdown...');
-    
-    if (!minuteSelect) {
-        console.error('Minute input element not found');
-        return;
-    }
-    
-    // Setup minute input validation and formatting
-    setupMinuteInput();
-    setupMinuteQuickButtons();
-    
-    console.log('📅 Enhanced minute selector initialized with custom input and quick buttons');
-}
-
-// Toggle time format
-function toggleTimeFormat() {
-    console.log('Toggling time format from', is24HourFormat ? '24h' : '12h');
-    is24HourFormat = !is24HourFormat;
-    
+// Update time format toggle button text
+function updateTimeFormatToggle() {
     if (timeFormatToggle) {
-        timeFormatToggle.textContent = is24HourFormat ? '24h' : '12h';
-        console.log('Updated toggle button to:', timeFormatToggle.textContent);
+        timeFormatToggle.textContent = is24HourFormat ? '24h' : 'AM/PM';
     }
-    
-    populateHourDropdown();
-    console.log('Time format toggled to', is24HourFormat ? '24h' : '12h');
 }
 
-// Enhanced minute input functionality
-function setupMinuteInput() {
-    if (!minuteSelect) return;
-    
-    // Add input validation for minute input
-    minuteSelect.addEventListener('input', function() {
-        let value = this.value;
-        
-        // Remove any non-numeric characters
-        value = value.replace(/[^0-9]/g, '');
-        
-        // Limit to 2 digits and valid range (0-59)
-        if (value.length > 2) {
-            value = value.slice(0, 2);
-        }
-        
-        const numValue = parseInt(value);
-        if (!isNaN(numValue) && numValue > 59) {
-            value = '59';
-        }
-        
-        this.value = value;
-    });
-    
-    // Format to 2 digits on blur
-    minuteSelect.addEventListener('blur', function() {
-        if (this.value && this.value.length > 0) {
-            const numValue = parseInt(this.value);
-            if (!isNaN(numValue)) {
-                this.value = numValue.toString().padStart(2, '0');
-            }
-        }
-    });
-    
-    console.log('✅ Minute input validation setup complete');
-}
-
-function setupMinuteQuickButtons() {
-    const minuteButtons = document.querySelectorAll('.minute-btn');
-    
-    if (minuteButtons.length === 0) {
-        console.log('ℹ️ No minute quick buttons found');
-        return;
-    }
-    
-    minuteButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const minute = this.dataset.minute;
-            if (minuteSelect) {
-                minuteSelect.value = minute;
-                // Add active visual feedback
-                minuteButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Focus the input for further editing if needed
-                minuteSelect.focus();
-            }
-        });
-    });
-    
-    console.log(`✅ Setup ${minuteButtons.length} minute quick-select buttons`);
-}
-
-// Helper function to clear minute button active states
-function clearMinuteButtonStates() {
-    const minuteButtons = document.querySelectorAll('.minute-btn');
-    minuteButtons.forEach(btn => btn.classList.remove('active'));
-}
-
-// Sidebar Management
-function initializeSidebar() {
-    const sidebar = document.getElementById('task-sidebar');
-    const toggle = document.getElementById('sidebar-toggle');
-    const toggleBtn = document.getElementById('sidebar-toggle-btn');
-    const mainContent = document.getElementById('main-content');
-    
-    if (!sidebar) return;
-    
-    // Function to toggle sidebar
-    function toggleSidebar() {
-        sidebar.classList.toggle('collapsed');
-        document.body.classList.toggle('sidebar-open');
-        
-        // Update toggle icons
-        const updateIcons = (isCollapsed) => {
-            if (toggle) {
-                const icon = toggle.querySelector('.toggle-icon');
-                if (icon) {
-                    icon.textContent = isCollapsed ? '📋' : '✖️';
-                }
-            }
-            if (toggleBtn) {
-                const icon = toggleBtn.querySelector('.toggle-icon');
-                const text = toggleBtn.querySelector('.toggle-text');
-                if (icon && text) {
-                    icon.textContent = isCollapsed ? '📋' : '✖️';
-                    text.textContent = isCollapsed ? 'Tasks' : 'Close';
-                }
-            }
-        };
-        
-        updateIcons(sidebar.classList.contains('collapsed'));
-        
-        // Refresh task list when opening
-        if (!sidebar.classList.contains('collapsed')) {
-            updateSidebarTasks();
-        }
-    }
-    
-    // Add event listeners to both toggle buttons
-    if (toggle) {
-        toggle.addEventListener('click', toggleSidebar);
-    }
-    if (toggleBtn) {
-        toggleBtn.addEventListener('click', toggleSidebar);
-    }
-    
-    // Initialize sidebar filters
-    initializeSidebarFilters();
-    
-    console.log('📋 Sidebar initialized');
-}
-
-// Initialize sidebar filter buttons
-function initializeSidebarFilters() {
-    const filterBtns = document.querySelectorAll('.sidebar-filters .filter-btn');
-    
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            // Update active filter
-            filterBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Apply filter
-            const filter = this.dataset.filter;
-            currentFilter = filter;
-            updateSidebarTasks();
-            displayTasks(); // Also update main calendar view
-        });
-    });
-    
-    // Initial filter counts update
-    updateFilterCounts();
-}
-
-// Update filter button counts
-function updateFilterCounts() {
-    const today = new Date();
-    const todayStr = today.toISOString().split('T')[0];
-    
-    // Calculate week start/end
-    const weekStart = new Date(today);
-    weekStart.setDate(weekStart.getDate() - weekStart.getDay());
-    const weekEnd = new Date(weekStart);
-    weekEnd.setDate(weekStart.getDate() + 6);
-    
-    // Calculate month start/end
-    const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
-    const monthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-    
-    // Count tasks for each filter
-    const allCount = tasks.length;
-    const todayCount = tasks.filter(task => task.date === todayStr).length;
-    const weekCount = tasks.filter(task => {
-        const taskDate = new Date(task.date);
-        return taskDate >= weekStart && taskDate <= weekEnd;
-    }).length;
-    const monthCount = tasks.filter(task => {
-        const taskDate = new Date(task.date);
-        return taskDate >= monthStart && taskDate <= monthEnd;
-    }).length;
-    
-    // Update button labels with counts
-    const filterBtns = document.querySelectorAll('.sidebar-filters .filter-btn');
-    filterBtns.forEach(btn => {
-        const filter = btn.dataset.filter;
-        let count = 0;
-        let baseText = '';
-        
-        switch (filter) {
-            case 'all':
-                count = allCount;
-                baseText = 'All Tasks';
-                break;
-            case 'today':
-                count = todayCount;
-                baseText = 'Today';
-                break;
-            case 'week':
-                count = weekCount;
-                baseText = 'This Week';
-                break;
-            case 'month':
-                count = monthCount;
-                baseText = 'This Month';
-                break;
-        }
-        
-        btn.innerHTML = `${baseText} <span class="filter-count">(${count})</span>`;
-    });
-}
-
-// Update sidebar task list
-function updateSidebarTasks() {
-    const sidebarTaskList = document.getElementById('sidebar-task-list');
-    if (!sidebarTaskList) return;
-    
-    // Filter tasks based on current filter
-    let filteredTasks = [...tasks];
-    const today = new Date().toISOString().split('T')[0];
-    
-    switch (currentFilter) {
-        case 'today':
-            filteredTasks = tasks.filter(task => task.date === today);
-            break;
-        case 'week':
-            const weekStart = new Date();
-            weekStart.setDate(weekStart.getDate() - weekStart.getDay());
-            const weekEnd = new Date(weekStart);
-            weekEnd.setDate(weekStart.getDate() + 6);
-            filteredTasks = tasks.filter(task => {
-                const taskDate = new Date(task.date);
-                return taskDate >= weekStart && taskDate <= weekEnd;
-            });
-            break;
-        case 'month':
-            const monthStart = new Date();
-            monthStart.setDate(1);
-            const monthEnd = new Date(monthStart);
-            monthEnd.setMonth(monthStart.getMonth() + 1);
-            monthEnd.setDate(0);
-            filteredTasks = tasks.filter(task => {
-                const taskDate = new Date(task.date);
-                return taskDate >= monthStart && taskDate <= monthEnd;
-            });
-            break;
-    }
-    
-    // Group tasks by date
-    const tasksByDate = {};
-    filteredTasks.forEach(task => {
-        if (!tasksByDate[task.date]) {
-            tasksByDate[task.date] = [];
-        }
-        tasksByDate[task.date].push(task);
-    });
-    
-    // Sort dates
-    const sortedDates = Object.keys(tasksByDate).sort();
-    
-    // Generate HTML
-    let html = '';
-    
-    if (sortedDates.length === 0) {
-        html = '<div class="no-tasks">No tasks found for this filter.</div>';
-    } else {
-        sortedDates.forEach(date => {
-            const dateTasks = tasksByDate[date];
-            const dateObj = new Date(date);
-            const dateLabel = dateObj.toLocaleDateString('en-US', { 
-                weekday: 'short', 
-                month: 'short', 
-                day: 'numeric' 
-            });
-            
-            html += `
-                <div class="task-date-group">
-                    <div class="task-date-header">
-                        📅 ${dateLabel}
-                        <span class="task-count-badge">${dateTasks.length}</span>
-                    </div>
-                    ${dateTasks.map(task => {
-                        const priorityIcon = task.priority === 'high' ? '🔴' : task.priority === 'low' ? '🟢' : '🟡';
-                        const completedIcon = task.completed ? '✅ ' : '';
-                        return `
-                        <div class="sidebar-task-item ${task.priority} ${task.completed ? 'completed' : ''}" data-task-id="${task.id}">
-                            <div class="task-priority-icon">${priorityIcon}</div>
-                            <div class="sidebar-task-content">
-                                <div class="sidebar-task-text">${completedIcon}${task.text}</div>
-                                ${task.time ? `<div class="sidebar-task-time">🕐 ${task.time}</div>` : ''}
-                                ${task.alarmTime ? `<div class="sidebar-task-alarm">⏰ ${task.alarmTime}</div>` : ''}
-                            </div>
-                        </div>
-                        `;
-                    }).join('')}
-                </div>
-            `;
-        });
-    }
-    
-    sidebarTaskList.innerHTML = html;
-    
-    // Add click handlers for task items
-    document.querySelectorAll('.sidebar-task-item').forEach(item => {
-        item.addEventListener('click', function() {
-            const taskId = this.dataset.taskId;
-            highlightTaskInCalendar(taskId);
-        });
-    });
-    
-    // Update filter counts and stats panel
-    updateFilterCounts();
-    updateStatsPanel();
-}
+// Sidebar removed
 
 // Update stats panel
 function updateStatsPanel() {
@@ -485,136 +116,117 @@ function updateStatsPanel() {
     
     totalTasksEl.textContent = totalTasks;
     todayTasksEl.textContent = todayTasks;
-    completedTasksEl.textContent = completedTasks;
-    monthTasksEl.textContent = thisMonthTasks;
+  completedTasksEl.textContent = completedTasks;
+  monthTasksEl.textContent = thisMonthTasks;
 }
 
-// Initialize Time-Slot Calendar
+// Toggle between AM/PM and 24h formats
+function toggleTimeFormat() {
+  is24HourFormat = !is24HourFormat;
+  updateTimeFormatToggle();
+  // Re-render the calendar to update time display
+  renderCurrentView();
+}
+
+// Remove old minute dropdown functions - no longer needed
+
+// Initialize the time-slot calendar hours and controls
 function initializeTimeslotCalendar() {
-    // Generate time slots (6 AM to 11 PM in 1-hour intervals)
-    timeSlots = [];
-    for (let hour = 6; hour <= 23; hour++) {
-        timeSlots.push({
-            hour: hour,
-            display: formatHour(hour)
-        });
-    }
-    
-    setupViewControls();
-    renderCurrentView();
+  // Build hour slots for 6 AM to 11 PM
+  timeSlots = [];
+  for (let h = 6; h <= 23; h++) {
+    timeSlots.push({ hour: h, display: formatHour(h) });
+  }
+  setupViewControls();
+  renderCurrentView();
 }
 
-// Format hour for display
-function formatHour(hour) {
-    if (hour === 0) return '12 AM';
-    if (hour < 12) return `${hour} AM`;
-    if (hour === 12) return '12 PM';
-    return `${hour - 12} PM`;
+function formatHour(h) {
+  if (is24HourFormat) return `${h.toString().padStart(2, '0')}:00`;
+  const suffix = h < 12 ? 'AM' : 'PM';
+  const hour12 = h % 12 === 0 ? 12 : h % 12;
+  return `${hour12} ${suffix}`;
 }
 
-// Setup view control buttons
+// Hook up view switching and period navigation
 function setupViewControls() {
-    const viewBtns = document.querySelectorAll('.view-btn');
-    const prevBtn = document.getElementById('prev-period');
-    const nextBtn = document.getElementById('next-period');
-    
-    viewBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            viewBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentView = btn.dataset.view;
-            renderCurrentView();
-        });
+  const viewButtons = document.querySelectorAll('.view-btn');
+  viewButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      viewButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentView = btn.getAttribute('data-view') || 'week';
+      renderCurrentView();
     });
-    
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            navigatePeriod(-1);
-        });
-    }
-    
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            navigatePeriod(1);
-        });
-    }
+  });
+
+  const prevBtn = document.getElementById('prev-period');
+  const nextBtn = document.getElementById('next-period');
+  if (prevBtn) prevBtn.addEventListener('click', () => navigatePeriod(-1));
+  if (nextBtn) nextBtn.addEventListener('click', () => navigatePeriod(1));
 }
 
-// Navigate to previous/next period
 function navigatePeriod(direction) {
-    const currentDate = new Date(currentCalendarDate);
-    
-    switch (currentView) {
-        case 'day':
-            currentDate.setDate(currentDate.getDate() + direction);
-            break;
-        case 'week':
-            currentDate.setDate(currentDate.getDate() + (direction * 7));
-            break;
-        case 'month':
-            currentDate.setMonth(currentDate.getMonth() + direction);
-            break;
-        case 'year':
-            currentDate.setFullYear(currentDate.getFullYear() + direction);
-            break;
-    }
-    
-    currentCalendarDate = currentDate;
-    renderCurrentView();
+  const d = new Date(currentCalendarDate);
+  switch (currentView) {
+    case 'day':
+      d.setDate(d.getDate() + (direction > 0 ? 1 : -1));
+      break;
+    case 'week':
+      d.setDate(d.getDate() + (direction > 0 ? 7 : -7));
+      break;
+    case 'month':
+      d.setMonth(d.getMonth() + (direction > 0 ? 1 : -1));
+      break;
+    case 'year':
+      d.setFullYear(d.getFullYear() + (direction > 0 ? 1 : -1));
+      break;
+  }
+  currentCalendarDate = d;
+  renderCurrentView();
 }
 
-// Render current view
 function renderCurrentView() {
-    const timeslotCalendar = document.getElementById('timeslot-calendar');
-    const monthView = document.getElementById('month-view');
-    
-    if (currentView === 'month' || currentView === 'year') {
-        timeslotCalendar.classList.add('hidden');
-        monthView.classList.remove('hidden');
-        renderTraditionalCalendar();
-    } else {
-        monthView.classList.add('hidden');
-        timeslotCalendar.classList.remove('hidden');
-        renderTimeslotView();
-    }
-    
-    updatePeriodDisplay();
+  const timeslotEl = document.getElementById('timeslot-calendar');
+  const monthViewEl = document.getElementById('month-view');
+  if (!timeslotEl || !monthViewEl) return;
+
+  if (currentView === 'day' || currentView === 'week') {
+    timeslotEl.classList.remove('hidden');
+    monthViewEl.classList.add('hidden');
+    renderTimeslotView();
+  } else {
+    timeslotEl.classList.add('hidden');
+    monthViewEl.classList.remove('hidden');
+    renderCalendar();
+  }
+  updatePeriodDisplay();
 }
 
-// Update period display text
 function updatePeriodDisplay() {
-    const periodDisplay = document.getElementById('current-period');
-    if (!periodDisplay) return;
-    
-    const date = new Date(currentCalendarDate);
-    let displayText = '';
-    
-    switch (currentView) {
-        case 'day':
-            displayText = date.toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            break;
-        case 'week':
-            const weekStart = new Date(date);
-            weekStart.setDate(date.getDate() - date.getDay());
-            const weekEnd = new Date(weekStart);
-            weekEnd.setDate(weekStart.getDate() + 6);
-            
-            displayText = `${weekStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${weekEnd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
-            break;
-        case 'month':
-            displayText = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
-            break;
-        case 'year':
-            displayText = date.getFullYear().toString();
-            break;
-    }
-    
-    periodDisplay.textContent = displayText;
+  const el = document.getElementById('current-period');
+  if (!el) return;
+  const date = new Date(currentCalendarDate);
+  let text = '';
+  switch (currentView) {
+    case 'day':
+      text = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      break;
+    case 'week':
+      const s = new Date(date);
+      s.setDate(date.getDate() - date.getDay());
+      const e = new Date(s);
+      e.setDate(s.getDate() + 6);
+      text = `${s.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${e.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+      break;
+    case 'month':
+      text = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+      break;
+    case 'year':
+      text = date.getFullYear().toString();
+      break;
+  }
+  el.textContent = text;
 }
 
 // Render timeslot view (day/week)
@@ -699,9 +311,13 @@ function createDayColumn(date) {
         
         // Add task blocks
         tasksForSlot.forEach(task => {
+            const timeRange = task.endTime ? 
+                `${formatTimeDisplay(task.startTime)} - ${formatTimeDisplay(task.endTime)}` : 
+                formatTimeDisplay(task.startTime);
             html += `
-                <div class="task-block ${task.priority}-priority" title="${task.text}">
-                    ${task.text}
+                <div class="task-block ${task.priority}-priority" title="${task.text} (${timeRange})">
+                    <div class="task-title">${task.text}</div>
+                    <div class="task-time">${timeRange}</div>
                 </div>
             `;
         });
@@ -723,8 +339,11 @@ function getTasksForTimeSlot(dateStr, hour) {
             const taskHour = parseInt(task.startTime.split(':')[0]);
             if (task.endTime) {
                 const endHour = parseInt(task.endTime.split(':')[0]);
-                return hour >= taskHour && hour < endHour;
+                const endMinute = parseInt(task.endTime.split(':')[1]);
+                // Task spans from start hour through end hour (inclusive if there are minutes)
+                return hour >= taskHour && (hour < endHour || (hour === endHour && endMinute > 0));
             } else {
+                // No end time, show in start hour only
                 return hour === taskHour;
             }
         }
@@ -823,8 +442,8 @@ function initializeApp() {
         'current-period': document.getElementById('current-period'),
         'year-select': document.getElementById('year-select'),
         'time-format-toggle': document.getElementById('time-format-toggle'),
-        'hour-select': document.getElementById('hour-select'),
-        'minute-select': document.getElementById('minute-select')
+        'start-time': document.getElementById('start-time'),
+        'end-time': document.getElementById('end-time')
     };
     
     console.log('🔍 Element Debug Check:', debugElements);
@@ -841,8 +460,6 @@ function initializeApp() {
     // Initialize DOM elements with error checking
     form = document.getElementById('task-form');
     input = document.getElementById('task-input');
-    hourSelect = document.getElementById('hour-select');
-    minuteSelect = document.getElementById('minute-select');
     prioritySelect = document.getElementById('priority-select');
     yearSelect = document.getElementById('year-select');
     timeFormatToggle = document.getElementById('time-format-toggle');
@@ -858,6 +475,8 @@ function initializeApp() {
     closeNotificationsBtn = document.getElementById('close-notifications');
     activeNotifications = document.getElementById('active-notifications');
     mainContent = document.querySelector('.main-content');
+  // Optional list element if present in DOM
+  list = document.getElementById('task-list') || document.getElementById('tasks-list') || document.querySelector('.task-list') || null;
     
     // Initialize calendar elements
     // Support both legacy (prev/next/current-month) and new (prev/next/current-period) IDs
@@ -872,8 +491,6 @@ function initializeApp() {
     console.log('Elements found:', {
         form: !!form,
         input: !!input,
-        hourSelect: !!hourSelect,
-        minuteSelect: !!minuteSelect,
         prioritySelect: !!prioritySelect,
         yearSelect: !!yearSelect,
         timeFormatToggle: !!timeFormatToggle,
@@ -884,7 +501,7 @@ function initializeApp() {
     initializeCalendar();
     setupFormHandlers();
     setupNotificationSystem();
-    initializeSidebar(); // New sidebar system
+  // Sidebar removed
     initializeAlarmAudio(); // Initialize alarm sound system  
     setupAlarmHandlers(); // Setup alarm UI handlers
     startNotificationChecker();
@@ -896,14 +513,13 @@ function initializeApp() {
     setTimeout(() => {
         console.log('🔄 Running year selector initialization...');
         initializeYearSelector();
-        initializeTimeSelectors();
+        initializeTimeFormatToggle();
         
         // Verify they worked
         setTimeout(() => {
-            console.log('📊 Dropdown population status:');
+            console.log('📊 Component initialization status:');
             console.log('Year options:', yearSelect ? yearSelect.options.length : 'null');
-            console.log('Minute input exists:', !!minuteSelect);
-            console.log('Hour options:', hourSelect ? hourSelect.options.length : 'null');
+            console.log('Time format toggle:', !!timeFormatToggle);
         }, 100);
     }, 100);
     
@@ -951,7 +567,6 @@ function setupFormHandlers() {
         e.preventDefault();
         
         const taskText = input.value.trim();
-        const selectedTime = getSelectedTime();
         const selectedPriority = prioritySelect.value;
         const startTime = document.getElementById('start-time')?.value || '';
         const endTime = document.getElementById('end-time')?.value || '';
@@ -964,7 +579,7 @@ function setupFormHandlers() {
             date: selectedDate,
             startTime: startTime,
             endTime: endTime,
-            alarmTime: selectedTime,
+            alarmTime: startTime, // Use start time for alarm
             priority: selectedPriority,
             completed: false,
             acknowledged: false,
@@ -977,9 +592,6 @@ function setupFormHandlers() {
         input.value = '';
         document.getElementById('start-time').value = '';
         document.getElementById('end-time').value = '';
-        hourSelect.value = '';
-        minuteSelect.value = '';
-        clearMinuteButtonStates(); // Clear minute button highlights
         prioritySelect.value = 'medium';
         hideQuickForm();
     });
@@ -1043,19 +655,18 @@ function startNotificationChecker() {
 
 function checkForActiveNotifications() {
     const now = new Date();
-    const currentTime = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
     const today = now.toISOString().split('T')[0];
     
-    // Find tasks that are due now or within the next 15 minutes
+    // Find tasks that are due now or within the next 15 minutes based on start time
     const activeTasksToday = tasks.filter(task => {
-        if (task.completed || !task.alarmTime || task.acknowledged) return false;
+        if (task.completed || !task.startTime || task.acknowledged) return false;
         
         const taskDate = new Date(task.date);
         const isToday = taskDate.toDateString() === now.toDateString();
         
         if (!isToday) return false;
         
-        const [taskHour, taskMinute] = task.alarmTime.split(':').map(Number);
+        const [taskHour, taskMinute] = task.startTime.split(':').map(Number);
         const taskTime = new Date(now);
         taskTime.setHours(taskHour, taskMinute, 0, 0);
         
@@ -1085,7 +696,7 @@ function updateNotificationSidebar(activeTasks) {
 
 function createNotificationItem(task) {
     const now = new Date();
-    const [taskHour, taskMinute] = task.alarmTime.split(':').map(Number);
+    const [taskHour, taskMinute] = task.startTime.split(':').map(Number);
     const taskTime = new Date(now);
     taskTime.setHours(taskHour, taskMinute, 0, 0);
     
@@ -1097,20 +708,24 @@ function createNotificationItem(task) {
     
     if (minutesDiff <= 0) {
         urgencyClass = 'urgent';
-        timeText = 'Due now!';
+        timeText = 'Starting now!';
     } else if (minutesDiff <= 5) {
         urgencyClass = 'due-soon';
-        timeText = `Due in ${minutesDiff} minute${minutesDiff !== 1 ? 's' : ''}`;
+        timeText = `Starts in ${minutesDiff} minute${minutesDiff !== 1 ? 's' : ''}`;
     } else {
-        timeText = `Due in ${minutesDiff} minutes`;
+        timeText = `Starts in ${minutesDiff} minutes`;
     }
+    
+    const timeRange = task.endTime ? 
+        `${formatTimeDisplay(task.startTime)} - ${formatTimeDisplay(task.endTime)}` : 
+        formatTimeDisplay(task.startTime);
     
     const notificationDiv = document.createElement('div');
     notificationDiv.className = `notification-item ${urgencyClass}`;
     notificationDiv.innerHTML = `
         <div class="notification-task-name">${task.text}</div>
         <div class="notification-time">
-            <span>🕐 ${task.alarmTime}</span>
+            <span>🕐 ${timeRange}</span>
             <span style="margin-left: 10px; font-weight: bold;">${timeText}</span>
         </div>
         <div class="notification-actions">
@@ -1147,13 +762,26 @@ function acknowledgeTask(taskId) {
 function snoozeTask(taskId) {
     const task = tasks.find(t => t.id === taskId);
     if (task) {
-        // Snooze for 5 minutes by updating alarm time
-        const [hours, minutes] = task.alarmTime.split(':').map(Number);
+        // Snooze for 5 minutes by updating start time
+        const [hours, minutes] = task.startTime.split(':').map(Number);
         const newTime = new Date();
         newTime.setHours(hours, minutes + 5);
         
-        task.alarmTime = newTime.getHours().toString().padStart(2, '0') + ':' + 
-                        newTime.getMinutes().toString().padStart(2, '0');
+        task.startTime = newTime.getHours().toString().padStart(2, '0') + ':' + 
+                         newTime.getMinutes().toString().padStart(2, '0');
+        
+        // Also update end time if it exists
+        if (task.endTime) {
+            const [endHours, endMinutes] = task.endTime.split(':').map(Number);
+            const newEndTime = new Date();
+            newEndTime.setHours(endHours, endMinutes + 5);
+            
+            task.endTime = newEndTime.getHours().toString().padStart(2, '0') + ':' + 
+                          newEndTime.getMinutes().toString().padStart(2, '0');
+        }
+        
+        // Update alarm time to match new start time
+        task.alarmTime = task.startTime;
         
         saveTasksToLocalStorage();
         checkForActiveNotifications(); // Refresh sidebar
@@ -1169,41 +797,7 @@ function completeTaskFromNotification(taskId) {
     checkForActiveNotifications(); // Refresh sidebar
 }
 
-// Form submission
-if (form) {
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const taskText = input.value.trim();
-        const selectedTime = getSelectedTime();
-        const selectedPriority = prioritySelect.value;
-        
-        if (taskText === '') return;
-
-        // Create date object for the task - use currently selected date
-        const taskDateObj = selectedDate ? new Date(selectedDate) : new Date();
-  
-  const task = {
-    id: Date.now(),
-    text: taskText,
-    date: taskDateObj.toISOString().split('T')[0], // YYYY-MM-DD format
-    fullDate: taskDateObj,
-    alarmTime: selectedTime,
-    priority: selectedPriority,
-    completed: false,
-    createdAt: new Date().toISOString()
-  };
-
-  addTask(task);
-  
-  // Clear form (but keep date for convenience)
-  input.value = '';
-  hourSelect.value = '';
-  minuteSelect.value = '';
-  clearMinuteButtonStates(); // Clear minute button highlights
-  // Keep date and priority selected for user convenience
-    });
-}
+// Old form submission handler removed - using new handler above
 
 // Add task
 async function addTask(task) {
@@ -1235,10 +829,7 @@ async function addTask(task) {
   setupAlarmForTask(task);
   checkForActiveNotifications();
   
-  // Update sidebar
-  if (document.getElementById('sidebar-task-list')) {
-    updateSidebarTasks();
-  }
+  // Sidebar removed
 }
 
 // Load tasks
@@ -1260,14 +851,12 @@ async function loadTasks() {
   renderCalendar();
   setupAllAlarms();
   
-  // Update sidebar if it exists
-  if (document.getElementById('sidebar-task-list')) {
-    updateSidebarTasks();
-  }
+  // Sidebar removed
 }
 
 // Display tasks
 function displayTasks() {
+  if (!list) return;
   list.innerHTML = '';
   
   let filteredTasks = tasks;
@@ -1330,6 +919,7 @@ function displayTask(task) {
     </div>
   `;
   
+  if (!list) return;
   list.appendChild(li);
 }
 
@@ -1399,12 +989,12 @@ function updateDayCounters() {
   });
 }
 
-// Setup alarm for a single task
+// Setup alarm for a single task based on start time
 function setupAlarmForTask(task) {
-  if (!task.alarmTime || !task.day) return;
+  if (!task.startTime || !task.date) return;
   
   const now = new Date();
-  const taskDateTime = getTaskDateTime(task);
+  const taskDateTime = getTaskDateTimeFromStartTime(task);
   
   if (taskDateTime > now) {
     const timeUntilAlarm = taskDateTime.getTime() - now.getTime();
@@ -1428,21 +1018,12 @@ function setupAllAlarms() {
   });
 }
 
-// Get task date and time
-function getTaskDateTime(task) {
-  const today = new Date();
-  const dayIndex = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].indexOf(task.day.toLowerCase());
-  const currentDayIndex = today.getDay();
+// Get task date and time from start time
+function getTaskDateTimeFromStartTime(task) {
+  if (!task.startTime || !task.date) return null;
   
-  let daysUntilTask = dayIndex - currentDayIndex;
-  if (daysUntilTask < 0) {
-    daysUntilTask += 7; // Next week
-  }
-  
-  const taskDate = new Date(today);
-  taskDate.setDate(today.getDate() + daysUntilTask);
-  
-  const [hours, minutes] = task.alarmTime.split(':');
+  const taskDate = new Date(task.date);
+  const [hours, minutes] = task.startTime.split(':');
   taskDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
   
   return taskDate;
@@ -1544,6 +1125,10 @@ function showAlarmModal(task) {
     
     if (!overlay || !taskInfo) return;
     
+    const timeRange = task.endTime ? 
+        `${formatTimeDisplay(task.startTime)} - ${formatTimeDisplay(task.endTime)}` : 
+        formatTimeDisplay(task.startTime);
+    
     // Populate task information
     taskInfo.innerHTML = `
         <div class="task-priority ${task.priority}">
@@ -1551,7 +1136,7 @@ function showAlarmModal(task) {
         </div>
         <div class="task-details">
             📅 ${new Date(task.date).toLocaleDateString()}
-            ⏰ ${task.alarmTime}
+            ⏰ ${timeRange}
         </div>
     `;
     
@@ -1679,25 +1264,23 @@ function checkAlarms() {
 // Calendar functionality
 function setupCalendar() {
   renderCalendar();
-  
-  if (prevMonthBtn) {
-    prevMonthBtn.addEventListener('click', () => {
+  const prevMonthOnly = document.getElementById('prev-month');
+  const nextMonthOnly = document.getElementById('next-month');
+  if (prevMonthOnly) {
+    prevMonthOnly.addEventListener('click', () => {
       console.log('📅 Previous month clicked');
       currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
       renderCalendar();
+      updatePeriodDisplay();
     });
-  } else {
-    console.error('❌ prevMonthBtn not found!');
   }
-  
-  if (nextMonthBtn) {
-    nextMonthBtn.addEventListener('click', () => {
+  if (nextMonthOnly) {
+    nextMonthOnly.addEventListener('click', () => {
       console.log('📅 Next month clicked');
       currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
       renderCalendar();
+      updatePeriodDisplay();
     });
-  } else {
-    console.error('❌ nextMonthBtn not found!');
   }
 }
 
@@ -1860,7 +1443,8 @@ function filterTasksByDate(dateString) {
   currentFilter = 'date';
   selectedDate = dateString;
   const date = new Date(dateString);
-  currentDayTitle.textContent = `Tasks for ${date.toLocaleDateString('en-US', { 
+  const currentDayTitle = document.getElementById('current-day-title');
+  if (currentDayTitle) currentDayTitle.textContent = `Tasks for ${date.toLocaleDateString('en-US', { 
     weekday: 'long', 
     year: 'numeric', 
     month: 'long', 
@@ -1871,19 +1455,22 @@ function filterTasksByDate(dateString) {
 
 function filterTasksByWeek() {
   currentFilter = 'week';
-  currentDayTitle.textContent = 'This Week\'s Tasks';
+  const currentDayTitle = document.getElementById('current-day-title');
+  if (currentDayTitle) currentDayTitle.textContent = 'This Week\'s Tasks';
   displayTasks();
 }
 
 function filterTasksByMonth() {
   currentFilter = 'month';
   const monthName = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-  currentDayTitle.textContent = `${monthName} Tasks`;
+  const currentDayTitle = document.getElementById('current-day-title');
+  if (currentDayTitle) currentDayTitle.textContent = `${monthName} Tasks`;
   displayTasks();
 }
 
 // Enhanced display tasks function
 function displayTasks() {
+  if (!list) return;
   list.innerHTML = '';
   
   let filteredTasks = [...tasks];
@@ -1948,15 +1535,12 @@ function displayTasks() {
 function loadTasksFromLocalStorage() {
   const storedTasks = localStorage.getItem('taskTrackerTasks');
   if (storedTasks) {
-    tasks = JSON.parse(storedTasks).map(task => {
-      // Ensure all tasks have the new properties
-      return {
-        ...task,
-        date: task.date || new Date().toISOString().split('T')[0],
-        priority: task.priority || 'medium',
-        fullDate: task.fullDate ? new Date(task.fullDate) : new Date()
-      };
-    });
+    tasks = JSON.parse(storedTasks).map(task => ({
+      ...task,
+      date: task.date || new Date().toISOString().split('T')[0],
+      priority: task.priority || 'medium',
+      fullDate: task.fullDate ? new Date(task.fullDate) : new Date()
+    }));
   }
 }
 
@@ -1964,7 +1548,6 @@ function saveTasksToLocalStorage() {
   localStorage.setItem('taskTrackerTasks', JSON.stringify(tasks));
 }
 
-// Dashboard Functions
 function updateDashboard() {
     updateDashboardStats();
     renderUpcomingTasks();
@@ -1972,8 +1555,8 @@ function updateDashboard() {
 }
 
 function updateDashboardStats() {
-    const today = new Date().toISOString().split('T')[0];
-    const todayTasks = tasks.filter(task => task.date === today);
+  const today = new Date().toISOString().split('T')[0];
+  const todayTasks = tasks.filter(task => task.date === today);
     const completedToday = todayTasks.filter(task => task.completed).length;
     
     const thisWeek = getWeekTasks();
@@ -2029,7 +1612,8 @@ function renderUpcomingTasks() {
 function selectTaskDate(dateString) {
     // Select the date in calendar and filter tasks
     selectedDate = dateString;
-    taskDate.value = dateString;
+  const taskDateInput = document.getElementById('task-date');
+  if (taskDateInput) taskDateInput.value = dateString;
     filterTasksByDate(dateString);
     
     // Update calendar display if needed

@@ -13,11 +13,7 @@
 </head>
 <body>
   <div class="app-container">
-    <!-- Always Visible Sidebar Toggle -->
-    <button class="sidebar-toggle-btn" id="sidebar-toggle-btn">
-      <span class="toggle-icon">📋</span>
-      <span class="toggle-text">Tasks</span>
-    </button>
+    
     
     <!-- Streamlined Main Content -->
     <div class="main-content" id="main-content">
@@ -46,57 +42,10 @@
 
             <div class="form-row">
               <div class="form-section">
-                <label class="form-label">⏰ Alarm Time (Optional):</label>
-                <div class="time-controls">
-                  <select id="hour-select" class="time-dropdown compact">
-                    <option value="">Hour</option>
-                    <option value="00">12 AM</option>
-                    <option value="01">1 AM</option>
-                    <option value="02">2 AM</option>
-                    <option value="03">3 AM</option>
-                    <option value="04">4 AM</option>
-                    <option value="05">5 AM</option>
-                    <option value="06">6 AM</option>
-                    <option value="07">7 AM</option>
-                    <option value="08">8 AM</option>
-                    <option value="09">9 AM</option>
-                    <option value="10">10 AM</option>
-                    <option value="11">11 AM</option>
-                    <option value="12">12 PM</option>
-                    <option value="13">1 PM</option>
-                    <option value="14">2 PM</option>
-                    <option value="15">3 PM</option>
-                    <option value="16">4 PM</option>
-                    <option value="17">5 PM</option>
-                    <option value="18">6 PM</option>
-                    <option value="19">7 PM</option>
-                    <option value="20">8 PM</option>
-                    <option value="21">9 PM</option>
-                    <option value="22">10 PM</option>
-                    <option value="23">11 PM</option>
-                  </select>
-                  <span class="time-separator">:</span>
-                  <div class="minute-selector-container">
-                    <input type="number" id="minute-select" class="minute-input compact" min="0" max="59" placeholder="00" title="Enter custom minutes (0-59)">
-                    <div class="minute-quick-buttons">
-                      <button type="button" class="minute-btn" data-minute="00">00</button>
-                      <button type="button" class="minute-btn" data-minute="05">05</button>
-                      <button type="button" class="minute-btn" data-minute="10">10</button>
-                      <button type="button" class="minute-btn" data-minute="15">15</button>
-                      <button type="button" class="minute-btn" data-minute="20">20</button>
-                      <button type="button" class="minute-btn" data-minute="25">25</button>
-                      <button type="button" class="minute-btn" data-minute="30">30</button>
-                      <button type="button" class="minute-btn" data-minute="35">35</button>
-                      <button type="button" class="minute-btn" data-minute="40">40</button>
-                      <button type="button" class="minute-btn" data-minute="45">45</button>
-                      <button type="button" class="minute-btn" data-minute="50">50</button>
-                      <button type="button" class="minute-btn" data-minute="55">55</button>
-                    </div>
-                  </div>
-                  <button type="button" id="time-format-toggle" class="time-format-btn compact" title="Switch between 12h and 24h format">
-                    12h
-                  </button>
-                </div>
+                <label class="form-label">🕐 Time Format:</label>
+                <button type="button" id="time-format-toggle" class="time-format-btn compact" title="Switch between AM/PM and 24-hour format">
+                  AM/PM
+                </button>
               </div>
               
               <div class="form-section">
@@ -242,31 +191,7 @@
     </div>
   </div>
 
-  <!-- Left Sidebar for Task Navigation -->
-  <div id="task-sidebar" class="task-sidebar collapsed">
-    <div class="sidebar-toggle" id="sidebar-toggle">
-      <span class="toggle-icon">📋</span>
-      <span class="toggle-text">Tasks</span>
-    </div>
-    <div class="sidebar-content">
-      <div class="sidebar-header">
-        <h3>📅 Task Overview</h3>
-      </div>
-      
-      <!-- Task Filters in Sidebar -->
-      <div class="sidebar-filters">
-        <button class="filter-btn active" data-filter="all">All Tasks</button>
-        <button class="filter-btn" data-filter="today">Today</button>
-        <button class="filter-btn" data-filter="week">This Week</button>
-        <button class="filter-btn" data-filter="month">This Month</button>
-      </div>
-      
-      <!-- Task List by Date -->
-      <div class="sidebar-tasks" id="sidebar-task-list">
-        <!-- Tasks will be populated here -->
-      </div>
-    </div>
-  </div>
+  
 
     <script src="script.js?v=1758746135"></script>
 </body>
