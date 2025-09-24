@@ -818,9 +818,9 @@ function initializeApp() {
     
     // Debug: Check if all elements exist
     const debugElements = {
-        'prev-month': document.getElementById('prev-month'),
-        'next-month': document.getElementById('next-month'), 
-        'current-month': document.getElementById('current-month'),
+        'prev-period': document.getElementById('prev-period'),
+        'next-period': document.getElementById('next-period'), 
+        'current-period': document.getElementById('current-period'),
         'year-select': document.getElementById('year-select'),
         'time-format-toggle': document.getElementById('time-format-toggle'),
         'hour-select': document.getElementById('hour-select'),
@@ -829,10 +829,10 @@ function initializeApp() {
     
     console.log('🔍 Element Debug Check:', debugElements);
     
-    // Report missing elements
+    // Report missing elements (using new IDs)
     Object.entries(debugElements).forEach(([name, element]) => {
         if (!element) {
-            console.error(`❌ Missing element: ${name}`);
+            console.warn(`ℹ️ Optional element not found: ${name}`);
         } else {
             console.log(`✅ Found element: ${name}`);
         }
@@ -860,10 +860,14 @@ function initializeApp() {
     mainContent = document.querySelector('.main-content');
     
     // Initialize calendar elements
-    prevMonthBtn = document.getElementById('prev-month');
-    nextMonthBtn = document.getElementById('next-month');
-    currentMonthDisplay = document.getElementById('current-month');
+    // Support both legacy (prev/next/current-month) and new (prev/next/current-period) IDs
+    prevMonthBtn = document.getElementById('prev-month') || document.getElementById('prev-period');
+    nextMonthBtn = document.getElementById('next-month') || document.getElementById('next-period');
+    currentMonthDisplay = document.getElementById('current-month') || document.getElementById('current-period');
     calendarDays = document.getElementById('calendar-days');
+    if (!calendarDays) {
+        console.warn('⚠️ calendar-days container not found; month view may be hidden initially.');
+    }
     
     console.log('Elements found:', {
         form: !!form,
@@ -1702,10 +1706,12 @@ function renderCalendar() {
   const month = currentCalendarDate.getMonth();
   
   // Update month display
-  currentMonthDisplay.textContent = new Intl.DateTimeFormat('en-US', { 
-    month: 'long', 
-    year: 'numeric' 
-  }).format(currentCalendarDate);
+    if (currentMonthDisplay) {
+        currentMonthDisplay.textContent = new Intl.DateTimeFormat('en-US', { 
+            month: 'long', 
+            year: 'numeric' 
+        }).format(currentCalendarDate);
+    }
   
   // Get first day of month and number of days
   const firstDay = new Date(year, month, 1);
@@ -1714,7 +1720,8 @@ function renderCalendar() {
   const startingDayOfWeek = firstDay.getDay();
   
   // Clear calendar
-  calendarDays.innerHTML = '';
+    if (!calendarDays) return;
+    calendarDays.innerHTML = '';
   
   // Add empty cells for days before the first day of the month
   for (let i = 0; i < startingDayOfWeek; i++) {
@@ -1743,7 +1750,9 @@ function renderCalendar() {
 function createCalendarDay(date, otherMonth) {
   const dayElement = document.createElement('div');
   dayElement.className = 'calendar-day';
-  dayElement.textContent = date.getDate();
+    dayElement.textContent = date.getDate();
+    // Attach data-date for later lookups/highlighting
+    dayElement.dataset.date = date.toISOString().split('T')[0];
   
   if (otherMonth) {
     dayElement.classList.add('other-month');
