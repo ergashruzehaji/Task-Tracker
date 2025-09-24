@@ -9,7 +9,7 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="cache-buster" content="1758740997" />
   <title>Task Tracker - Latest Updates</title>
-  <link rel="stylesheet" href="style.css?v=1758744985&cb=force-refresh" />
+  <link rel="stylesheet" href="style.css?v=1758745393&cb=force-refresh" />
 </head>
 <body>
   <div class="app-container">
@@ -52,9 +52,23 @@
                   <option value="23">11 PM</option>
                 </select>
                 <span class="time-separator">:</span>
-                <select id="minute-select" class="time-dropdown">
-                  <option value="">Min</option>
-                </select>
+                <div class="minute-selector-container">
+                  <input type="number" id="minute-select" class="minute-input" min="0" max="59" placeholder="00" title="Enter custom minutes (0-59)">
+                  <div class="minute-quick-buttons">
+                    <button type="button" class="minute-btn" data-minute="00">00</button>
+                    <button type="button" class="minute-btn" data-minute="05">05</button>
+                    <button type="button" class="minute-btn" data-minute="10">10</button>
+                    <button type="button" class="minute-btn" data-minute="15">15</button>
+                    <button type="button" class="minute-btn" data-minute="20">20</button>
+                    <button type="button" class="minute-btn" data-minute="25">25</button>
+                    <button type="button" class="minute-btn" data-minute="30">30</button>
+                    <button type="button" class="minute-btn" data-minute="35">35</button>
+                    <button type="button" class="minute-btn" data-minute="40">40</button>
+                    <button type="button" class="minute-btn" data-minute="45">45</button>
+                    <button type="button" class="minute-btn" data-minute="50">50</button>
+                    <button type="button" class="minute-btn" data-minute="55">55</button>
+                  </div>
+                </div>
                 <button type="button" id="time-format-toggle" class="time-format-btn" title="Switch between 12h and 24h format">
                   12h
                 </button>
@@ -128,6 +142,6 @@
     Your browser does not support the audio element.
   </audio>
 
-    <script src="script.js?v=1758744985"></script>
+    <script src="script.js?v=1758745393"></script>
 </body>
 </html>

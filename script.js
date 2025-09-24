@@ -128,25 +128,15 @@ function populateMinuteDropdown() {
     console.log('Populating minute dropdown...');
     
     if (!minuteSelect) {
-        console.error('Minute select element not found');
+        console.error('Minute input element not found');
         return;
     }
     
-    const selectedValue = minuteSelect.value; // Preserve selection
-    minuteSelect.innerHTML = '<option value="">Min</option>';
+    // Setup minute input validation and formatting
+    setupMinuteInput();
+    setupMinuteQuickButtons();
     
-    // 5-minute increments: 00, 05, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55
-    for (let i = 0; i < 60; i += 5) {
-        const minute = i.toString().padStart(2, '0');
-        const option = document.createElement('option');
-        option.value = minute;
-        option.textContent = minute;
-        if (minute === selectedValue) option.selected = true;
-        minuteSelect.appendChild(option);
-        console.log(`Added minute: ${minute}`);
-    }
-    
-    console.log(`Minute dropdown populated with ${minuteSelect.options.length - 1} options`);
+    console.log('📅 Enhanced minute selector initialized with custom input and quick buttons');
 }
 
 // Toggle time format
@@ -161,6 +151,75 @@ function toggleTimeFormat() {
     
     populateHourDropdown();
     console.log('Time format toggled to', is24HourFormat ? '24h' : '12h');
+}
+
+// Enhanced minute input functionality
+function setupMinuteInput() {
+    if (!minuteSelect) return;
+    
+    // Add input validation for minute input
+    minuteSelect.addEventListener('input', function() {
+        let value = this.value;
+        
+        // Remove any non-numeric characters
+        value = value.replace(/[^0-9]/g, '');
+        
+        // Limit to 2 digits and valid range (0-59)
+        if (value.length > 2) {
+            value = value.slice(0, 2);
+        }
+        
+        const numValue = parseInt(value);
+        if (!isNaN(numValue) && numValue > 59) {
+            value = '59';
+        }
+        
+        this.value = value;
+    });
+    
+    // Format to 2 digits on blur
+    minuteSelect.addEventListener('blur', function() {
+        if (this.value && this.value.length > 0) {
+            const numValue = parseInt(this.value);
+            if (!isNaN(numValue)) {
+                this.value = numValue.toString().padStart(2, '0');
+            }
+        }
+    });
+    
+    console.log('✅ Minute input validation setup complete');
+}
+
+function setupMinuteQuickButtons() {
+    const minuteButtons = document.querySelectorAll('.minute-btn');
+    
+    if (minuteButtons.length === 0) {
+        console.log('ℹ️ No minute quick buttons found');
+        return;
+    }
+    
+    minuteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const minute = this.dataset.minute;
+            if (minuteSelect) {
+                minuteSelect.value = minute;
+                // Add active visual feedback
+                minuteButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Focus the input for further editing if needed
+                minuteSelect.focus();
+            }
+        });
+    });
+    
+    console.log(`✅ Setup ${minuteButtons.length} minute quick-select buttons`);
+}
+
+// Helper function to clear minute button active states
+function clearMinuteButtonStates() {
+    const minuteButtons = document.querySelectorAll('.minute-btn');
+    minuteButtons.forEach(btn => btn.classList.remove('active'));
 }
 
 // Update priority select color based on selected value
@@ -338,6 +397,7 @@ function setupFormHandlers() {
         input.value = '';
         hourSelect.value = '';
         minuteSelect.value = '';
+        clearMinuteButtonStates(); // Clear minute button highlights
         prioritySelect.value = 'medium';
         hideQuickForm();
     });
@@ -551,6 +611,7 @@ if (form) {
   input.value = '';
   hourSelect.value = '';
   minuteSelect.value = '';
+  clearMinuteButtonStates(); // Clear minute button highlights
   // Keep date and priority selected for user convenience
     });
 }

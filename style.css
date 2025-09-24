@@ -604,6 +604,124 @@ input:focus, select:focus {
   box-shadow: 0 0 12px rgba(218, 165, 32, 0.3);
 }
 
+/* Enhanced Minute Selector */
+.minute-selector-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.minute-input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 2px solid rgba(218, 165, 32, 0.4);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.8);
+  color: #1a1a1a;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(218, 165, 32, 0.15);
+  width: 60px;
+}
+
+.minute-input:focus {
+  border-color: rgba(218, 165, 32, 0.8);
+  box-shadow: 0 0 15px rgba(218, 165, 32, 0.4);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.minute-input:hover {
+  border-color: rgba(218, 165, 32, 0.6);
+  box-shadow: 0 0 12px rgba(218, 165, 32, 0.3);
+}
+
+.minute-quick-buttons {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 3px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(218, 165, 32, 0.2);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-5px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(218, 165, 32, 0.2);
+}
+
+.minute-selector-container:hover .minute-quick-buttons,
+.minute-input:focus + .minute-quick-buttons {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.minute-btn {
+  padding: 6px 4px;
+  border: 1px solid rgba(218, 165, 32, 0.3);
+  background: rgba(255, 255, 255, 0.8);
+  color: #1a1a1a;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.minute-btn:hover {
+  background: rgba(218, 165, 32, 0.1);
+  border-color: rgba(218, 165, 32, 0.6);
+  transform: scale(1.05);
+}
+
+.minute-btn:active {
+  background: rgba(218, 165, 32, 0.3);
+  transform: scale(0.95);
+}
+
+.minute-btn.active {
+  background: linear-gradient(135deg, rgba(218, 165, 32, 0.8), rgba(218, 165, 32, 0.6));
+  border-color: rgba(218, 165, 32, 0.8);
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 6px rgba(218, 165, 32, 0.4);
+}
+
+/* Mobile Responsive Minute Selector */
+@media (max-width: 768px) {
+  .minute-quick-buttons {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    padding: 10px;
+  }
+  
+  .minute-btn {
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+  
+  .minute-input {
+    width: 50px;
+    padding: 8px 10px;
+  }
+  
+  .time-dropdowns {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
 .time-separator {
   font-size: 18px;
   font-weight: bold;
