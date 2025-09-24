@@ -230,7 +230,7 @@ body {
 .calendar-layout {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 15px;
   margin: 20px 0;
   max-width: 100%;
   overflow: hidden;
@@ -244,7 +244,7 @@ body {
   box-shadow: 0 6px 24px rgba(218, 165, 32, 0.15);
   flex: 1;
   min-width: 300px;
-  max-width: calc(100% - 300px);
+  max-width: calc(100% - 240px);
   overflow: hidden;
   backdrop-filter: blur(8px);
 }
@@ -252,26 +252,26 @@ body {
 .calendar-right-panel {
   background: rgba(255, 255, 255, 0.85);
   border-radius: 15px;
-  padding: 25px;
+  padding: 18px;
   border: 1px solid rgba(218, 165, 32, 0.4);
   box-shadow: 0 6px 20px rgba(218, 165, 32, 0.25);
   height: fit-content;
-  width: 280px;
+  width: 220px;
   flex-shrink: 0;
   backdrop-filter: blur(12px);
-  min-height: 200px;
+  min-height: 180px;
 }
 
 .panel-header {
-  margin-bottom: 15px;
-  padding-bottom: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
   border-bottom: 1px solid rgba(218, 165, 32, 0.2);
 }
 
 .panel-header h4 {
   color: #1a1a1a;
   margin: 0;
-  font-size: 16px;
+  font-size: 15px;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
@@ -1331,23 +1331,23 @@ li.completed {
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   color: #1a1a1a;
   font-weight: 500;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-  padding: 8px 12px;
-  border-radius: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
   background: rgba(255, 255, 255, 0.3);
   transition: all 0.3s ease;
 }
 
 .calendar-legend.vertical .legend-item:hover {
   background: rgba(255, 255, 255, 0.5);
-  transform: translateX(3px);
+  transform: translateX(2px);
 }
 
 .legend-text {
-  font-size: 13px;
+  font-size: 12px;
 }
 
 /* Time Input Styling */
@@ -1456,7 +1456,7 @@ li.completed {
 }
 
 .time-column {
-  width: 80px;
+  width: 90px;
   background: linear-gradient(180deg, #f8f9fa, #f1f3f4);
   border-right: 2px solid rgba(218, 165, 32, 0.2);
 }
@@ -1471,10 +1471,11 @@ li.completed {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   color: #666;
   border-bottom: 1px solid rgba(218, 165, 32, 0.1);
+  padding: 0 4px;
 }
 
 .days-grid {
@@ -1494,7 +1495,7 @@ li.completed {
 }
 
 .day-header {
-  height: 50px;
+  height: 55px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1503,6 +1504,7 @@ li.completed {
   border-bottom: 2px solid rgba(218, 165, 32, 0.2);
   font-weight: 600;
   color: #1a1a1a;
+  padding: 0 8px;
 }
 
 .day-name {
@@ -1534,19 +1536,20 @@ li.completed {
 
 .task-block {
   position: absolute;
-  left: 2px;
-  right: 2px;
-  top: 2px;
-  bottom: 2px;
-  border-radius: 4px;
-  padding: 4px 6px;
-  font-size: 11px;
+  left: 3px;
+  right: 3px;
+  top: 3px;
+  bottom: 3px;
+  border-radius: 5px;
+  padding: 6px 8px;
+  font-size: 12px;
   font-weight: 500;
   color: white;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  line-height: 1.2;
 }
 
 .task-block.high-priority {
