@@ -183,9 +183,29 @@ function updatePrioritySelectColor() {
 // Load tasks when page loads
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 DOM loaded, initializing Task Tracker components...');
-    console.log('🔧 Script version: 2025-09-24-v5 - CACHE CLEARED - YEAR SELECTOR MOVED');
+    console.log('🔧 Script version: 2025-09-24-v6 - DEBUGGING STUCK NAVIGATION');
     
-    // Initialize DOM elements
+    // Debug: Check if all elements exist
+    const debugElements = {
+        'prev-month': document.getElementById('prev-month'),
+        'next-month': document.getElementById('next-month'), 
+        'current-month': document.getElementById('current-month'),
+        'year-select': document.getElementById('year-select'),
+        'time-format-toggle': document.getElementById('time-format-toggle'),
+        'hour-select': document.getElementById('hour-select'),
+        'minute-select': document.getElementById('minute-select')
+    };
+    
+    console.log('🔍 Element Debug Check:', debugElements);
+    
+    // Report missing elements
+    Object.entries(debugElements).forEach(([name, element]) => {
+        if (!element) {
+            console.error(`❌ Missing element: ${name}`);
+        } else {
+            console.log(`✅ Found element: ${name}`);
+        }
+    });    // Initialize DOM elements
     form = document.getElementById('task-form');
     input = document.getElementById('task-input');
     hourSelect = document.getElementById('hour-select');
@@ -808,15 +828,25 @@ function checkAlarms() {
 function setupCalendar() {
   renderCalendar();
   
-  prevMonthBtn.addEventListener('click', () => {
-    currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
-    renderCalendar();
-  });
+  if (prevMonthBtn) {
+    prevMonthBtn.addEventListener('click', () => {
+      console.log('📅 Previous month clicked');
+      currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+      renderCalendar();
+    });
+  } else {
+    console.error('❌ prevMonthBtn not found!');
+  }
   
-  nextMonthBtn.addEventListener('click', () => {
-    currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
-    renderCalendar();
-  });
+  if (nextMonthBtn) {
+    nextMonthBtn.addEventListener('click', () => {
+      console.log('📅 Next month clicked');
+      currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+      renderCalendar();
+    });
+  } else {
+    console.error('❌ nextMonthBtn not found!');
+  }
 }
 
 function renderCalendar() {
