@@ -1,6 +1,6 @@
 {
   "name": "task-tracker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple web app to track tasks for each day of the week",
   "main": "backend/server.js",
   "scripts": {
