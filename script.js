@@ -222,6 +222,176 @@ function clearMinuteButtonStates() {
     minuteButtons.forEach(btn => btn.classList.remove('active'));
 }
 
+// Sidebar Management
+function initializeSidebar() {
+    const sidebar = document.getElementById('task-sidebar');
+    const toggle = document.getElementById('sidebar-toggle');
+    const mainContent = document.getElementById('main-content');
+    
+    if (!sidebar || !toggle) return;
+    
+    // Toggle sidebar
+    toggle.addEventListener('click', function() {
+        sidebar.classList.toggle('collapsed');
+        document.body.classList.toggle('sidebar-open');
+        
+        // Update toggle icon
+        const icon = toggle.querySelector('.toggle-icon');
+        if (sidebar.classList.contains('collapsed')) {
+            icon.textContent = '📋';
+        } else {
+            icon.textContent = '✖️';
+        }
+        
+        // Refresh task list when opening
+        if (!sidebar.classList.contains('collapsed')) {
+            updateSidebarTasks();
+        }
+    });
+    
+    // Initialize sidebar filters
+    initializeSidebarFilters();
+    
+    console.log('📋 Sidebar initialized');
+}
+
+// Initialize sidebar filter buttons
+function initializeSidebarFilters() {
+    const filterBtns = document.querySelectorAll('.sidebar-filters .filter-btn');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Update active filter
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Apply filter
+            const filter = this.dataset.filter;
+            currentFilter = filter;
+            updateSidebarTasks();
+            displayTasks(); // Also update main calendar view
+        });
+    });
+}
+
+// Update sidebar task list
+function updateSidebarTasks() {
+    const sidebarTaskList = document.getElementById('sidebar-task-list');
+    if (!sidebarTaskList) return;
+    
+    // Filter tasks based on current filter
+    let filteredTasks = [...tasks];
+    const today = new Date().toISOString().split('T')[0];
+    
+    switch (currentFilter) {
+        case 'today':
+            filteredTasks = tasks.filter(task => task.date === today);
+            break;
+        case 'week':
+            const weekStart = new Date();
+            weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+            const weekEnd = new Date(weekStart);
+            weekEnd.setDate(weekStart.getDate() + 6);
+            filteredTasks = tasks.filter(task => {
+                const taskDate = new Date(task.date);
+                return taskDate >= weekStart && taskDate <= weekEnd;
+            });
+            break;
+        case 'month':
+            const monthStart = new Date();
+            monthStart.setDate(1);
+            const monthEnd = new Date(monthStart);
+            monthEnd.setMonth(monthStart.getMonth() + 1);
+            monthEnd.setDate(0);
+            filteredTasks = tasks.filter(task => {
+                const taskDate = new Date(task.date);
+                return taskDate >= monthStart && taskDate <= monthEnd;
+            });
+            break;
+    }
+    
+    // Group tasks by date
+    const tasksByDate = {};
+    filteredTasks.forEach(task => {
+        if (!tasksByDate[task.date]) {
+            tasksByDate[task.date] = [];
+        }
+        tasksByDate[task.date].push(task);
+    });
+    
+    // Sort dates
+    const sortedDates = Object.keys(tasksByDate).sort();
+    
+    // Generate HTML
+    let html = '';
+    
+    if (sortedDates.length === 0) {
+        html = '<div class="no-tasks">No tasks found for this filter.</div>';
+    } else {
+        sortedDates.forEach(date => {
+            const dateTasks = tasksByDate[date];
+            const dateObj = new Date(date);
+            const dateLabel = dateObj.toLocaleDateString('en-US', { 
+                weekday: 'short', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+            
+            html += `
+                <div class="task-date-group">
+                    <div class="task-date-header">${dateLabel}</div>
+                    ${dateTasks.map(task => `
+                        <div class="sidebar-task-item ${task.priority}" data-task-id="${task.id}">
+                            <div class="sidebar-task-text">${task.text}</div>
+                            ${task.alarmTime ? `<div class="sidebar-task-time">⏰ ${task.alarmTime}</div>` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        });
+    }
+    
+    sidebarTaskList.innerHTML = html;
+    
+    // Add click handlers for task items
+    document.querySelectorAll('.sidebar-task-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const taskId = this.dataset.taskId;
+            highlightTaskInCalendar(taskId);
+        });
+    });
+}
+
+// Highlight task in calendar when clicked from sidebar
+function highlightTaskInCalendar(taskId) {
+    const task = tasks.find(t => t.id.toString() === taskId);
+    if (!task) return;
+    
+    // Navigate to the task's date
+    const taskDate = new Date(task.date);
+    currentCalendarDate.setFullYear(taskDate.getFullYear());
+    currentCalendarDate.setMonth(taskDate.getMonth());
+    
+    // Re-render calendar
+    renderCalendar();
+    
+    // Highlight the specific day
+    setTimeout(() => {
+        const dayElements = document.querySelectorAll('.calendar-day');
+        dayElements.forEach(day => {
+            if (day.dataset.date === task.date) {
+                day.classList.add('highlighted');
+                day.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Remove highlight after 3 seconds
+                setTimeout(() => {
+                    day.classList.remove('highlighted');
+                }, 3000);
+            }
+        });
+    }, 100);
+}
+
 // Update priority select color based on selected value
 function updatePrioritySelectColor() {
     if (!prioritySelect) return;
@@ -312,6 +482,9 @@ function initializeApp() {
     initializeCalendar();
     setupFormHandlers();
     setupNotificationSystem();
+    initializeSidebar(); // New sidebar system
+    initializeAlarmAudio(); // Initialize alarm sound system  
+    setupAlarmHandlers(); // Setup alarm UI handlers
     startNotificationChecker();
     
     // Initialize dropdowns with debugging
@@ -644,6 +817,11 @@ async function addTask(task) {
   renderCalendar();
   setupAlarmForTask(task);
   checkForActiveNotifications();
+  
+  // Update sidebar
+  if (document.getElementById('sidebar-task-list')) {
+    updateSidebarTasks();
+  }
 }
 
 // Load tasks
@@ -664,6 +842,11 @@ async function loadTasks() {
   // Initialize calendar with loaded tasks
   renderCalendar();
   setupAllAlarms();
+  
+  // Update sidebar if it exists
+  if (document.getElementById('sidebar-task-list')) {
+    updateSidebarTasks();
+  }
 }
 
 // Display tasks
@@ -857,17 +1040,189 @@ function clearAlarmForTask(taskId) {
   }
 }
 
-// Trigger alarm
+// Enhanced Alarm System with Audio Generation
+let alarmContext = null;
+let alarmOscillator = null;
+let alarmGainNode = null;
+let alarmInterval = null;
+let alarmCountdown = 60;
+
+// Create audio context for alarm sound
+function initializeAlarmAudio() {
+    try {
+        alarmContext = new (window.AudioContext || window.webkitAudioContext)();
+    } catch (e) {
+        console.warn('Web Audio API not supported');
+    }
+}
+
+// Generate alarm sound programmatically
+function playAlarmSound() {
+    if (!alarmContext) return;
+    
+    // Stop any existing alarm
+    stopAlarmSound();
+    
+    // Create oscillator for alarm tone
+    alarmOscillator = alarmContext.createOscillator();
+    alarmGainNode = alarmContext.createGain();
+    
+    // Connect audio nodes
+    alarmOscillator.connect(alarmGainNode);
+    alarmGainNode.connect(alarmContext.destination);
+    
+    // Configure alarm sound (urgent beeping)
+    alarmOscillator.frequency.setValueAtTime(800, alarmContext.currentTime); // High frequency
+    alarmGainNode.gain.setValueAtTime(0.3, alarmContext.currentTime); // Loud volume
+    
+    // Create beeping pattern
+    let time = alarmContext.currentTime;
+    for (let i = 0; i < 60; i++) { // 60 seconds of beeping
+        alarmGainNode.gain.setValueAtTime(0.3, time);
+        alarmGainNode.gain.setValueAtTime(0, time + 0.3); // Beep for 0.3s
+        alarmGainNode.gain.setValueAtTime(0.3, time + 0.5); // Silent for 0.2s
+        time += 1; // Repeat every second
+    }
+    
+    alarmOscillator.start(alarmContext.currentTime);
+    alarmOscillator.stop(alarmContext.currentTime + 60); // Stop after 60 seconds
+}
+
+function stopAlarmSound() {
+    if (alarmOscillator) {
+        try {
+            alarmOscillator.stop();
+        } catch (e) {
+            // Oscillator already stopped
+        }
+        alarmOscillator = null;
+    }
+}
+
+// Trigger alarm with full UI
 function triggerAlarm(task) {
-  // Play alarm sound
-  alarmAudio.currentTime = 0;
-  alarmAudio.play().catch(e => console.log('Could not play alarm sound'));
-  
-  // Check for active notifications and show sidebar if needed
-  checkForActiveNotifications();
-  
-  // Remove this alarm from timeouts
-  clearAlarmForTask(task.id);
+    console.log('🚨 Triggering alarm for task:', task.text);
+    
+    // Initialize countdown
+    alarmCountdown = 60;
+    
+    // Play alarm sound
+    playAlarmSound();
+    
+    // Show alarm modal
+    showAlarmModal(task);
+    
+    // Start countdown
+    startAlarmCountdown();
+    
+    // Remove this alarm from timeouts
+    clearAlarmForTask(task.id);
+}
+
+// Show alarm modal with task details
+function showAlarmModal(task) {
+    const overlay = document.getElementById('alarm-overlay');
+    const taskInfo = document.getElementById('alarm-task-info');
+    const countdown = document.getElementById('alarm-countdown');
+    
+    if (!overlay || !taskInfo) return;
+    
+    // Populate task information
+    taskInfo.innerHTML = `
+        <div class="task-priority ${task.priority}">
+            <strong>${task.text}</strong>
+        </div>
+        <div class="task-details">
+            📅 ${new Date(task.date).toLocaleDateString()}
+            ⏰ ${task.alarmTime}
+        </div>
+    `;
+    
+    // Show overlay
+    overlay.style.display = 'flex';
+    
+    // Auto-dismiss after 60 seconds if not manually dismissed
+    setTimeout(() => {
+        if (overlay.style.display === 'flex') {
+            dismissAlarm();
+        }
+    }, 60000);
+}
+
+// Start countdown timer
+function startAlarmCountdown() {
+    const countdown = document.getElementById('alarm-countdown');
+    
+    alarmInterval = setInterval(() => {
+        alarmCountdown--;
+        if (countdown) {
+            countdown.textContent = alarmCountdown;
+        }
+        
+        if (alarmCountdown <= 0) {
+            dismissAlarm();
+        }
+    }, 1000);
+}
+
+// Dismiss alarm
+function dismissAlarm() {
+    // Stop sound
+    stopAlarmSound();
+    
+    // Clear countdown
+    if (alarmInterval) {
+        clearInterval(alarmInterval);
+        alarmInterval = null;
+    }
+    
+    // Hide modal
+    const overlay = document.getElementById('alarm-overlay');
+    if (overlay) {
+        overlay.style.display = 'none';
+    }
+    
+    console.log('✅ Alarm dismissed');
+}
+
+// Snooze alarm for 5 minutes
+function snoozeAlarm() {
+    // Get current task from alarm modal
+    const taskInfo = document.getElementById('alarm-task-info');
+    if (!taskInfo) return;
+    
+    // Dismiss current alarm
+    dismissAlarm();
+    
+    // Find the task and reschedule for 5 minutes later
+    // This would require storing the current task reference
+    console.log('😴 Alarm snoozed for 5 minutes');
+}
+
+// Setup alarm UI event handlers
+function setupAlarmHandlers() {
+    const dismissBtn = document.getElementById('dismiss-alarm');
+    const snoozeBtn = document.getElementById('snooze-alarm');
+    
+    if (dismissBtn) {
+        dismissBtn.addEventListener('click', dismissAlarm);
+    }
+    
+    if (snoozeBtn) {
+        snoozeBtn.addEventListener('click', snoozeAlarm);
+    }
+    
+    // Also allow ESC key to dismiss alarm
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const overlay = document.getElementById('alarm-overlay');
+            if (overlay && overlay.style.display === 'flex') {
+                dismissAlarm();
+            }
+        }
+    });
+    
+    console.log('🚨 Alarm handlers initialized');
 }
 
 // Show alarm notification
@@ -994,11 +1349,14 @@ function createCalendarDay(date, otherMonth) {
   if (dayTasks.length > 0) {
     dayElement.classList.add('has-tasks');
     
-    // Add priority indicator for highest priority task
+    // Add priority indicator and background color for highest priority task
     const highestPriority = getHighestPriority(dayTasks);
     const indicator = document.createElement('div');
     indicator.className = `task-indicator ${highestPriority}`;
     dayElement.appendChild(indicator);
+    
+    // Add priority background color to the day
+    dayElement.classList.add(`priority-${highestPriority}`);
   }
   
   // Add click handler

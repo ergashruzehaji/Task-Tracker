@@ -9,12 +9,12 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="cache-buster" content="1758740997" />
   <title>Task Tracker - Latest Updates</title>
-  <link rel="stylesheet" href="style.css?v=1758745393&cb=force-refresh" />
+  <link rel="stylesheet" href="style.css?v=1758746135&cb=force-refresh" />
 </head>
 <body>
   <div class="app-container">
     <!-- Streamlined Main Content -->
-    <div class="main-content">
+    <div class="main-content" id="main-content">
       <div class="container">
         <!-- Quick Task Form - Initially Hidden -->
         <div id="quick-task-form" class="quick-form" style="display: none;">
@@ -112,13 +112,7 @@
             <span class="legend-item"><span class="legend-dot low"></span>Low Priority</span>
           </div>
           
-          <!-- Task Filter Buttons -->
-          <div class="task-filters">
-            <button class="filter-btn active" data-filter="all">All Tasks</button>
-            <button class="filter-btn" data-filter="today">Today</button>
-            <button class="filter-btn" data-filter="week">This Week</button>
-            <button class="filter-btn" data-filter="month">This Month</button>
-          </div>
+          <!-- Filter buttons moved to left sidebar -->
         </div>
         
       </div>
@@ -136,12 +130,51 @@
     </div>
   </div>
 
-  <!-- Audio element for alarm -->
-  <audio id="alarm-audio" preload="auto">
-    <source src="task-alarm.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+  <!-- Enhanced Alarm System -->
+  <div id="alarm-overlay" class="alarm-overlay" style="display: none;">
+    <div class="alarm-modal">
+      <div class="alarm-header">
+        <h2>🔔 Task Reminder!</h2>
+        <div class="alarm-time" id="alarm-countdown">60</div>
+      </div>
+      <div class="alarm-content">
+        <div class="task-info" id="alarm-task-info">
+          <!-- Task details will be populated here -->
+        </div>
+      </div>
+      <div class="alarm-actions">
+        <button id="dismiss-alarm" class="dismiss-btn">Dismiss</button>
+        <button id="snooze-alarm" class="snooze-btn">Snooze 5min</button>
+      </div>
+    </div>
+  </div>
 
-    <script src="script.js?v=1758745393"></script>
+  <!-- Left Sidebar for Task Navigation -->
+  <div id="task-sidebar" class="task-sidebar collapsed">
+    <div class="sidebar-toggle" id="sidebar-toggle">
+      <span class="toggle-icon">📋</span>
+      <span class="toggle-text">Tasks</span>
+    </div>
+    <div class="sidebar-content">
+      <div class="sidebar-header">
+        <h3>📅 Task Overview</h3>
+      </div>
+      
+      <!-- Task Filters in Sidebar -->
+      <div class="sidebar-filters">
+        <button class="filter-btn active" data-filter="all">All Tasks</button>
+        <button class="filter-btn" data-filter="today">Today</button>
+        <button class="filter-btn" data-filter="week">This Week</button>
+        <button class="filter-btn" data-filter="month">This Month</button>
+      </div>
+      
+      <!-- Task List by Date -->
+      <div class="sidebar-tasks" id="sidebar-task-list">
+        <!-- Tasks will be populated here -->
+      </div>
+    </div>
+  </div>
+
+    <script src="script.js?v=1758746135"></script>
 </body>
 </html>
