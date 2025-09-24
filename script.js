@@ -273,6 +273,66 @@ function initializeSidebarFilters() {
             displayTasks(); // Also update main calendar view
         });
     });
+    
+    // Initial filter counts update
+    updateFilterCounts();
+}
+
+// Update filter button counts
+function updateFilterCounts() {
+    const today = new Date();
+    const todayStr = today.toISOString().split('T')[0];
+    
+    // Calculate week start/end
+    const weekStart = new Date(today);
+    weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 6);
+    
+    // Calculate month start/end
+    const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+    const monthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    
+    // Count tasks for each filter
+    const allCount = tasks.length;
+    const todayCount = tasks.filter(task => task.date === todayStr).length;
+    const weekCount = tasks.filter(task => {
+        const taskDate = new Date(task.date);
+        return taskDate >= weekStart && taskDate <= weekEnd;
+    }).length;
+    const monthCount = tasks.filter(task => {
+        const taskDate = new Date(task.date);
+        return taskDate >= monthStart && taskDate <= monthEnd;
+    }).length;
+    
+    // Update button labels with counts
+    const filterBtns = document.querySelectorAll('.sidebar-filters .filter-btn');
+    filterBtns.forEach(btn => {
+        const filter = btn.dataset.filter;
+        let count = 0;
+        let baseText = '';
+        
+        switch (filter) {
+            case 'all':
+                count = allCount;
+                baseText = 'All Tasks';
+                break;
+            case 'today':
+                count = todayCount;
+                baseText = 'Today';
+                break;
+            case 'week':
+                count = weekCount;
+                baseText = 'This Week';
+                break;
+            case 'month':
+                count = monthCount;
+                baseText = 'This Month';
+                break;
+        }
+        
+        btn.innerHTML = `${baseText} <span class="filter-count">(${count})</span>`;
+    });
 }
 
 // Update sidebar task list
@@ -340,13 +400,24 @@ function updateSidebarTasks() {
             
             html += `
                 <div class="task-date-group">
-                    <div class="task-date-header">${dateLabel}</div>
-                    ${dateTasks.map(task => `
-                        <div class="sidebar-task-item ${task.priority}" data-task-id="${task.id}">
-                            <div class="sidebar-task-text">${task.text}</div>
-                            ${task.alarmTime ? `<div class="sidebar-task-time">⏰ ${task.alarmTime}</div>` : ''}
+                    <div class="task-date-header">
+                        📅 ${dateLabel}
+                        <span class="task-count-badge">${dateTasks.length}</span>
+                    </div>
+                    ${dateTasks.map(task => {
+                        const priorityIcon = task.priority === 'high' ? '🔴' : task.priority === 'low' ? '🟢' : '🟡';
+                        const completedIcon = task.completed ? '✅ ' : '';
+                        return `
+                        <div class="sidebar-task-item ${task.priority} ${task.completed ? 'completed' : ''}" data-task-id="${task.id}">
+                            <div class="task-priority-icon">${priorityIcon}</div>
+                            <div class="sidebar-task-content">
+                                <div class="sidebar-task-text">${completedIcon}${task.text}</div>
+                                ${task.time ? `<div class="sidebar-task-time">🕐 ${task.time}</div>` : ''}
+                                ${task.alarmTime ? `<div class="sidebar-task-alarm">⏰ ${task.alarmTime}</div>` : ''}
+                            </div>
                         </div>
-                    `).join('')}
+                        `;
+                    }).join('')}
                 </div>
             `;
         });
@@ -362,19 +433,23 @@ function updateSidebarTasks() {
         });
     });
     
-    // Update stats panel
+    // Update filter counts and stats panel
+    updateFilterCounts();
     updateStatsPanel();
 }
 
 // Update stats panel
 function updateStatsPanel() {
     const totalTasksEl = document.querySelector('#total-tasks');
+    const todayTasksEl = document.querySelector('#today-tasks');
     const completedTasksEl = document.querySelector('#completed-tasks');
-    const thisMonthTasksEl = document.querySelector('#this-month-tasks');
+    const monthTasksEl = document.querySelector('#month-tasks');
     
-    if (!totalTasksEl || !completedTasksEl || !thisMonthTasksEl) return;
+    if (!totalTasksEl || !todayTasksEl || !completedTasksEl || !monthTasksEl) return;
     
+    const today = new Date().toISOString().split('T')[0];
     const totalTasks = tasks.length;
+    const todayTasks = tasks.filter(task => task.date === today).length;
     const completedTasks = tasks.filter(task => task.completed).length;
     
     // Calculate this month's tasks
@@ -386,8 +461,9 @@ function updateStatsPanel() {
     }).length;
     
     totalTasksEl.textContent = totalTasks;
+    todayTasksEl.textContent = todayTasks;
     completedTasksEl.textContent = completedTasks;
-    thisMonthTasksEl.textContent = thisMonthTasks;
+    monthTasksEl.textContent = thisMonthTasks;
 }
 
 // Highlight task in calendar when clicked from sidebar
@@ -440,7 +516,7 @@ function updatePrioritySelectColor() {
 // Initialize when both DOM and window are fully loaded
 function initializeApp() {
     console.log('🚀 Initializing Task Tracker App...');
-    console.log('🔧 Script version: 2025-09-24-v8 - FIXED BUGS & LAYOUT');
+    console.log('🔧 Script version: 2025-09-24-v9 - ENHANCED SIDEBAR & STATS');
     
     try {
     console.log('🚀 DOM loaded, initializing Task Tracker components...');
