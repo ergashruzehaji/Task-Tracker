@@ -250,15 +250,16 @@ body {
 }
 
 .calendar-right-panel {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.85);
   border-radius: 15px;
-  padding: 22px;
+  padding: 25px;
   border: 1px solid rgba(218, 165, 32, 0.4);
-  box-shadow: 0 4px 16px rgba(218, 165, 32, 0.2);
+  box-shadow: 0 6px 20px rgba(218, 165, 32, 0.25);
   height: fit-content;
   width: 280px;
   flex-shrink: 0;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  min-height: 200px;
 }
 
 .panel-header {
@@ -1632,45 +1633,7 @@ li.completed {
   }
 }
 
-/* Stats Panel */
-.stats-panel {
-  margin-top: 25px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(218, 165, 32, 0.2);
-}
-
-.stats-panel h5 {
-  color: #1a1a1a;
-  margin: 0 0 15px 0;
-  font-size: 14px;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-}
-
-.stat-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 12px;
-  margin-bottom: 6px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 6px;
-  font-size: 12px;
-}
-
-.stat-label {
-  color: #1a1a1a;
-  font-weight: 500;
-}
-
-.stat-value {
-  background: rgba(218, 165, 32, 0.2);
-  color: #1a1a1a;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-weight: 600;
-  min-width: 20px;
-  text-align: center;
-}
+/* Stats Panel styles removed - Quick Stats section removed */
 
 .legend-dot {
   width: 8px;

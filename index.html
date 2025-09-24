@@ -136,27 +136,6 @@
                 <span class="legend-text">Low Priority</span>
               </div>
             </div>
-            
-            <!-- Quick Stats Panel -->
-            <div class="stats-panel">
-              <h5>📈 Quick Stats</h5>
-              <div class="stat-item">
-                <span class="stat-label">Total Tasks:</span>
-                <span class="stat-value" id="total-tasks">0</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">Today:</span>
-                <span class="stat-value" id="today-tasks">0</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">This Month:</span>
-                <span class="stat-value" id="month-tasks">0</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">Completed:</span>
-                <span class="stat-value" id="completed-tasks">0</span>
-              </div>
-            </div>
           </div>
         </div>
         
@@ -194,7 +173,10 @@
     </div>
   </div>
 
-  
+  <!-- Gentle Alarm Audio -->
+  <audio id="alarm-audio" preload="auto" loop>
+    <!-- We'll generate the alarm sound programmatically -->
+  </audio>
 
     <script src="script.js?v=1758746135"></script>
 </body>

@@ -136,33 +136,7 @@ function convertTimeFormat(timeValue) {
 
 // Sidebar removed
 
-// Update stats panel
-function updateStatsPanel() {
-    const totalTasksEl = document.querySelector('#total-tasks');
-    const todayTasksEl = document.querySelector('#today-tasks');
-    const completedTasksEl = document.querySelector('#completed-tasks');
-    const monthTasksEl = document.querySelector('#month-tasks');
-    
-    if (!totalTasksEl || !todayTasksEl || !completedTasksEl || !monthTasksEl) return;
-    
-    const today = new Date().toISOString().split('T')[0];
-    const totalTasks = tasks.length;
-    const todayTasks = tasks.filter(task => task.date === today).length;
-    const completedTasks = tasks.filter(task => task.completed).length;
-    
-    // Calculate this month's tasks
-    const currentMonth = new Date().getMonth();
-    const currentYear = new Date().getFullYear();
-    const thisMonthTasks = tasks.filter(task => {
-        const taskDate = new Date(task.date);
-        return taskDate.getMonth() === currentMonth && taskDate.getFullYear() === currentYear;
-    }).length;
-    
-    totalTasksEl.textContent = totalTasks;
-    todayTasksEl.textContent = todayTasks;
-  completedTasksEl.textContent = completedTasks;
-  monthTasksEl.textContent = thisMonthTasks;
-}
+// Stats panel functionality removed - Quick Stats section removed
 
 // Toggle between AM/PM and 24h formats
 function toggleTimeFormat() {
@@ -1085,8 +1059,8 @@ function clearAlarmForTask(taskId) {
 
 // Enhanced Alarm System with Audio Generation
 let alarmContext = null;
-let alarmOscillator = null;
-let alarmGainNode = null;
+let alarmOscillators = [];
+let alarmGainNodes = [];
 let alarmInterval = null;
 let alarmCountdown = 60;
 
@@ -1099,47 +1073,90 @@ function initializeAlarmAudio() {
     }
 }
 
-// Generate alarm sound programmatically
+// Generate gentle alarm sound with gradual volume increase
 function playAlarmSound() {
     if (!alarmContext) return;
     
     // Stop any existing alarm
     stopAlarmSound();
     
-    // Create oscillator for alarm tone
-    alarmOscillator = alarmContext.createOscillator();
-    alarmGainNode = alarmContext.createGain();
+    // Create multiple oscillators for rich, gentle sound
+    const fundamentalFreq = 432; // Calming frequency (A4 tuned to 432Hz)
+    const harmonicFreqs = [432, 432 * 1.5, 432 * 2]; // Fundamental + harmonics for warmth
     
-    // Connect audio nodes
-    alarmOscillator.connect(alarmGainNode);
-    alarmGainNode.connect(alarmContext.destination);
+    alarmOscillators = [];
+    alarmGainNodes = [];
     
-    // Configure alarm sound (urgent beeping)
-    alarmOscillator.frequency.setValueAtTime(800, alarmContext.currentTime); // High frequency
-    alarmGainNode.gain.setValueAtTime(0.3, alarmContext.currentTime); // Loud volume
+    // Create a gentle, warm sound with multiple harmonics
+    harmonicFreqs.forEach((freq, index) => {
+        const oscillator = alarmContext.createOscillator();
+        const gainNode = alarmContext.createGain();
+        const filter = alarmContext.createBiquadFilter();
+        
+        // Configure filter for warmth
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(800, alarmContext.currentTime);
+        filter.Q.setValueAtTime(0.5, alarmContext.currentTime);
+        
+        // Connect audio chain: oscillator -> filter -> gain -> destination
+        oscillator.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(alarmContext.destination);
+        
+        // Use sine wave for smoothness
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(freq, alarmContext.currentTime);
+        
+        // Set volume based on harmonic (fundamental loudest)
+        const baseVolume = index === 0 ? 0.15 : 0.05 / (index + 1);
+        
+        // Start with very low volume and gradually increase over 10 seconds
+        gainNode.gain.setValueAtTime(0.001, alarmContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(baseVolume * 0.3, alarmContext.currentTime + 5);
+        gainNode.gain.exponentialRampToValueAtTime(baseVolume * 0.6, alarmContext.currentTime + 15);
+        gainNode.gain.exponentialRampToValueAtTime(baseVolume, alarmContext.currentTime + 30);
+        
+        // Add gentle vibrato for life
+        const lfo = alarmContext.createOscillator();
+        const lfoGain = alarmContext.createGain();
+        lfo.type = 'sine';
+        lfo.frequency.setValueAtTime(4.5, alarmContext.currentTime); // Slow vibrato
+        lfoGain.gain.setValueAtTime(3, alarmContext.currentTime); // Subtle depth
+        
+        lfo.connect(lfoGain);
+        lfoGain.connect(oscillator.frequency);
+        
+        lfo.start(alarmContext.currentTime);
+        oscillator.start(alarmContext.currentTime);
+        
+        // Schedule stop after 60 seconds
+        lfo.stop(alarmContext.currentTime + 60);
+        oscillator.stop(alarmContext.currentTime + 60);
+        
+        alarmOscillators.push(oscillator);
+        alarmGainNodes.push(gainNode);
+    });
     
-    // Create beeping pattern
-    let time = alarmContext.currentTime;
-    for (let i = 0; i < 60; i++) { // 60 seconds of beeping
-        alarmGainNode.gain.setValueAtTime(0.3, time);
-        alarmGainNode.gain.setValueAtTime(0, time + 0.3); // Beep for 0.3s
-        alarmGainNode.gain.setValueAtTime(0.3, time + 0.5); // Silent for 0.2s
-        time += 1; // Repeat every second
-    }
-    
-    alarmOscillator.start(alarmContext.currentTime);
-    alarmOscillator.stop(alarmContext.currentTime + 60); // Stop after 60 seconds
+    console.log('🔔 Playing gentle alarm sound with gradual volume increase');
 }
 
 function stopAlarmSound() {
-    if (alarmOscillator) {
-        try {
-            alarmOscillator.stop();
-        } catch (e) {
-            // Oscillator already stopped
+    // Stop all oscillators
+    alarmOscillators.forEach(oscillator => {
+        if (oscillator) {
+            try {
+                oscillator.stop();
+            } catch (e) {
+                // Oscillator already stopped
+            }
         }
-        alarmOscillator = null;
-    }
+    });
+    
+    // Clear arrays
+    alarmOscillators = [];
+    alarmGainNodes = [];
+    
+    console.log('🔕 Stopped gentle alarm sound');
 }
 
 // Trigger alarm with full UI
