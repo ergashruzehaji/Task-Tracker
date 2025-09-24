@@ -182,7 +182,8 @@ function updatePrioritySelectColor() {
 
 // Load tasks when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, initializing components...');
+    console.log('🚀 DOM loaded, initializing Task Tracker components...');
+    console.log('🔧 Script version: 2025-09-24-v2');
     
     // Initialize DOM elements
     form = document.getElementById('task-form');
@@ -229,9 +230,21 @@ document.addEventListener('DOMContentLoaded', function() {
     startNotificationChecker();
     
     // Initialize dropdowns with debugging
-    console.log('Initializing dropdowns...');
-    initializeYearSelector();
-    initializeTimeSelectors();
+    console.log('🔧 Initializing dropdowns...');
+    
+    // Force year selector population with retry mechanism
+    setTimeout(() => {
+        console.log('🔄 Running year selector initialization...');
+        initializeYearSelector();
+        initializeTimeSelectors();
+        
+        // Verify they worked
+        setTimeout(() => {
+            console.log('📊 Dropdown population status:');
+            console.log('Year options:', yearSelect ? yearSelect.options.length : 'null');
+            console.log('Minute options:', minuteSelect ? minuteSelect.options.length : 'null');
+        }, 100);
+    }, 100);
     
     // Add event listeners with null checks
     if (yearSelect) {
@@ -247,10 +260,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add priority select color functionality
     if (prioritySelect) {
         // Set initial color based on default selection
-        updatePrioritySelectColor();
+        setTimeout(() => {
+            updatePrioritySelectColor();
+            console.log('🎨 Priority select initial color set');
+        }, 150);
         
         prioritySelect.addEventListener('change', updatePrioritySelectColor);
-        console.log('Priority select color functionality added');
+        console.log('🎨 Priority select color functionality added');
     }
     
     console.log('All components initialized');
