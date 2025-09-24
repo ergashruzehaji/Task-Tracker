@@ -3,8 +3,11 @@ const API_BASE = window.location.origin;
 
 const form = document.getElementById('task-form');
 const input = document.getElementById('task-input');
-const alarmTime = document.getElementById('alarm-time');
+const hourSelect = document.getElementById('hour-select');
+const minuteSelect = document.getElementById('minute-select');
 const prioritySelect = document.getElementById('priority-select');
+const yearSelect = document.getElementById('year-select');
+const timeFormatToggle = document.getElementById('time-format-toggle');
 const alarmAudio = document.getElementById('alarm-audio');
 const quickForm = document.getElementById('quick-task-form');
 const cancelFormBtn = document.getElementById('cancel-form');
@@ -29,6 +32,112 @@ let alarmTimeouts = []; // Store alarm timeouts
 
 let activeTaskNotifications = []; // Store active notifications
 let notificationCheckInterval; // Store interval for checking notifications
+let is24HourFormat = false; // Track current time format (false = 12h, true = 24h)
+
+// Helper function to get combined time from dropdowns
+function getSelectedTime() {
+    const hour = hourSelect.value;
+    const minute = minuteSelect.value;
+    
+    if (!hour || !minute) return '';
+    
+    return `${hour}:${minute}`;
+}
+
+// Initialize year selector with current year and future years
+function initializeYearSelector() {
+    const currentYear = new Date().getFullYear();
+    const futureYears = 10; // Show 10 years ahead
+    
+    yearSelect.innerHTML = ''; // Clear existing options
+    
+    for (let i = 0; i <= futureYears; i++) {
+        const year = currentYear + i;
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        
+        // Set current year as selected
+        if (i === 0) {
+            option.selected = true;
+        }
+        
+        yearSelect.appendChild(option);
+    }
+}
+
+// Handle year change
+function handleYearChange() {
+    const selectedYear = parseInt(yearSelect.value);
+    currentCalendarDate.setFullYear(selectedYear);
+    updateCalendar();
+}
+
+// Initialize time selectors
+function initializeTimeSelectors() {
+    populateHourDropdown();
+    populateMinuteDropdown();
+}
+
+// Populate hour dropdown based on current format
+function populateHourDropdown() {
+    const selectedValue = hourSelect.value; // Preserve selection
+    hourSelect.innerHTML = '<option value="">Hour</option>';
+    
+    if (is24HourFormat) {
+        // 24-hour format (00-23)
+        for (let i = 0; i < 24; i++) {
+            const hour = i.toString().padStart(2, '0');
+            const option = document.createElement('option');
+            option.value = hour;
+            option.textContent = hour;
+            if (hour === selectedValue) option.selected = true;
+            hourSelect.appendChild(option);
+        }
+    } else {
+        // 12-hour format with AM/PM
+        const hours = [
+            {value: '00', label: '12 AM'}, {value: '01', label: '1 AM'}, {value: '02', label: '2 AM'},
+            {value: '03', label: '3 AM'}, {value: '04', label: '4 AM'}, {value: '05', label: '5 AM'},
+            {value: '06', label: '6 AM'}, {value: '07', label: '7 AM'}, {value: '08', label: '8 AM'},
+            {value: '09', label: '9 AM'}, {value: '10', label: '10 AM'}, {value: '11', label: '11 AM'},
+            {value: '12', label: '12 PM'}, {value: '13', label: '1 PM'}, {value: '14', label: '2 PM'},
+            {value: '15', label: '3 PM'}, {value: '16', label: '4 PM'}, {value: '17', label: '5 PM'},
+            {value: '18', label: '6 PM'}, {value: '19', label: '7 PM'}, {value: '20', label: '8 PM'},
+            {value: '21', label: '9 PM'}, {value: '22', label: '10 PM'}, {value: '23', label: '11 PM'}
+        ];
+        
+        hours.forEach(hour => {
+            const option = document.createElement('option');
+            option.value = hour.value;
+            option.textContent = hour.label;
+            if (hour.value === selectedValue) option.selected = true;
+            hourSelect.appendChild(option);
+        });
+    }
+}
+
+// Populate minute dropdown (0-59)
+function populateMinuteDropdown() {
+    const selectedValue = minuteSelect.value; // Preserve selection
+    minuteSelect.innerHTML = '<option value="">Min</option>';
+    
+    for (let i = 0; i < 60; i++) {
+        const minute = i.toString().padStart(2, '0');
+        const option = document.createElement('option');
+        option.value = minute;
+        option.textContent = minute;
+        if (minute === selectedValue) option.selected = true;
+        minuteSelect.appendChild(option);
+    }
+}
+
+// Toggle time format
+function toggleTimeFormat() {
+    is24HourFormat = !is24HourFormat;
+    timeFormatToggle.textContent = is24HourFormat ? '24h' : '12h';
+    populateHourDropdown();
+}
 
 // Load tasks when page loads
 document.addEventListener('DOMContentLoaded', function() {
@@ -37,6 +146,12 @@ document.addEventListener('DOMContentLoaded', function() {
     setupFormHandlers();
     setupNotificationSystem();
     startNotificationChecker();
+    initializeYearSelector();
+    initializeTimeSelectors();
+    
+    // Add event listeners
+    yearSelect.addEventListener('change', handleYearChange);
+    timeFormatToggle.addEventListener('click', toggleTimeFormat);
 });
 
 // Setup form handlers
@@ -46,7 +161,7 @@ function setupFormHandlers() {
         e.preventDefault();
         
         const taskText = input.value.trim();
-        const selectedTime = alarmTime.value;
+        const selectedTime = getSelectedTime();
         const selectedPriority = prioritySelect.value;
         
         if (taskText === '' || !selectedDate) return;
@@ -66,7 +181,8 @@ function setupFormHandlers() {
         
         // Clear form and hide it
         input.value = '';
-        alarmTime.value = '';
+        hourSelect.value = '';
+        minuteSelect.value = '';
         prioritySelect.value = 'medium';
         hideQuickForm();
     });
@@ -252,7 +368,7 @@ form.addEventListener('submit', function(e) {
   const taskText = input.value.trim();
   const selectedDay = daySelect.value;
   const selectedTaskDate = taskDate.value;
-  const selectedTime = alarmTime.value;
+  const selectedTime = getSelectedTime();
   const selectedPriority = prioritySelect.value;
   
   if (taskText === '') return;
@@ -277,7 +393,8 @@ form.addEventListener('submit', function(e) {
   // Clear form (but keep date for convenience)
   input.value = '';
   daySelect.value = '';
-  alarmTime.value = '';
+  hourSelect.value = '';
+  minuteSelect.value = '';
   // Keep date and priority selected for user convenience
 });
 

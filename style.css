@@ -483,6 +483,155 @@ input:focus, select:focus {
   border-color: #DAA520;
 }
 
+/* Time Selector Styling */
+.time-selector-container {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.time-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #1a1a1a;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+}
+
+.time-dropdowns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.time-dropdown {
+  flex: 1;
+  padding: 10px 12px;
+  border: 2px solid rgba(218, 165, 32, 0.4);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(5px);
+  color: #1a1a1a;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(218, 165, 32, 0.2);
+}
+
+.time-dropdown:focus {
+  border-color: rgba(218, 165, 32, 0.8);
+  box-shadow: 0 0 15px rgba(218, 165, 32, 0.4);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.time-dropdown:hover {
+  border-color: rgba(218, 165, 32, 0.6);
+  box-shadow: 0 0 12px rgba(218, 165, 32, 0.3);
+}
+
+.time-separator {
+  font-size: 18px;
+  font-weight: bold;
+  color: rgba(218, 165, 32, 0.8);
+  text-shadow: 0 0 5px rgba(218, 165, 32, 0.4);
+  margin: 0 4px;
+}
+
+.time-format-btn {
+  padding: 8px 12px;
+  margin-left: 8px;
+  border: 2px solid rgba(218, 165, 32, 0.6);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  outline: none;
+  transition: all 0.3s ease;
+  background: rgba(218, 165, 32, 0.2);
+  backdrop-filter: blur(5px);
+  color: rgba(218, 165, 32, 0.9);
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(218, 165, 32, 0.2);
+  text-shadow: 0 0 5px rgba(218, 165, 32, 0.4);
+}
+
+.time-format-btn:hover {
+  border-color: rgba(218, 165, 32, 0.8);
+  background: rgba(218, 165, 32, 0.3);
+  box-shadow: 0 0 12px rgba(218, 165, 32, 0.4);
+  transform: translateY(-1px);
+}
+
+.time-format-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 0 8px rgba(218, 165, 32, 0.3);
+}
+
+/* Year Selector Sidebar Styling */
+.year-sidebar {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 2px solid rgba(218, 165, 32, 0.4);
+  padding: 15px;
+  box-shadow: 0 0 20px rgba(218, 165, 32, 0.3);
+  transition: all 0.3s ease;
+}
+
+.year-sidebar:hover {
+  border-color: rgba(218, 165, 32, 0.6);
+  box-shadow: 0 0 25px rgba(218, 165, 32, 0.5);
+  transform: translateY(-2px);
+}
+
+.year-selector-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.year-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+.year-dropdown {
+  padding: 8px 12px;
+  border: 2px solid rgba(218, 165, 32, 0.4);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  color: #1a1a1a;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(218, 165, 32, 0.2);
+  min-width: 80px;
+  text-align: center;
+}
+
+.year-dropdown:focus {
+  border-color: rgba(218, 165, 32, 0.8);
+  box-shadow: 0 0 15px rgba(218, 165, 32, 0.4);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.year-dropdown:hover {
+  border-color: rgba(218, 165, 32, 0.6);
+  box-shadow: 0 0 12px rgba(218, 165, 32, 0.3);
+}
+
 #alarm-time {
   flex: 0 1 auto;
   min-width: 120px;
