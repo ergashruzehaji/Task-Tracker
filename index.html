@@ -7,9 +7,9 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <meta name="cache-buster" content="1758743199" />
-  <title>Task Tracker - Latest Updates</title>
-  <link rel="stylesheet" href="style.css?v=1758746135&cb=force-refresh" />
+  <meta name="cache-buster" content="1758757000" />
+  <title>Task Tracker - Sidebar Layout</title>
+  <link rel="stylesheet" href="style.css?v=1758757000&cb=force-refresh" />
 </head>
 <body>
   <div class="app-container">
@@ -18,8 +18,8 @@
     <!-- Streamlined Main Content -->
     <div class="main-content" id="main-content">
       <div class="container">
-        <!-- Compact Task Form - Initially Hidden -->
-        <div id="quick-task-form" class="quick-form" style="display: none;">
+        <!-- Compact Task Form - Initially Hidden (Replaced by Sidebar) -->
+        <div id="quick-task-form" class="quick-form" style="display: none !important;">
           <div class="form-header">
             <h3 id="form-title">Add Task for <span id="selected-date"></span></h3>
             <button type="button" id="cancel-form" class="close-btn">✕</button>
@@ -124,24 +124,26 @@
         <!-- Enhanced Time-Slot Calendar Component -->
         <div class="calendar-layout">
           <div class="calendar-main">
-            <!-- Calendar Controls -->
-            <div class="calendar-controls">
+            <!-- Month/Year Display at Top -->
+            <div class="month-year-header">
               <div class="navigation-controls">
                 <button id="prev-period">‹</button>
                 <div class="period-display">
-                  <h2 id="current-period">October 21-27, 2025</h2>
+                  <h2 id="current-period">September 2025</h2>
                 </div>
                 <button id="next-period">›</button>
                 <select id="year-select" class="year-dropdown-inline">
                   <!-- Years will be populated by JavaScript -->
                 </select>
               </div>
-              
+            </div>
+
+            <!-- View Controls Below -->
+            <div class="view-controls-section">
               <div class="view-controls">
-                <button class="view-btn active" data-view="week">📅 Week</button>
-                <button class="view-btn" data-view="day">📆 Day</button>
+                <button class="view-btn" data-view="day">� Day</button>
+                <button class="view-btn active" data-view="week">� Week</button>
                 <button class="view-btn" data-view="month">🗓 Month</button>
-                <button class="view-btn" data-view="year">📋 Year</button>
               </div>
             </div>
 
@@ -170,23 +172,122 @@
             </div>
           </div>
           
-          <!-- Right Side Legend Panel -->
-          <div class="calendar-right-panel">
-            <div class="panel-header">
-              <h4>📊 Priority Legend</h4>
+          <!-- Task Form Sidebar - Appears when day is selected -->
+          <div id="task-sidebar" class="task-sidebar" style="display: none;">
+            <div class="sidebar-header">
+              <h3 id="sidebar-title">Add Task for <span id="sidebar-selected-date"></span></h3>
+              <button type="button" id="close-sidebar" class="close-btn">✕</button>
             </div>
-            <div class="calendar-legend vertical">
-              <div class="legend-item">
-                <span class="legend-dot high"></span>
-                <span class="legend-text">High Priority</span>
+            
+            <form id="sidebar-task-form" class="sidebar-form">
+              <div class="form-group">
+                <label class="form-label">📝 Task Description</label>
+                <input type="text" id="sidebar-task-input" class="form-input" placeholder="Enter a task..." required />
               </div>
-              <div class="legend-item">
-                <span class="legend-dot medium"></span>
-                <span class="legend-text">Medium Priority</span>
+              
+              <div class="form-row">
+                <div class="form-group half">
+                  <label class="form-label">🕐 Start Time</label>
+                  <input type="time" id="sidebar-start-time" class="form-input" />
+                </div>
+                <div class="form-group half">
+                  <label class="form-label">🕐 End Time</label>
+                  <input type="time" id="sidebar-end-time" class="form-input" />
+                </div>
               </div>
-              <div class="legend-item">
-                <span class="legend-dot low"></span>
-                <span class="legend-text">Low Priority</span>
+              
+              <div class="form-group">
+                <label class="form-label">🎯 Priority</label>
+                <select id="sidebar-priority-select" class="form-select">
+                  <option value="low">Low Priority</option>
+                  <option value="medium" selected>Medium Priority</option>
+                  <option value="high">High Priority</option>
+                </select>
+              </div>
+
+              <!-- Time Format Toggle -->
+              <div class="form-group">
+                <label class="form-label">⏰ Time Format</label>
+                <button type="button" id="sidebar-time-format-toggle" class="format-toggle-btn">
+                  AM/PM
+                </button>
+              </div>
+
+              <!-- Recurring Options -->
+              <div class="recurring-section">
+                <div class="recurring-header">
+                  <button type="button" id="sidebar-toggle-recurring" class="recurring-toggle-btn">
+                    🔄 <span class="toggle-text">Add Recurring</span> <span class="toggle-icon">▼</span>
+                  </button>
+                </div>
+                <div id="sidebar-recurring-options" class="recurring-options" style="display: none;">
+                  <div class="form-row">
+                    <div class="form-group half">
+                      <label class="form-label">📅 Repeat</label>
+                      <select id="sidebar-recurring-type" class="form-select">
+                        <option value="none">No Repeat</option>
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                      </select>
+                    </div>
+                    <div class="form-group half">
+                      <label class="form-label">🔢 Times</label>
+                      <input type="number" id="sidebar-recurring-count" class="form-input" min="1" max="365" value="3" placeholder="Count">
+                    </div>
+                  </div>
+                  
+                  <!-- Weekly Options -->
+                  <div id="sidebar-weekly-options" class="weekly-options" style="display: none;">
+                    <label class="form-label">📆 Repeat on days</label>
+                    <div class="weekday-selector">
+                      <label class="weekday-item"><input type="checkbox" value="1"> Mon</label>
+                      <label class="weekday-item"><input type="checkbox" value="2"> Tue</label>
+                      <label class="weekday-item"><input type="checkbox" value="3"> Wed</label>
+                      <label class="weekday-item"><input type="checkbox" value="4"> Thu</label>
+                      <label class="weekday-item"><input type="checkbox" value="5"> Fri</label>
+                      <label class="weekday-item"><input type="checkbox" value="6"> Sat</label>
+                      <label class="weekday-item"><input type="checkbox" value="0"> Sun</label>
+                    </div>
+                  </div>
+
+                  <!-- Quick Presets -->
+                  <div class="recurring-presets">
+                    <label class="form-label">⚡ Quick Presets</label>
+                    <div class="preset-buttons">
+                      <button type="button" class="preset-btn" data-preset="work-week">Work Week</button>
+                      <button type="button" class="preset-btn" data-preset="weekends">Weekends</button>
+                      <button type="button" class="preset-btn" data-preset="daily-month">Daily/Month</button>
+                      <button type="button" class="preset-btn" data-preset="weekly-year">Weekly/Year</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-actions">
+                <button type="submit" class="btn-primary">
+                  <span id="sidebar-submit-text">Add Task</span>
+                </button>
+                <button type="button" class="btn-secondary" onclick="document.getElementById('close-sidebar').click()">Cancel</button>
+              </div>
+            </form>
+
+            <!-- Priority Legend -->
+            <div class="sidebar-legend">
+              <h4>📊 Priority Legend</h4>
+              <div class="legend-items">
+                <div class="legend-item">
+                  <span class="legend-dot high"></span>
+                  <span class="legend-text">High Priority</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot medium"></span>
+                  <span class="legend-text">Medium Priority</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot low"></span>
+                  <span class="legend-text">Low Priority</span>
+                </div>
               </div>
             </div>
           </div>
@@ -231,6 +332,6 @@
     <!-- We'll generate the alarm sound programmatically -->
   </audio>
 
-    <script src="script.js?v=1758746135"></script>
+    <script src="script.js?v=1758757000"></script>
 </body>
 </html>

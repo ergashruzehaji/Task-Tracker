@@ -136,7 +136,560 @@ function convertTimeFormat(timeValue) {
 
 // Sidebar removed
 
-// Stats panel functionality removed - Quick Stats section removed
+// Recurring Task Functionality
+let recurringExpanded = false;
+
+function initializeRecurringSection() {
+    const toggleBtn = document.getElementById('toggle-recurring');
+    const recurringOptions = document.getElementById('recurring-options');
+    const recurringType = document.getElementById('recurring-type');
+    const weeklyOptions = document.getElementById('weekly-options');
+    const presetBtns = document.querySelectorAll('.preset-btn');
+    const submitBtn = document.querySelector('.btn-primary');
+    const submitText = document.getElementById('submit-text');
+    
+    if (!toggleBtn || !recurringOptions) return;
+    
+    // Toggle recurring section
+    toggleBtn.addEventListener('click', () => {
+        recurringExpanded = !recurringExpanded;
+        
+        if (recurringExpanded) {
+            recurringOptions.style.display = 'block';
+            toggleBtn.classList.add('expanded');
+            document.querySelector('.recurring-section').classList.add('expanded');
+        } else {
+            recurringOptions.style.display = 'none';
+            toggleBtn.classList.remove('expanded');
+            document.querySelector('.recurring-section').classList.remove('expanded');
+        }
+        
+        updateSubmitButtonText();
+    });
+    
+    // Handle recurring type change
+    if (recurringType && weeklyOptions) {
+        recurringType.addEventListener('change', (e) => {
+            if (e.target.value === 'weekly') {
+                weeklyOptions.style.display = 'block';
+            } else {
+                weeklyOptions.style.display = 'none';
+            }
+            updateSubmitButtonText();
+        });
+    }
+    
+    // Handle preset buttons
+    presetBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const preset = e.target.dataset.preset;
+            applyRecurringPreset(preset);
+        });
+    });
+    
+    // Update submit button text based on recurring settings
+    function updateSubmitButtonText() {
+        if (!recurringExpanded || recurringType?.value === 'none') {
+            submitText.textContent = 'Add Task';
+            return;
+        }
+        
+        const count = document.getElementById('recurring-count')?.value || 1;
+        const type = recurringType?.value || 'none';
+        
+        if (type !== 'none') {
+            submitText.textContent = `Add ${count} ${type === 'weekly' ? 'Weekly' : type === 'daily' ? 'Daily' : 'Monthly'} Tasks`;
+        } else {
+            submitText.textContent = 'Add Task';
+        }
+    }
+    
+    // Listen for count changes
+    const recurringCount = document.getElementById('recurring-count');
+    if (recurringCount) {
+        recurringCount.addEventListener('input', updateSubmitButtonText);
+    }
+}
+
+function applyRecurringPreset(preset) {
+    const recurringType = document.getElementById('recurring-type');
+    const recurringCount = document.getElementById('recurring-count');
+    const weeklyOptions = document.getElementById('weekly-options');
+    const weekdayCheckboxes = weeklyOptions?.querySelectorAll('input[type="checkbox"]');
+    
+    // Clear all checkboxes first
+    if (weekdayCheckboxes) {
+        weekdayCheckboxes.forEach(cb => cb.checked = false);
+    }
+    
+    switch (preset) {
+        case 'work-week':
+            recurringType.value = 'weekly';
+            recurringCount.value = '52'; // Full year
+            weeklyOptions.style.display = 'block';
+            // Check Mon-Fri (values 1-5)
+            [1, 2, 3, 4, 5].forEach(day => {
+                const checkbox = weeklyOptions?.querySelector(`input[value="${day}"]`);
+                if (checkbox) checkbox.checked = true;
+            });
+            break;
+            
+        case 'weekends':
+            recurringType.value = 'weekly';
+            recurringCount.value = '26'; // Half year
+            weeklyOptions.style.display = 'block';
+            // Check Sat-Sun (values 6, 0)
+            [6, 0].forEach(day => {
+                const checkbox = weeklyOptions?.querySelector(`input[value="${day}"]`);
+                if (checkbox) checkbox.checked = true;
+            });
+            break;
+            
+        case 'daily-month':
+            recurringType.value = 'daily';
+            recurringCount.value = '30';
+            weeklyOptions.style.display = 'none';
+            break;
+            
+        case 'weekly-year':
+            recurringType.value = 'weekly';
+            recurringCount.value = '52';
+            weeklyOptions.style.display = 'block';
+            // Check the same day as today
+            const today = new Date().getDay();
+            const todayCheckbox = weeklyOptions?.querySelector(`input[value="${today}"]`);
+            if (todayCheckbox) todayCheckbox.checked = true;
+            break;
+    }
+    
+    // Update button text
+    setTimeout(() => {
+        const event = new Event('change');
+        recurringType.dispatchEvent(event);
+    }, 100);
+}
+
+// Generate recurring tasks
+function generateRecurringTasks(baseTask) {
+    const recurringType = document.getElementById('recurring-type')?.value;
+    const recurringCount = parseInt(document.getElementById('recurring-count')?.value) || 1;
+    
+    if (!recurringExpanded || recurringType === 'none' || recurringCount <= 1) {
+        return [baseTask]; // Return single task
+    }
+    
+    const tasks = [];
+    const baseDate = new Date(baseTask.date);
+    
+    switch (recurringType) {
+        case 'daily':
+            for (let i = 0; i < recurringCount; i++) {
+                const taskDate = new Date(baseDate);
+                taskDate.setDate(baseDate.getDate() + i);
+                tasks.push({
+                    ...baseTask,
+                    id: Date.now() + i,
+                    date: taskDate.toISOString().split('T')[0]
+                });
+            }
+            break;
+            
+        case 'weekly':
+            const selectedDays = getSelectedWeekdays();
+            if (selectedDays.length === 0) {
+                // If no days selected, use the original day
+                selectedDays.push(baseDate.getDay());
+            }
+            
+            let weekCount = 0;
+            let taskId = 0;
+            
+            while (tasks.length < recurringCount) {
+                selectedDays.forEach(dayOfWeek => {
+                    if (tasks.length >= recurringCount) return;
+                    
+                    const taskDate = new Date(baseDate);
+                    // Calculate the next occurrence of this day
+                    const dayDiff = (dayOfWeek - baseDate.getDay() + 7) % 7;
+                    taskDate.setDate(baseDate.getDate() + dayDiff + (weekCount * 7));
+                    
+                    tasks.push({
+                        ...baseTask,
+                        id: Date.now() + taskId++,
+                        date: taskDate.toISOString().split('T')[0]
+                    });
+                });
+                weekCount++;
+            }
+            break;
+            
+        case 'monthly':
+            for (let i = 0; i < recurringCount; i++) {
+                const taskDate = new Date(baseDate);
+                taskDate.setMonth(baseDate.getMonth() + i);
+                tasks.push({
+                    ...baseTask,
+                    id: Date.now() + i,
+                    date: taskDate.toISOString().split('T')[0]
+                });
+            }
+            break;
+    }
+    
+    return tasks.slice(0, recurringCount);
+}
+
+function getSelectedWeekdays() {
+    const weeklyOptions = document.getElementById('weekly-options');
+    const checkedBoxes = weeklyOptions?.querySelectorAll('input[type="checkbox"]:checked');
+    return Array.from(checkedBoxes || []).map(cb => parseInt(cb.value));
+}
+
+function resetRecurringForm() {
+    const recurringType = document.getElementById('recurring-type');
+    const recurringCount = document.getElementById('recurring-count');
+    const weeklyOptions = document.getElementById('weekly-options');
+    const weekdayCheckboxes = weeklyOptions?.querySelectorAll('input[type="checkbox"]');
+    
+    if (recurringType) recurringType.value = 'none';
+    if (recurringCount) recurringCount.value = '1';
+    
+    // Uncheck all weekday boxes
+    if (weekdayCheckboxes) {
+        weekdayCheckboxes.forEach(cb => cb.checked = false);
+    }
+    
+    // Hide weekly options
+    if (weeklyOptions) {
+        weeklyOptions.style.display = 'none';
+    }
+}
+
+function showNotification(message) {
+    // Create a temporary notification element
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        animation: slideIn 0.3s ease-out;
+    `;
+    
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    // Add slide-in animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Remove notification after 3 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideIn 0.3s ease-out reverse';
+        setTimeout(() => {
+            notification.remove();
+            style.remove();
+        }, 300);
+    }, 3000);
+}
+
+// Task Sidebar Functionality
+let sidebarOpen = false;
+let selectedSidebarDate = null;
+
+function initializeTaskSidebar() {
+    const sidebar = document.getElementById('task-sidebar');
+    const closeSidebarBtn = document.getElementById('close-sidebar');
+    const sidebarForm = document.getElementById('sidebar-task-form');
+    const sidebarToggleRecurring = document.getElementById('sidebar-toggle-recurring');
+    const sidebarRecurringOptions = document.getElementById('sidebar-recurring-options');
+    const sidebarRecurringType = document.getElementById('sidebar-recurring-type');
+    const sidebarWeeklyOptions = document.getElementById('sidebar-weekly-options');
+    const sidebarTimeFormatToggle = document.getElementById('sidebar-time-format-toggle');
+    
+    if (!sidebar) return;
+    
+    // Close sidebar
+    if (closeSidebarBtn) {
+        closeSidebarBtn.addEventListener('click', closeSidebar);
+    }
+    
+    // Handle recurring toggle
+    if (sidebarToggleRecurring && sidebarRecurringOptions) {
+        sidebarToggleRecurring.addEventListener('click', () => {
+            const isExpanded = sidebarRecurringOptions.style.display === 'block';
+            sidebarRecurringOptions.style.display = isExpanded ? 'none' : 'block';
+            sidebarToggleRecurring.classList.toggle('expanded', !isExpanded);
+        });
+    }
+    
+    // Handle recurring type change
+    if (sidebarRecurringType && sidebarWeeklyOptions) {
+        sidebarRecurringType.addEventListener('change', (e) => {
+            sidebarWeeklyOptions.style.display = e.target.value === 'weekly' ? 'block' : 'none';
+        });
+    }
+    
+    // Handle time format toggle
+    if (sidebarTimeFormatToggle) {
+        sidebarTimeFormatToggle.addEventListener('click', toggleSidebarTimeFormat);
+    }
+    
+    // Handle preset buttons
+    const sidebarPresetBtns = sidebar.querySelectorAll('.preset-btn');
+    sidebarPresetBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const preset = e.target.dataset.preset;
+            applySidebarRecurringPreset(preset);
+        });
+    });
+    
+    // Handle form submission
+    if (sidebarForm) {
+        sidebarForm.addEventListener('submit', handleSidebarFormSubmit);
+    }
+}
+
+function showTaskSidebar(dateString) {
+    const sidebar = document.getElementById('task-sidebar');
+    const sidebarSelectedDate = document.getElementById('sidebar-selected-date');
+    
+    if (!sidebar) return;
+    
+    selectedSidebarDate = dateString;
+    const date = new Date(dateString);
+    
+    if (sidebarSelectedDate) {
+        sidebarSelectedDate.textContent = date.toLocaleDateString('en-US', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+    }
+    
+    sidebar.classList.add('show');
+    document.body.classList.add('sidebar-open');
+    sidebarOpen = true;
+    
+    // Focus on task input
+    setTimeout(() => {
+        const taskInput = document.getElementById('sidebar-task-input');
+        if (taskInput) taskInput.focus();
+    }, 300);
+}
+
+function closeSidebar() {
+    const sidebar = document.getElementById('task-sidebar');
+    if (!sidebar) return;
+    
+    sidebar.classList.remove('show');
+    document.body.classList.remove('sidebar-open');
+    sidebarOpen = false;
+    selectedSidebarDate = null;
+    
+    // Reset form
+    const sidebarForm = document.getElementById('sidebar-task-form');
+    if (sidebarForm) sidebarForm.reset();
+    
+    // Hide recurring options
+    const recurringOptions = document.getElementById('sidebar-recurring-options');
+    if (recurringOptions) recurringOptions.style.display = 'none';
+    
+    const weeklyOptions = document.getElementById('sidebar-weekly-options');
+    if (weeklyOptions) weeklyOptions.style.display = 'none';
+}
+
+function toggleSidebarTimeFormat() {
+    const toggle = document.getElementById('sidebar-time-format-toggle');
+    const startTime = document.getElementById('sidebar-start-time');
+    const endTime = document.getElementById('sidebar-end-time');
+    
+    if (!toggle) return;
+    
+    const is24Hour = toggle.textContent === '24H';
+    toggle.textContent = is24Hour ? 'AM/PM' : '24H';
+    
+    // Update input placeholders and behavior
+    if (startTime) startTime.step = is24Hour ? "60" : "300";
+    if (endTime) endTime.step = is24Hour ? "60" : "300";
+}
+
+function applySidebarRecurringPreset(preset) {
+    const recurringType = document.getElementById('sidebar-recurring-type');
+    const recurringCount = document.getElementById('sidebar-recurring-count');
+    const weeklyOptions = document.getElementById('sidebar-weekly-options');
+    const weekdayCheckboxes = weeklyOptions?.querySelectorAll('input[type="checkbox"]');
+    
+    // Clear all checkboxes first
+    if (weekdayCheckboxes) {
+        weekdayCheckboxes.forEach(cb => cb.checked = false);
+    }
+    
+    switch (preset) {
+        case 'work-week':
+            recurringType.value = 'weekly';
+            recurringCount.value = '52';
+            weeklyOptions.style.display = 'block';
+            [1, 2, 3, 4, 5].forEach(day => {
+                const checkbox = weeklyOptions?.querySelector(`input[value="${day}"]`);
+                if (checkbox) checkbox.checked = true;
+            });
+            break;
+            
+        case 'weekends':
+            recurringType.value = 'weekly';
+            recurringCount.value = '26';
+            weeklyOptions.style.display = 'block';
+            [6, 0].forEach(day => {
+                const checkbox = weeklyOptions?.querySelector(`input[value="${day}"]`);
+                if (checkbox) checkbox.checked = true;
+            });
+            break;
+            
+        case 'daily-month':
+            recurringType.value = 'daily';
+            recurringCount.value = '30';
+            weeklyOptions.style.display = 'none';
+            break;
+            
+        case 'weekly-year':
+            recurringType.value = 'weekly';
+            recurringCount.value = '52';
+            weeklyOptions.style.display = 'block';
+            const today = new Date().getDay();
+            const todayCheckbox = weeklyOptions?.querySelector(`input[value="${today}"]`);
+            if (todayCheckbox) todayCheckbox.checked = true;
+            break;
+    }
+}
+
+function handleSidebarFormSubmit(e) {
+    e.preventDefault();
+    
+    if (!selectedSidebarDate) return;
+    
+    const taskText = document.getElementById('sidebar-task-input')?.value.trim();
+    const startTime = document.getElementById('sidebar-start-time')?.value || '';
+    const endTime = document.getElementById('sidebar-end-time')?.value || '';
+    const priority = document.getElementById('sidebar-priority-select')?.value || 'medium';
+    
+    if (!taskText) return;
+    
+    const baseTask = {
+        text: taskText,
+        date: selectedSidebarDate,
+        startTime: startTime,
+        endTime: endTime,
+        alarmTime: startTime,
+        priority: priority,
+        completed: false,
+        acknowledged: false,
+        createdAt: new Date().toISOString()
+    };
+    
+    // Generate recurring tasks or single task
+    const tasksToAdd = generateSidebarRecurringTasks(baseTask);
+    
+    // Add all tasks
+    tasksToAdd.forEach(task => addTask(task));
+    
+    // Show confirmation
+    if (tasksToAdd.length > 1) {
+        showNotification(`Successfully added ${tasksToAdd.length} recurring tasks!`);
+    }
+    
+    // Close sidebar
+    closeSidebar();
+}
+
+function generateSidebarRecurringTasks(baseTask) {
+    const recurringType = document.getElementById('sidebar-recurring-type')?.value;
+    const recurringCount = parseInt(document.getElementById('sidebar-recurring-count')?.value) || 1;
+    const recurringOptions = document.getElementById('sidebar-recurring-options');
+    
+    if (!recurringOptions || recurringOptions.style.display === 'none' || recurringType === 'none' || recurringCount <= 1) {
+        return [{ ...baseTask, id: Date.now() }];
+    }
+    
+    const tasks = [];
+    const baseDate = new Date(baseTask.date);
+    
+    switch (recurringType) {
+        case 'daily':
+            for (let i = 0; i < recurringCount; i++) {
+                const taskDate = new Date(baseDate);
+                taskDate.setDate(baseDate.getDate() + i);
+                tasks.push({
+                    ...baseTask,
+                    id: Date.now() + i,
+                    date: taskDate.toISOString().split('T')[0]
+                });
+            }
+            break;
+            
+        case 'weekly':
+            const selectedDays = getSidebarSelectedWeekdays();
+            if (selectedDays.length === 0) {
+                selectedDays.push(baseDate.getDay());
+            }
+            
+            let weekCount = 0;
+            let taskId = 0;
+            
+            while (tasks.length < recurringCount) {
+                selectedDays.forEach(dayOfWeek => {
+                    if (tasks.length >= recurringCount) return;
+                    
+                    const taskDate = new Date(baseDate);
+                    const dayDiff = (dayOfWeek - baseDate.getDay() + 7) % 7;
+                    taskDate.setDate(baseDate.getDate() + dayDiff + (weekCount * 7));
+                    
+                    tasks.push({
+                        ...baseTask,
+                        id: Date.now() + taskId++,
+                        date: taskDate.toISOString().split('T')[0]
+                    });
+                });
+                weekCount++;
+            }
+            break;
+            
+        case 'monthly':
+            for (let i = 0; i < recurringCount; i++) {
+                const taskDate = new Date(baseDate);
+                taskDate.setMonth(baseDate.getMonth() + i);
+                tasks.push({
+                    ...baseTask,
+                    id: Date.now() + i,
+                    date: taskDate.toISOString().split('T')[0]
+                });
+            }
+            break;
+    }
+    
+    return tasks.slice(0, recurringCount);
+}
+
+function getSidebarSelectedWeekdays() {
+    const weeklyOptions = document.getElementById('sidebar-weekly-options');
+    const checkedBoxes = weeklyOptions?.querySelectorAll('input[type="checkbox"]:checked');
+    return Array.from(checkedBoxes || []).map(cb => parseInt(cb.value));
+}
 
 // Toggle between AM/PM and 24h formats
 function toggleTimeFormat() {
@@ -524,6 +1077,8 @@ function initializeApp() {
     initializeAlarmAudio(); // Initialize alarm sound system  
     setupAlarmHandlers(); // Setup alarm UI handlers
     startNotificationChecker();
+    initializeRecurringSection(); // Initialize recurring task functionality
+    initializeTaskSidebar(); // Initialize task sidebar functionality
     
     // Initialize dropdowns with debugging
     console.log('🔧 Initializing dropdowns...');
@@ -592,8 +1147,7 @@ function setupFormHandlers() {
         
         if (taskText === '' || !selectedDate) return;
         
-        const task = {
-            id: Date.now(),
+        const baseTask = {
             text: taskText,
             date: selectedDate,
             startTime: startTime,
@@ -605,13 +1159,29 @@ function setupFormHandlers() {
             createdAt: new Date().toISOString()
         };
         
-        addTask(task);
+        // Generate recurring tasks or single task
+        const tasksToAdd = generateRecurringTasks(baseTask);
+        
+        // Add all tasks
+        tasksToAdd.forEach(task => addTask(task));
+        
+        // Show confirmation message
+        if (tasksToAdd.length > 1) {
+            showNotification(`Successfully added ${tasksToAdd.length} recurring tasks!`);
+        }
         
         // Clear form and hide it
         input.value = '';
         document.getElementById('start-time').value = '';
         document.getElementById('end-time').value = '';
         prioritySelect.value = 'medium';
+        
+        // Reset recurring section
+        if (recurringExpanded) {
+            document.getElementById('toggle-recurring').click();
+        }
+        resetRecurringForm();
+        
         hideQuickForm();
     });
     
@@ -623,16 +1193,8 @@ function setupFormHandlers() {
 
 // Show quick form for selected date
 function showQuickForm(dateString) {
-    selectedDate = dateString;
-    const date = new Date(dateString);
-    selectedDateTitle.textContent = date.toLocaleDateString('en-US', { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-    });
-    quickForm.style.display = 'block';
-    input.focus();
+    // Use sidebar instead of old quick form
+    showTaskSidebar(dateString);
 }
 
 // Alternative function name for consistency
