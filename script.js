@@ -117,12 +117,13 @@ function populateHourDropdown() {
     }
 }
 
-// Populate minute dropdown (0-59)
+// Populate minute dropdown (5-minute increments)
 function populateMinuteDropdown() {
     const selectedValue = minuteSelect.value; // Preserve selection
     minuteSelect.innerHTML = '<option value="">Min</option>';
     
-    for (let i = 0; i < 60; i++) {
+    // 5-minute increments: 00, 05, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55
+    for (let i = 0; i < 60; i += 5) {
         const minute = i.toString().padStart(2, '0');
         const option = document.createElement('option');
         option.value = minute;
