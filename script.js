@@ -343,7 +343,9 @@ function setupFormHandlers() {
     });
     
     // Cancel form handler
-    cancelFormBtn.addEventListener('click', hideQuickForm);
+    if (cancelFormBtn) {
+        cancelFormBtn.addEventListener('click', hideQuickForm);
+    }
 }
 
 // Show quick form for selected date
@@ -369,7 +371,9 @@ function hideQuickForm() {
 // Notification System Functions
 function setupNotificationSystem() {
     // Close sidebar handler
-    closeNotificationsBtn.addEventListener('click', hideSidebar);
+    if (closeNotificationsBtn) {
+        closeNotificationsBtn.addEventListener('click', hideSidebar);
+    }
     
     // Click outside to close
     document.addEventListener('click', (e) => {
