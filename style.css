@@ -572,7 +572,7 @@ input:focus, select:focus {
 .year-sidebar {
   position: fixed;
   top: 20px;
-  right: 20px;
+  right: 80px;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(10px);

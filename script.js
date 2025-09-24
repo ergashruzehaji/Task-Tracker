@@ -46,19 +46,19 @@ function getSelectedTime() {
 
 // Initialize year selector with current year and future years
 function initializeYearSelector() {
-    const currentYear = new Date().getFullYear();
-    const futureYears = 10; // Show 10 years ahead
+    const currentYear = 2025; // Fixed to start from 2025
+    const futureYears = 50; // Show 50 years ahead (2025-2075)
     
     yearSelect.innerHTML = ''; // Clear existing options
     
-    for (let i = 0; i <= futureYears; i++) {
+    for (let i = 0; i < futureYears; i++) {
         const year = currentYear + i;
         const option = document.createElement('option');
         option.value = year;
         option.textContent = year;
         
-        // Set current year as selected
-        if (i === 0) {
+        // Set 2025 as selected by default
+        if (year === currentYear) {
             option.selected = true;
         }
         
