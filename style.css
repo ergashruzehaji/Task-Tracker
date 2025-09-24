@@ -85,14 +85,21 @@ body {
   background: rgba(255, 255, 255, 0.9) !important;
 }
 
-/* Calendar styling */
+/* Calendar styling - Updated with reduced transparency and improved background */
+/* Fix: Replaced excessive transparency layers with single gradient background and minimal blur */
 .calendar-container {
-  background: rgba(255, 255, 255, 0.4);
+  /* Use a gradient background instead of excessive transparency for better visual appeal */
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.85) 0%, 
+    rgba(248, 249, 250, 0.9) 50%, 
+    rgba(255, 255, 255, 0.85) 100%);
   border-radius: 15px;
   padding: 25px;
   margin: 20px 0;
-  border: 1px solid rgba(218, 165, 32, 0.25);
-  box-shadow: 0 4px 12px rgba(218, 165, 32, 0.1);
+  border: 1px solid rgba(218, 165, 32, 0.3);
+  box-shadow: 0 4px 12px rgba(218, 165, 32, 0.15);
+  /* Single backdrop filter for minimal blur effect - reduced from multiple overlapping filters */
+  backdrop-filter: blur(2px);
 }
 
 .calendar-header {
@@ -761,15 +768,8 @@ li.completed {
   box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3);
 }
 
-/* Calendar Component */
-.calendar-container {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 15px;
-  padding: 20px;
-  margin: 20px 0;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
+/* Duplicate calendar-container definition removed to prevent conflicts */
+/* Fix: Removed duplicate .calendar-container rule that was causing style conflicts */
 
 .calendar-header {
   display: flex;
@@ -809,10 +809,11 @@ li.completed {
 }
 
 .calendar-grid {
-  background: rgba(255, 255, 255, 0.2);
+  /* Simplified calendar grid with less transparency - Fix: Reduced excessive transparency */
+  background: rgba(255, 255, 255, 0.6);
   border-radius: 10px;
   padding: 15px;
-  backdrop-filter: blur(3px);
+  /* Removed backdrop-filter to reduce excessive blur and improve readability */
 }
 
 .calendar-weekdays {
@@ -856,7 +857,7 @@ li.completed {
   border: 1px solid rgba(218, 165, 32, 0.8);
   transform: scale(1.05);
   box-shadow: 0 0 15px rgba(218, 165, 32, 0.4);
-  backdrop-filter: blur(3px);
+  /* Fix: Removed backdrop-filter to reduce excessive blur on hover */
 }
 
 .calendar-day.today {
@@ -876,7 +877,7 @@ li.completed {
   border: 2px solid rgba(218, 165, 32, 1);
   box-shadow: 0 0 25px rgba(218, 165, 32, 0.8), inset 0 0 15px rgba(218, 165, 32, 0.2);
   text-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(5px);
+  /* Fix: Removed backdrop-filter to reduce excessive blur on selected days */
 }
 
 .calendar-day.other-month {
