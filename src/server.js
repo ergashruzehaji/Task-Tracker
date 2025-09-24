@@ -138,8 +138,15 @@ app.delete('/api/tasks/:date/:id', (req, res) => {
     }
 });
 
-// Serve the main page
+// Serve main page
 app.get('/', (req, res) => {
+    console.log('🏠 Serving index.html');
+    // Force no cache
+    res.set({
+        'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+    });
     res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
