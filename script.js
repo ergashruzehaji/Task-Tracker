@@ -180,8 +180,12 @@ function updatePrioritySelectColor() {
     console.log('Priority select color updated to:', selectedPriority);
 }
 
-// Load tasks when page loads
-document.addEventListener('DOMContentLoaded', function() {
+// Initialize when both DOM and window are fully loaded
+function initializeApp() {
+    console.log('🚀 Initializing Task Tracker App...');
+    console.log('🔧 Script version: 2025-09-24-v7 - FIXED INITIALIZATION');
+    
+    try {
     console.log('🚀 DOM loaded, initializing Task Tracker components...');
     console.log('🔧 Script version: 2025-09-24-v6 - DEBUGGING STUCK NAVIGATION');
     
@@ -205,7 +209,9 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             console.log(`✅ Found element: ${name}`);
         }
-    });    // Initialize DOM elements
+    });
+    
+    // Initialize DOM elements with error checking
     form = document.getElementById('task-form');
     input = document.getElementById('task-input');
     hourSelect = document.getElementById('hour-select');
@@ -289,7 +295,18 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('🎨 Priority select color functionality added');
     }
     
-    console.log('All components initialized');
+        console.log('All components initialized successfully');
+    } catch (error) {
+        console.error('❌ Error initializing app:', error);
+    }
+}
+
+// Load when DOM is ready and when window is fully loaded
+document.addEventListener('DOMContentLoaded', initializeApp);
+window.addEventListener('load', function() {
+    console.log('🔄 Window fully loaded, ensuring app is initialized');
+    // Reinitialize if something failed
+    setTimeout(initializeApp, 100);
 });
 
 // Setup form handlers
