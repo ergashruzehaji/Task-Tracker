@@ -556,7 +556,7 @@ form.addEventListener('submit', function(e) {
 // Add task
 async function addTask(task) {
   try {
-    const response = await fetch(`${API_BASE}/tasks`, {
+    const response = await fetch(`${API_BASE}/api/tasks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -586,7 +586,7 @@ async function addTask(task) {
 // Load tasks
 async function loadTasks() {
   try {
-    const response = await fetch(`${API_BASE}/tasks`);
+    const response = await fetch(`${API_BASE}/api/tasks`);
     if (response.ok) {
       tasks = await response.json();
     } else {
@@ -678,7 +678,7 @@ async function toggleTaskCompletion(id) {
   task.completed = !task.completed;
   
   try {
-    const response = await fetch(`${API_BASE}/tasks/${id}`, {
+    const response = await fetch(`${API_BASE}/api/tasks/${task.date}/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -699,9 +699,9 @@ async function toggleTaskCompletion(id) {
 }
 
 // Delete task
-async function deleteTask(id) {
+async function deleteTask(date, id) {
   try {
-    const response = await fetch(`${API_BASE}/tasks/${id}`, {
+    const response = await fetch(`${API_BASE}/api/tasks/${date}/${id}`, {
       method: 'DELETE'
     });
     
@@ -967,6 +967,14 @@ function getHighestPriority(tasks) {
 
 // Filter functionality
 function setupFilters() {
+  // Get filter buttons if they exist
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  
+  if (filterBtns.length === 0) {
+    console.log('ℹ️ No filter buttons found, skipping filter setup');
+    return;
+  }
+  
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       // Update active filter button
@@ -1263,7 +1271,7 @@ function clearCompleted() {
         // Delete completed tasks from backend
         completedTasks.forEach(async (task) => {
             try {
-                await fetch(`${API_BASE}/tasks/${task.id}`, {
+                await fetch(`${API_BASE}/api/tasks/${task.date}/${task.id}`, {
                     method: 'DELETE'
                 });
             } catch (error) {
