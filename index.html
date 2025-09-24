@@ -60,9 +60,62 @@
                 </select>
               </div>
             </div>
+
+            <!-- Recurring Task Section -->
+            <div class="recurring-section">
+              <div class="recurring-header">
+                <button type="button" id="toggle-recurring" class="recurring-toggle-btn" title="Add recurring schedule">
+                  🔄 <span class="toggle-text">Add Recurring</span> <span class="toggle-icon">▼</span>
+                </button>
+              </div>
+              <div id="recurring-options" class="recurring-options" style="display: none;">
+                <div class="recurring-row">
+                  <div class="form-section">
+                    <label class="form-label">📅 Repeat:</label>
+                    <select id="recurring-type" class="recurring-dropdown">
+                      <option value="none">No Repeat</option>
+                      <option value="daily">Daily</option>
+                      <option value="weekly">Weekly</option>
+                      <option value="monthly">Monthly</option>
+                    </select>
+                  </div>
+                  <div class="form-section">
+                    <label class="form-label">🔢 Times:</label>
+                    <input type="number" id="recurring-count" class="recurring-input" min="1" max="365" value="3" placeholder="How many times">
+                  </div>
+                </div>
+                
+                <!-- Weekly Options -->
+                <div id="weekly-options" class="weekly-options" style="display: none;">
+                  <label class="form-label">📆 Repeat on days:</label>
+                  <div class="weekday-selector">
+                    <label class="weekday-item"><input type="checkbox" value="1"> Mon</label>
+                    <label class="weekday-item"><input type="checkbox" value="2"> Tue</label>
+                    <label class="weekday-item"><input type="checkbox" value="3"> Wed</label>
+                    <label class="weekday-item"><input type="checkbox" value="4"> Thu</label>
+                    <label class="weekday-item"><input type="checkbox" value="5"> Fri</label>
+                    <label class="weekday-item"><input type="checkbox" value="6"> Sat</label>
+                    <label class="weekday-item"><input type="checkbox" value="0"> Sun</label>
+                  </div>
+                </div>
+
+                <!-- Quick Presets -->
+                <div class="recurring-presets">
+                  <label class="form-label">⚡ Quick Presets:</label>
+                  <div class="preset-buttons">
+                    <button type="button" class="preset-btn" data-preset="work-week">Work Week (Mon-Fri)</button>
+                    <button type="button" class="preset-btn" data-preset="weekends">Weekends</button>
+                    <button type="button" class="preset-btn" data-preset="daily-month">Daily for Month</button>
+                    <button type="button" class="preset-btn" data-preset="weekly-year">Weekly for Year</button>
+                  </div>
+                </div>
+              </div>
+            </div>
             
             <div class="form-actions">
-              <button type="submit" class="btn-primary">Add Task</button>
+              <button type="submit" class="btn-primary">
+                <span id="submit-text">Add Task</span>
+              </button>
               <button type="button" class="btn-secondary" onclick="document.getElementById('cancel-form').click()">Cancel</button>
             </div>
           </form>
@@ -73,13 +126,6 @@
           <div class="calendar-main">
             <!-- Calendar Controls -->
             <div class="calendar-controls">
-              <div class="view-controls">
-                <button class="view-btn active" data-view="week">📅 Week</button>
-                <button class="view-btn" data-view="day">📆 Day</button>
-                <button class="view-btn" data-view="month">🗓 Month</button>
-                <button class="view-btn" data-view="year">📋 Year</button>
-              </div>
-              
               <div class="navigation-controls">
                 <button id="prev-period">‹</button>
                 <div class="period-display">
@@ -89,6 +135,13 @@
                 <select id="year-select" class="year-dropdown-inline">
                   <!-- Years will be populated by JavaScript -->
                 </select>
+              </div>
+              
+              <div class="view-controls">
+                <button class="view-btn active" data-view="week">📅 Week</button>
+                <button class="view-btn" data-view="day">📆 Day</button>
+                <button class="view-btn" data-view="month">🗓 Month</button>
+                <button class="view-btn" data-view="year">📋 Year</button>
               </div>
             </div>
 
