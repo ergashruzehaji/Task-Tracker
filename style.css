@@ -53,15 +53,16 @@ body {
 
 /* Compact Task Form */
 .quick-form {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-  border: 1px solid rgba(218, 165, 32, 0.3);
-  box-shadow: 0 4px 20px rgba(218, 165, 32, 0.2);
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 25px;
+  border: 1px solid rgba(218, 165, 32, 0.4);
+  box-shadow: 0 8px 32px rgba(218, 165, 32, 0.25);
   max-width: 100%;
   width: 100%;
   box-sizing: border-box;
+  backdrop-filter: blur(10px);
 }
 
 .form-header {
@@ -105,10 +106,23 @@ body {
   margin-bottom: 15px;
 }
 
-.form-row:last-of-type {
+.form-row.time-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr auto;
   gap: 15px;
+  align-items: end;
+}
+
+.form-row:not(.time-row):last-of-type {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+.time-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .form-section {
@@ -223,26 +237,28 @@ body {
 }
 
 .calendar-main {
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 15px;
-  padding: 25px;
-  border: 1px solid rgba(218, 165, 32, 0.25);
-  box-shadow: 0 4px 12px rgba(218, 165, 32, 0.1);
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 18px;
+  padding: 28px;
+  border: 1px solid rgba(218, 165, 32, 0.35);
+  box-shadow: 0 6px 24px rgba(218, 165, 32, 0.15);
   flex: 1;
   min-width: 300px;
   max-width: calc(100% - 300px);
   overflow: hidden;
+  backdrop-filter: blur(8px);
 }
 
 .calendar-right-panel {
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 12px;
-  padding: 20px;
-  border: 1px solid rgba(218, 165, 32, 0.3);
-  box-shadow: 0 2px 8px rgba(218, 165, 32, 0.15);
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  padding: 22px;
+  border: 1px solid rgba(218, 165, 32, 0.4);
+  box-shadow: 0 4px 16px rgba(218, 165, 32, 0.2);
   height: fit-content;
   width: 280px;
   flex-shrink: 0;
+  backdrop-filter: blur(10px);
 }
 
 .panel-header {
@@ -894,32 +910,40 @@ input:focus, select:focus {
 }
 
 .time-format-btn {
-  padding: 8px 12px;
-  margin-left: 8px;
+  padding: 12px 18px;
   border: 2px solid rgba(218, 165, 32, 0.6);
-  border-radius: 6px;
-  font-size: 12px;
+  border-radius: 10px;
+  font-size: 14px;
   font-weight: 600;
   outline: none;
   transition: all 0.3s ease;
-  background: rgba(218, 165, 32, 0.2);
-  backdrop-filter: blur(5px);
-  color: rgba(218, 165, 32, 0.9);
+  background: linear-gradient(135deg, rgba(218, 165, 32, 0.15), rgba(218, 165, 32, 0.25));
+  backdrop-filter: blur(8px);
+  color: #DAA520;
   cursor: pointer;
-  box-shadow: 0 0 8px rgba(218, 165, 32, 0.2);
-  text-shadow: 0 0 5px rgba(218, 165, 32, 0.4);
+  box-shadow: 0 2px 12px rgba(218, 165, 32, 0.2);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  min-width: 80px;
+  text-align: center;
 }
 
 .time-format-btn:hover {
   border-color: rgba(218, 165, 32, 0.8);
-  background: rgba(218, 165, 32, 0.3);
-  box-shadow: 0 0 12px rgba(218, 165, 32, 0.4);
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, rgba(218, 165, 32, 0.25), rgba(218, 165, 32, 0.35));
+  box-shadow: 0 4px 16px rgba(218, 165, 32, 0.3);
+  transform: translateY(-2px);
+  color: #B8860B;
 }
 
 .time-format-btn:active {
   transform: translateY(0);
-  box-shadow: 0 0 8px rgba(218, 165, 32, 0.3);
+  box-shadow: 0 2px 8px rgba(218, 165, 32, 0.25);
+}
+
+.time-format-btn.active-24h {
+  background: linear-gradient(135deg, #DAA520, #B8860B);
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* Year Selector Sidebar Styling */
@@ -1327,21 +1351,28 @@ li.completed {
 
 /* Time Input Styling */
 .time-input {
-  padding: 8px 12px;
-  border: 2px solid rgba(218, 165, 32, 0.3);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.95);
+  padding: 12px 15px;
+  border: 2px solid rgba(218, 165, 32, 0.4);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.98);
   color: #1a1a1a;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   transition: all 0.3s ease;
-  width: 120px;
+  width: 140px;
+  box-shadow: 0 2px 8px rgba(218, 165, 32, 0.1);
 }
 
 .time-input:focus {
   outline: none;
   border-color: #DAA520;
-  box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.2);
+  box-shadow: 0 0 0 4px rgba(218, 165, 32, 0.25);
+  background: rgba(255, 255, 255, 1);
+}
+
+.time-input:hover {
+  border-color: rgba(218, 165, 32, 0.6);
+  box-shadow: 0 4px 12px rgba(218, 165, 32, 0.15);
 }
 
 /* Enhanced Calendar Controls */
@@ -1349,11 +1380,13 @@ li.completed {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background: linear-gradient(135deg, rgba(218, 165, 32, 0.1), rgba(218, 165, 32, 0.05));
-  border-radius: 12px;
-  margin-bottom: 20px;
-  border: 1px solid rgba(218, 165, 32, 0.2);
+  padding: 22px;
+  background: linear-gradient(135deg, rgba(218, 165, 32, 0.12), rgba(218, 165, 32, 0.08));
+  border-radius: 15px;
+  margin-bottom: 25px;
+  border: 1px solid rgba(218, 165, 32, 0.25);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 3px 15px rgba(218, 165, 32, 0.1);
 }
 
 .view-controls {
@@ -1362,26 +1395,32 @@ li.completed {
 }
 
 .view-btn {
-  padding: 8px 16px;
-  border: 2px solid rgba(218, 165, 32, 0.3);
-  background: rgba(255, 255, 255, 0.9);
+  padding: 10px 18px;
+  border: 2px solid rgba(218, 165, 32, 0.4);
+  background: rgba(255, 255, 255, 0.95);
   color: #1a1a1a;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 2px 8px rgba(218, 165, 32, 0.1);
 }
 
 .view-btn:hover {
-  background: rgba(218, 165, 32, 0.1);
+  background: rgba(218, 165, 32, 0.15);
   border-color: #DAA520;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(218, 165, 32, 0.2);
 }
 
 .view-btn.active {
-  background: #DAA520;
+  background: linear-gradient(135deg, #DAA520, #B8860B);
   color: white;
   border-color: #DAA520;
+  box-shadow: 0 4px 15px rgba(218, 165, 32, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .navigation-controls {

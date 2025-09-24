@@ -29,25 +29,28 @@
               <input type="text" id="task-input" placeholder="Enter a task..." required />
             </div>
             
-            <div class="form-row">
+            <div class="form-row time-row">
               <div class="form-section">
                 <label class="form-label">🕐 Start Time:</label>
-                <input type="time" id="start-time" class="time-input" />
+                <div class="time-input-container">
+                  <input type="time" id="start-time" class="time-input" placeholder="Select time" />
+                </div>
               </div>
               <div class="form-section">
                 <label class="form-label">🕐 End Time (Optional):</label>
-                <input type="time" id="end-time" class="time-input" />
+                <div class="time-input-container">
+                  <input type="time" id="end-time" class="time-input" placeholder="Select time" />
+                </div>
               </div>
-            </div>
-
-            <div class="form-row">
               <div class="form-section">
-                <label class="form-label">🕐 Time Format:</label>
-                <button type="button" id="time-format-toggle" class="time-format-btn compact" title="Switch between AM/PM and 24-hour format">
+                <label class="form-label">⏰ Format:</label>
+                <button type="button" id="time-format-toggle" class="time-format-btn" title="Switch between AM/PM and 24-hour format">
                   AM/PM
                 </button>
               </div>
-              
+            </div>
+
+            <div class="form-row">              
               <div class="form-section">
                 <label class="form-label">🎯 Priority:</label>
                 <select id="priority-select" class="priority-dropdown">

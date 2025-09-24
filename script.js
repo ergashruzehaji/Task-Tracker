@@ -80,14 +80,58 @@ function handleYearChange() {
 function initializeTimeFormatToggle() {
     console.log('Initializing time format toggle...');
     updateTimeFormatToggle();
+    updateTimeInputs();
     console.log('Time format toggle initialization complete');
 }
 
 // Update time format toggle button text
 function updateTimeFormatToggle() {
     if (timeFormatToggle) {
-        timeFormatToggle.textContent = is24HourFormat ? '24h' : 'AM/PM';
+        timeFormatToggle.textContent = is24HourFormat ? '24H' : 'AM/PM';
+        timeFormatToggle.classList.toggle('active-24h', is24HourFormat);
     }
+}
+
+// Update time inputs based on current format
+function updateTimeInputs() {
+    const startTimeInput = document.getElementById('start-time');
+    const endTimeInput = document.getElementById('end-time');
+    
+    if (startTimeInput && endTimeInput) {
+        // Store current values
+        const startValue = startTimeInput.value;
+        const endValue = endTimeInput.value;
+        
+        // Update input step and format
+        if (is24HourFormat) {
+            startTimeInput.step = "60"; // 1 minute steps
+            endTimeInput.step = "60";
+            startTimeInput.placeholder = "13:30";
+            endTimeInput.placeholder = "14:30";
+        } else {
+            startTimeInput.step = "60";
+            endTimeInput.step = "60";
+            startTimeInput.placeholder = "1:30 PM";
+            endTimeInput.placeholder = "2:30 PM";
+        }
+        
+        // Convert existing values if any
+        if (startValue) {
+            startTimeInput.value = convertTimeFormat(startValue);
+        }
+        if (endValue) {
+            endTimeInput.value = convertTimeFormat(endValue);
+        }
+    }
+}
+
+// Convert time between formats
+function convertTimeFormat(timeValue) {
+    if (!timeValue) return timeValue;
+    
+    // HTML time inputs always use 24h format internally (HH:MM)
+    // So we don't need to convert the actual value, just update display
+    return timeValue;
 }
 
 // Sidebar removed
@@ -124,6 +168,7 @@ function updateStatsPanel() {
 function toggleTimeFormat() {
   is24HourFormat = !is24HourFormat;
   updateTimeFormatToggle();
+  updateTimeInputs();
   // Re-render the calendar to update time display
   renderCurrentView();
 }
