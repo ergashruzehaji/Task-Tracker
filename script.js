@@ -46,6 +46,11 @@ function getSelectedTime() {
 
 // Initialize year selector with current year and future years
 function initializeYearSelector() {
+    if (!yearSelect) {
+        console.error('Year select element not found');
+        return;
+    }
+    
     const currentYear = 2025; // Fixed to start from 2025
     const futureYears = 50; // Show 50 years ahead (2025-2075)
     
@@ -64,6 +69,8 @@ function initializeYearSelector() {
         
         yearSelect.appendChild(option);
     }
+    
+    console.log(`Year selector initialized with ${futureYears} years starting from ${currentYear}`);
 }
 
 // Handle year change
