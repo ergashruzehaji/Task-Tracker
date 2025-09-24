@@ -517,24 +517,22 @@ function completeTaskFromNotification(taskId) {
 }
 
 // Form submission
-form.addEventListener('submit', function(e) {
-  e.preventDefault();
+if (form) {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
 
-  const taskText = input.value.trim();
-  const selectedDay = daySelect.value;
-  const selectedTaskDate = taskDate.value;
-  const selectedTime = getSelectedTime();
-  const selectedPriority = prioritySelect.value;
-  
-  if (taskText === '') return;
+        const taskText = input.value.trim();
+        const selectedTime = getSelectedTime();
+        const selectedPriority = prioritySelect.value;
+        
+        if (taskText === '') return;
 
-  // Create date object for the task
-  const taskDateObj = selectedTaskDate ? new Date(selectedTaskDate) : new Date();
+        // Create date object for the task - use currently selected date
+        const taskDateObj = selectedDate ? new Date(selectedDate) : new Date();
   
   const task = {
     id: Date.now(),
     text: taskText,
-    day: selectedDay,
     date: taskDateObj.toISOString().split('T')[0], // YYYY-MM-DD format
     fullDate: taskDateObj,
     alarmTime: selectedTime,
@@ -547,11 +545,11 @@ form.addEventListener('submit', function(e) {
   
   // Clear form (but keep date for convenience)
   input.value = '';
-  daySelect.value = '';
   hourSelect.value = '';
   minuteSelect.value = '';
   // Keep date and priority selected for user convenience
-});
+    });
+}
 
 // Add task
 async function addTask(task) {
@@ -986,6 +984,12 @@ function setupFilters() {
       applyFilter(filter);
     });
   });
+}
+
+// Setup day items function - placeholder for future day selection functionality
+function setupDayItems() {
+    // This function can be extended in the future to handle day-specific UI elements
+    console.log('📅 Day items setup complete');
 }
 
 function applyFilter(filter) {
