@@ -1,29 +1,12 @@
 // Use relative URLs for API calls so it works both locally and in production
 const API_BASE = window.location.origin;
 
-const form = document.getElementById('task-form');
-const input = document.getElementById('task-input');
-const hourSelect = document.getElementById('hour-select');
-const minuteSelect = document.getElementById('minute-select');
-const prioritySelect = document.getElementById('priority-select');
-const yearSelect = document.getElementById('year-select');
-const timeFormatToggle = document.getElementById('time-format-toggle');
-const alarmAudio = document.getElementById('alarm-audio');
-const quickForm = document.getElementById('quick-task-form');
-const cancelFormBtn = document.getElementById('cancel-form');
-const selectedDateTitle = document.getElementById('selected-date');
-
-// Notification sidebar elements
-const notificationSidebar = document.getElementById('notification-sidebar');
-const closeNotificationsBtn = document.getElementById('close-notifications');
-const activeNotifications = document.getElementById('active-notifications');
-const mainContent = document.querySelector('.main-content');
-
-// Calendar elements
-const prevMonthBtn = document.getElementById('prev-month');
-const nextMonthBtn = document.getElementById('next-month');
-const currentMonthDisplay = document.getElementById('current-month');
-const calendarDays = document.getElementById('calendar-days');
+// Initialize these inside DOMContentLoaded to ensure elements exist
+let form, input, hourSelect, minuteSelect, prioritySelect, yearSelect, timeFormatToggle, alarmAudio;
+// Initialize these inside DOMContentLoaded to ensure elements exist
+let quickForm, cancelFormBtn, selectedDateTitle;
+let notificationSidebar, closeNotificationsBtn, activeNotifications, mainContent;
+let prevMonthBtn, nextMonthBtn, currentMonthDisplay, calendarDays;
 
 let tasks = [];
 let currentCalendarDate = new Date(); // Current calendar view
@@ -46,13 +29,15 @@ function getSelectedTime() {
 
 // Initialize year selector with current year and future years
 function initializeYearSelector() {
+    console.log('Initializing year selector...');
+    
     if (!yearSelect) {
         console.error('Year select element not found');
         return;
     }
     
     const currentYear = 2025; // Fixed to start from 2025
-    const futureYears = 50; // Show 50 years ahead (2025-2075)
+    const futureYears = 26; // Show 26 years (2025-2050 inclusive)
     
     yearSelect.innerHTML = ''; // Clear existing options
     
@@ -68,9 +53,10 @@ function initializeYearSelector() {
         }
         
         yearSelect.appendChild(option);
+        console.log(`Added year: ${year}`);
     }
     
-    console.log(`Year selector initialized with ${futureYears} years starting from ${currentYear}`);
+    console.log(`Year selector initialized with ${yearSelect.options.length} options (2025-2050)`);
 }
 
 // Handle year change
@@ -82,12 +68,21 @@ function handleYearChange() {
 
 // Initialize time selectors
 function initializeTimeSelectors() {
+    console.log('Initializing time selectors...');
     populateHourDropdown();
     populateMinuteDropdown();
+    console.log('Time selectors initialization complete');
 }
 
 // Populate hour dropdown based on current format
 function populateHourDropdown() {
+    console.log('Populating hour dropdown in', is24HourFormat ? '24h' : '12h', 'format');
+    
+    if (!hourSelect) {
+        console.error('Hour select element not found');
+        return;
+    }
+    
     const selectedValue = hourSelect.value; // Preserve selection
     hourSelect.innerHTML = '<option value="">Hour</option>';
     
@@ -97,10 +92,11 @@ function populateHourDropdown() {
             const hour = i.toString().padStart(2, '0');
             const option = document.createElement('option');
             option.value = hour;
-            option.textContent = hour;
+            option.textContent = hour + ':00';
             if (hour === selectedValue) option.selected = true;
             hourSelect.appendChild(option);
         }
+        console.log('Added 24 hours in 24h format');
     } else {
         // 12-hour format with AM/PM
         const hours = [
@@ -121,11 +117,21 @@ function populateHourDropdown() {
             if (hour.value === selectedValue) option.selected = true;
             hourSelect.appendChild(option);
         });
+        console.log('Added 24 hours in 12h format');
     }
+    
+    console.log(`Hour dropdown populated with ${hourSelect.options.length - 1} options`);
 }
 
 // Populate minute dropdown (5-minute increments)
 function populateMinuteDropdown() {
+    console.log('Populating minute dropdown...');
+    
+    if (!minuteSelect) {
+        console.error('Minute select element not found');
+        return;
+    }
+    
     const selectedValue = minuteSelect.value; // Preserve selection
     minuteSelect.innerHTML = '<option value="">Min</option>';
     
@@ -137,29 +143,91 @@ function populateMinuteDropdown() {
         option.textContent = minute;
         if (minute === selectedValue) option.selected = true;
         minuteSelect.appendChild(option);
+        console.log(`Added minute: ${minute}`);
     }
+    
+    console.log(`Minute dropdown populated with ${minuteSelect.options.length - 1} options`);
 }
 
 // Toggle time format
 function toggleTimeFormat() {
+    console.log('Toggling time format from', is24HourFormat ? '24h' : '12h');
     is24HourFormat = !is24HourFormat;
-    timeFormatToggle.textContent = is24HourFormat ? '24h' : '12h';
+    
+    if (timeFormatToggle) {
+        timeFormatToggle.textContent = is24HourFormat ? '24h' : '12h';
+        console.log('Updated toggle button to:', timeFormatToggle.textContent);
+    }
+    
     populateHourDropdown();
+    console.log('Time format toggled to', is24HourFormat ? '24h' : '12h');
 }
 
 // Load tasks when page loads
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing components...');
+    
+    // Initialize DOM elements
+    form = document.getElementById('task-form');
+    input = document.getElementById('task-input');
+    hourSelect = document.getElementById('hour-select');
+    minuteSelect = document.getElementById('minute-select');
+    prioritySelect = document.getElementById('priority-select');
+    yearSelect = document.getElementById('year-select');
+    timeFormatToggle = document.getElementById('time-format-toggle');
+    alarmAudio = document.getElementById('alarm-audio');
+    
+    // Initialize form elements
+    quickForm = document.getElementById('quick-task-form');
+    cancelFormBtn = document.getElementById('cancel-form');
+    selectedDateTitle = document.getElementById('selected-date');
+    
+    // Initialize notification elements
+    notificationSidebar = document.getElementById('notification-sidebar');
+    closeNotificationsBtn = document.getElementById('close-notifications');
+    activeNotifications = document.getElementById('active-notifications');
+    mainContent = document.querySelector('.main-content');
+    
+    // Initialize calendar elements
+    prevMonthBtn = document.getElementById('prev-month');
+    nextMonthBtn = document.getElementById('next-month');
+    currentMonthDisplay = document.getElementById('current-month');
+    calendarDays = document.getElementById('calendar-days');
+    
+    console.log('Elements found:', {
+        form: !!form,
+        input: !!input,
+        hourSelect: !!hourSelect,
+        minuteSelect: !!minuteSelect,
+        prioritySelect: !!prioritySelect,
+        yearSelect: !!yearSelect,
+        timeFormatToggle: !!timeFormatToggle,
+        alarmAudio: !!alarmAudio
+    });
+    
     loadTasks();
     initializeCalendar();
     setupFormHandlers();
     setupNotificationSystem();
     startNotificationChecker();
+    
+    // Initialize dropdowns with debugging
+    console.log('Initializing dropdowns...');
     initializeYearSelector();
     initializeTimeSelectors();
     
-    // Add event listeners
-    yearSelect.addEventListener('change', handleYearChange);
-    timeFormatToggle.addEventListener('click', toggleTimeFormat);
+    // Add event listeners with null checks
+    if (yearSelect) {
+        yearSelect.addEventListener('change', handleYearChange);
+        console.log('Year select event listener added');
+    }
+    
+    if (timeFormatToggle) {
+        timeFormatToggle.addEventListener('click', toggleTimeFormat);
+        console.log('Time format toggle event listener added');
+    }
+    
+    console.log('All components initialized');
 });
 
 // Setup form handlers
