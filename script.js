@@ -39,10 +39,7 @@ function formatTimeDisplay(timeString) {
 
 // Initialize year selector with current year and future years
 function initializeYearSelector() {
-    console.log('Initializing year selector...');
-    
     if (!yearSelect) {
-        console.error('Year select element not found');
         return;
     }
     
@@ -63,10 +60,7 @@ function initializeYearSelector() {
         }
         
         yearSelect.appendChild(option);
-        console.log(`Added year: ${year}`);
     }
-    
-    console.log(`Year selector initialized with ${yearSelect.options.length} options (2025-2050)`);
 }
 
 // Handle year change
@@ -465,13 +459,10 @@ function initializeTaskSidebar() {
 }
 
 function showTaskSidebar(dateString) {
-    console.log('🎯 showTaskSidebar called with date:', dateString);
     const sidebar = document.getElementById('task-sidebar');
     const sidebarSelectedDate = document.getElementById('sidebar-selected-date');
     
-    console.log('🔍 Sidebar element found:', !!sidebar);
     if (!sidebar) {
-        console.error('❌ Sidebar element not found!');
         return;
     }
     
@@ -487,13 +478,9 @@ function showTaskSidebar(dateString) {
         });
     }
     
-    console.log('✅ Adding show class to sidebar');
     sidebar.classList.add('show');
     document.body.classList.add('sidebar-open');
     sidebarOpen = true;
-    
-    // Force display in case CSS isn't working
-    sidebar.style.display = 'block';
     
     // Focus on task input
     setTimeout(() => {
@@ -941,8 +928,6 @@ function addTimeBlockHandlers() {
             const date = this.dataset.date;
             const hour = parseInt(this.dataset.hour);
             
-            console.log('🕐 Time block clicked:', date, hour);
-            
             // Show sidebar with pre-filled time
             showTaskSidebar(date);
             
@@ -962,7 +947,6 @@ function addTimeBlockHandlers() {
         if (dayColumn) {
             header.addEventListener('click', function() {
                 const date = dayColumn.dataset.date;
-                console.log('📅 Day header clicked:', date);
                 showTaskSidebar(date);
             });
             
@@ -1028,14 +1012,8 @@ function updatePrioritySelectColor() {
 
 // Initialize when both DOM and window are fully loaded
 function initializeApp() {
-    console.log('🚀 Initializing Task Tracker App...');
-    console.log('🔧 Script version: 2025-09-24-v11 - FIXED SIDEBAR VISIBILITY');
-    
     try {
-    console.log('🚀 DOM loaded, initializing Task Tracker components...');
-    console.log('🔧 Script version: 2025-09-24-v6 - DEBUGGING STUCK NAVIGATION');
-    
-    // Debug: Check if all elements exist
+    // Check if all elements exist
     const debugElements = {
         'prev-period': document.getElementById('prev-period'),
         'next-period': document.getElementById('next-period'), 
@@ -1045,17 +1023,6 @@ function initializeApp() {
         'start-time': document.getElementById('start-time'),
         'end-time': document.getElementById('end-time')
     };
-    
-    console.log('🔍 Element Debug Check:', debugElements);
-    
-    // Report missing elements (using new IDs)
-    Object.entries(debugElements).forEach(([name, element]) => {
-        if (!element) {
-            console.warn(`ℹ️ Optional element not found: ${name}`);
-        } else {
-            console.log(`✅ Found element: ${name}`);
-        }
-    });
     
     // Initialize DOM elements with error checking
     form = document.getElementById('task-form');
@@ -1088,15 +1055,6 @@ function initializeApp() {
         console.warn('⚠️ calendar-days container not found; month view may be hidden initially.');
     }
     
-    console.log('Elements found:', {
-        form: !!form,
-        input: !!input,
-        prioritySelect: !!prioritySelect,
-        yearSelect: !!yearSelect,
-        timeFormatToggle: !!timeFormatToggle,
-        alarmAudio: !!alarmAudio
-    });
-    
     loadTasks();
     initializeCalendar();
     setupFormHandlers();
@@ -1108,12 +1066,11 @@ function initializeApp() {
     initializeRecurringSection(); // Initialize recurring task functionality
     initializeTaskSidebar(); // Initialize task sidebar functionality
     
-    // Initialize dropdowns with debugging
-    console.log('🔧 Initializing dropdowns...');
+    // Initialize dropdowns
     
     // Force year selector population with retry mechanism
     setTimeout(() => {
-        console.log('🔄 Running year selector initialization...');
+        // Running year selector initialization
         initializeYearSelector();
         initializeTimeFormatToggle();
         
@@ -1221,7 +1178,6 @@ function setupFormHandlers() {
 
 // Show quick form for selected date
 function showQuickForm(dateString) {
-    console.log('🚀 showQuickForm called with date:', dateString);
     // Use sidebar instead of old quick form
     showTaskSidebar(dateString);
 }
