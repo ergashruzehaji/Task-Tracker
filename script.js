@@ -656,6 +656,36 @@ function initializeTaskSidebar() {
     }
 }
 
+function clearSidebarForm() {
+    // Clear form fields
+    const taskTitle = document.getElementById('sidebar-task-title');
+    const startTime = document.getElementById('sidebar-start-time');
+    const endTime = document.getElementById('sidebar-end-time');
+    const priority = document.getElementById('sidebar-priority');
+    
+    if (taskTitle) taskTitle.value = '';
+    if (startTime) startTime.value = '';
+    if (endTime) endTime.value = '';
+    if (priority) priority.value = 'medium';
+    
+    // Reset recurring options
+    const recurringOptions = document.getElementById('sidebar-recurring-options');
+    if (recurringOptions) {
+        recurringOptions.style.display = 'none';
+    }
+    
+    const recurringType = document.getElementById('sidebar-recurring-type');
+    if (recurringType) {
+        recurringType.value = 'none';
+    }
+    
+    // Clear weekday checkboxes
+    const weekdayCheckboxes = document.querySelectorAll('#sidebar-weekly-options input[type="checkbox"]');
+    weekdayCheckboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
+}
+
 function showTaskSidebar(dateString) {
     console.log('🔧 showTaskSidebar called with:', dateString);
     const sidebar = document.getElementById('task-sidebar');
@@ -670,6 +700,9 @@ function showTaskSidebar(dateString) {
     }
     
     selectedSidebarDate = dateString;
+    
+    // Clear the form before showing
+    clearSidebarForm();
     const date = new Date(dateString);
     
     if (sidebarSelectedDate) {
@@ -691,7 +724,7 @@ function showTaskSidebar(dateString) {
     
     // Focus on task input
     setTimeout(() => {
-        const taskInput = document.getElementById('sidebar-task-input');
+        const taskInput = document.getElementById('sidebar-task-title');
         console.log('🔧 Task input found:', !!taskInput);
         if (taskInput) taskInput.focus();
     }, 300);
@@ -797,10 +830,10 @@ function handleSidebarFormSubmit(e) {
     
     if (!selectedSidebarDate) return;
     
-    const taskText = document.getElementById('sidebar-task-input')?.value.trim();
+    const taskText = document.getElementById('sidebar-task-title')?.value.trim();
     const startTime = document.getElementById('sidebar-start-time')?.value || '';
     const endTime = document.getElementById('sidebar-end-time')?.value || '';
-    const priority = document.getElementById('sidebar-priority-select')?.value || 'medium';
+    const priority = document.getElementById('sidebar-priority')?.value || 'medium';
     
     if (!taskText) return;
     
