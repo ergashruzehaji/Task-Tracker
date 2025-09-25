@@ -2576,6 +2576,11 @@ function playAlarmSound() {
         alarmGainNodes.push(gainNode);
     });
     
+    // Additional safety timeout to ensure alarm stops after exactly 60 seconds
+    setTimeout(() => {
+        stopAlarmSound();
+    }, 60000);
+    
     console.log('🔔 Playing gentle alarm sound with gradual volume increase');
 }
 
