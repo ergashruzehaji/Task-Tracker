@@ -47,7 +47,17 @@ const translations = {
     complete_selected: "Complete Selected", add_task_for: "Add Task for",
     // Priority Legend
     priority_legend: "Priority Legend", high_priority: "High Priority", 
-    medium_priority: "Medium Priority", low_priority: "Low Priority"
+    medium_priority: "Medium Priority", low_priority: "Low Priority",
+    // Floating Tabs and Suggestions System
+    live_demo: "Live Demo", suggestions: "Suggestions", suggestions_form_title: "Send us Your Suggestions",
+    name_label: "Name", email_label: "Email", suggestions_label: "Your Suggestions",
+    name_placeholder: "Enter your name", email_placeholder: "Enter your email address",
+    suggestions_placeholder: "Share your suggestions, feedback, or ideas with us (up to 500 words)...",
+    submit_suggestions: "Submit Suggestions", character_count: "characters remaining",
+    success_title: "Thank you!", success_message: "Your message has been successfully sent.",
+    name_required: "Name is required", email_required: "Email is required",
+    email_invalid: "Please enter a valid email address", suggestions_required: "Please share your suggestions with us",
+    suggestions_too_long: "Suggestions must be 500 words or less"
   },
   es: {
     view_day: "Día", view_week: "Semana", view_month: "Mes", add_task: "Agregar Tarea", cancel: "Cancelar",
@@ -75,7 +85,17 @@ const translations = {
     complete_selected: "Completar Seleccionadas", add_task_for: "Agregar Tarea para",
     // Priority Legend
     priority_legend: "Leyenda de Prioridades", high_priority: "Alta Prioridad",
-    medium_priority: "Prioridad Media", low_priority: "Baja Prioridad"
+    medium_priority: "Prioridad Media", low_priority: "Baja Prioridad",
+    // Floating Tabs and Suggestions System
+    live_demo: "Demostración", suggestions: "Sugerencias", suggestions_form_title: "Envíanos tus Sugerencias",
+    name_label: "Nombre", email_label: "Correo Electrónico", suggestions_label: "Tus Sugerencias",
+    name_placeholder: "Ingresa tu nombre", email_placeholder: "Ingresa tu correo electrónico",
+    suggestions_placeholder: "Comparte tus sugerencias, comentarios o ideas con nosotros (hasta 500 palabras)...",
+    submit_suggestions: "Enviar Sugerencias", character_count: "caracteres restantes",
+    success_title: "¡Gracias!", success_message: "Tu mensaje ha sido enviado exitosamente.",
+    name_required: "El nombre es obligatorio", email_required: "El correo electrónico es obligatorio",
+    email_invalid: "Por favor ingresa un correo electrónico válido", suggestions_required: "Por favor comparte tus sugerencias con nosotros",
+    suggestions_too_long: "Las sugerencias deben tener 500 palabras o menos"
   },
   fr: {
     view_day: "Jour", view_week: "Semaine", view_month: "Mois", add_task: "Ajouter Tâche", cancel: "Annuler",
@@ -102,7 +122,17 @@ const translations = {
     complete_selected: "Terminer Sélectionnées", add_task_for: "Ajouter Tâche pour",
     // Priority Legend
     priority_legend: "Légende des priorités", high_priority: "Priorité élevée",
-    medium_priority: "Priorité moyenne", low_priority: "Priorité faible"
+    medium_priority: "Priorité moyenne", low_priority: "Priorité faible",
+    // Floating Tabs and Suggestions System
+    live_demo: "Démo en Direct", suggestions: "Suggestions", suggestions_form_title: "Envoyez-nous vos Suggestions",
+    name_label: "Nom", email_label: "E-mail", suggestions_label: "Vos Suggestions",
+    name_placeholder: "Entrez votre nom", email_placeholder: "Entrez votre adresse e-mail",
+    suggestions_placeholder: "Partagez vos suggestions, commentaires ou idées avec nous (jusqu'à 500 mots)...",
+    submit_suggestions: "Envoyer Suggestions", character_count: "caractères restants",
+    success_title: "Merci!", success_message: "Votre message a été envoyé avec succès.",
+    name_required: "Le nom est requis", email_required: "L'e-mail est requis",
+    email_invalid: "Veuillez entrer une adresse e-mail valide", suggestions_required: "Veuillez partager vos suggestions avec nous",
+    suggestions_too_long: "Les suggestions doivent contenir 500 mots ou moins"
   },
   de: {
     view_day: "Tag", view_week: "Woche", view_month: "Monat", add_task: "Aufgabe hinzufügen", cancel: "Abbrechen",
@@ -130,7 +160,17 @@ const translations = {
     complete_selected: "Ausgewählte abschließen", add_task_for: "Aufgabe hinzufügen für",
     // Priority Legend
     priority_legend: "Prioritäts-Legende", high_priority: "Hohe Priorität",
-    medium_priority: "Mittlere Priorität", low_priority: "Niedrige Priorität"
+    medium_priority: "Mittlere Priorität", low_priority: "Niedrige Priorität",
+    // Floating Tabs and Suggestions System
+    live_demo: "Live Demo", suggestions: "Vorschläge", suggestions_form_title: "Senden Sie uns Ihre Vorschläge",
+    name_label: "Name", email_label: "E-Mail", suggestions_label: "Ihre Vorschläge",
+    name_placeholder: "Geben Sie Ihren Namen ein", email_placeholder: "Geben Sie Ihre E-Mail-Adresse ein",
+    suggestions_placeholder: "Teilen Sie Ihre Vorschläge, Feedback oder Ideen mit uns (bis zu 500 Wörter)...",
+    submit_suggestions: "Vorschläge Senden", character_count: "Zeichen übrig",
+    success_title: "Vielen Dank!", success_message: "Ihre Nachricht wurde erfolgreich gesendet.",
+    name_required: "Name ist erforderlich", email_required: "E-Mail ist erforderlich",
+    email_invalid: "Bitte geben Sie eine gültige E-Mail-Adresse ein", suggestions_required: "Bitte teilen Sie Ihre Vorschläge mit uns",
+    suggestions_too_long: "Vorschläge müssen 500 Wörter oder weniger enthalten"
   },
   zh: {
     view_day: "日", view_week: "周", view_month: "月", add_task: "添加任务", cancel: "取消",
@@ -157,7 +197,17 @@ const translations = {
     complete_selected: "完成选中", add_task_for: "为...添加任务",
     // Priority Legend
     priority_legend: "优先级图例", high_priority: "高优先级",
-    medium_priority: "中优先级", low_priority: "低优先级"
+    medium_priority: "中优先级", low_priority: "低优先级",
+    // Floating Tabs and Suggestions System
+    live_demo: "实时演示", suggestions: "建议", suggestions_form_title: "向我们发送您的建议",
+    name_label: "姓名", email_label: "电子邮件", suggestions_label: "您的建议",
+    name_placeholder: "请输入您的姓名", email_placeholder: "请输入您的电子邮件地址",
+    suggestions_placeholder: "与我们分享您的建议、反馈或想法（最多500字）...",
+    submit_suggestions: "提交建议", character_count: "剩余字符",
+    success_title: "谢谢！", success_message: "您的消息已成功发送。",
+    name_required: "姓名为必填项", email_required: "电子邮件为必填项",
+    email_invalid: "请输入有效的电子邮件地址", suggestions_required: "请与我们分享您的建议",
+    suggestions_too_long: "建议必须在500字以内"
   },
   it: {
     view_day: "Giorno", view_week: "Settimana", view_month: "Mese", add_task: "Aggiungi Attività", cancel: "Annulla",
@@ -184,7 +234,17 @@ const translations = {
     complete_selected: "Completa Selezionate", add_task_for: "Aggiungi Attività per",
     // Priority Legend
     priority_legend: "Legenda Priorità", high_priority: "Alta Priorità",
-    medium_priority: "Media Priorità", low_priority: "Bassa Priorità"
+    medium_priority: "Media Priorità", low_priority: "Bassa Priorità",
+    // Floating Tabs and Suggestions System
+    live_demo: "Demo Live", suggestions: "Suggerimenti", suggestions_form_title: "Inviaci i Tuoi Suggerimenti",
+    name_label: "Nome", email_label: "E-mail", suggestions_label: "I Tuoi Suggerimenti",
+    name_placeholder: "Inserisci il tuo nome", email_placeholder: "Inserisci il tuo indirizzo e-mail",
+    suggestions_placeholder: "Condividi i tuoi suggerimenti, feedback o idee con noi (fino a 500 parole)...",
+    submit_suggestions: "Invia Suggerimenti", character_count: "caratteri rimanenti",
+    success_title: "Grazie!", success_message: "Il tuo messaggio è stato inviato con successo.",
+    name_required: "Il nome è obbligatorio", email_required: "L'e-mail è obbligatoria",
+    email_invalid: "Inserisci un indirizzo e-mail valido", suggestions_required: "Condividi i tuoi suggerimenti con noi",
+    suggestions_too_long: "I suggerimenti devono essere di 500 parole o meno"
   },
   ru: {
     view_day: "День", view_week: "Неделя", view_month: "Месяц", add_task: "Добавить Задачу", cancel: "Отмена",
@@ -205,7 +265,17 @@ const translations = {
     month_6: "Июль", month_7: "Август", month_8: "Сентябрь", month_9: "Октябрь", month_10: "Ноябрь", month_11: "Декабрь",
     // Priority Legend
     priority_legend: "Легенда Приоритетов", high_priority: "Высокий Приоритет",
-    medium_priority: "Средний Приоритет", low_priority: "Низкий Приоритет"
+    medium_priority: "Средний Приоритет", low_priority: "Низкий Приоритет",
+    // Floating Tabs and Suggestions System
+    live_demo: "Живая Демонстрация", suggestions: "Предложения", suggestions_form_title: "Отправьте нам Ваши Предложения",
+    name_label: "Имя", email_label: "Электронная почта", suggestions_label: "Ваши Предложения",
+    name_placeholder: "Введите ваше имя", email_placeholder: "Введите ваш адрес электронной почты",
+    suggestions_placeholder: "Поделитесь с нами вашими предложениями, отзывами или идеями (до 500 слов)...",
+    submit_suggestions: "Отправить Предложения", character_count: "символов осталось",
+    success_title: "Спасибо!", success_message: "Ваше сообщение было успешно отправлено.",
+    name_required: "Имя обязательно", email_required: "Электронная почта обязательна",
+    email_invalid: "Пожалуйста, введите действительный адрес электронной почты", suggestions_required: "Пожалуйста, поделитесь с нами вашими предложениями",
+    suggestions_too_long: "Предложения должны содержать не более 500 слов"
   },
   ja: {
     view_day: "日", view_week: "週", view_month: "月", add_task: "タスクを追加", cancel: "キャンセル",
@@ -226,7 +296,17 @@ const translations = {
     month_6: "7月", month_7: "8月", month_8: "9月", month_9: "10月", month_10: "11月", month_11: "12月",
     // Priority Legend
     priority_legend: "優先度凡例", high_priority: "高優先度",
-    medium_priority: "中優先度", low_priority: "低優先度"
+    medium_priority: "中優先度", low_priority: "低優先度",
+    // Floating Tabs and Suggestions System
+    live_demo: "ライブデモ", suggestions: "提案", suggestions_form_title: "ご提案をお送りください",
+    name_label: "お名前", email_label: "メールアドレス", suggestions_label: "ご提案",
+    name_placeholder: "お名前を入力してください", email_placeholder: "メールアドレスを入力してください",
+    suggestions_placeholder: "ご提案、フィードバック、アイデアをお聞かせください（500文字まで）...",
+    submit_suggestions: "提案を送信", character_count: "文字残り",
+    success_title: "ありがとうございます！", success_message: "メッセージが正常に送信されました。",
+    name_required: "お名前は必須です", email_required: "メールアドレスは必須です",
+    email_invalid: "有効なメールアドレスを入力してください", suggestions_required: "ご提案をお聞かせください",
+    suggestions_too_long: "提案は500文字以下にしてください"
   },
   tr: {
     view_day: "Gün", view_week: "Hafta", view_month: "Ay", add_task: "Görev Ekle", cancel: "İptal",
@@ -247,7 +327,17 @@ const translations = {
     month_6: "Temmuz", month_7: "Ağustos", month_8: "Eylül", month_9: "Ekim", month_10: "Kasım", month_11: "Aralık",
     // Priority Legend
     priority_legend: "Öncelik Açıklaması", high_priority: "Yüksek Öncelik",
-    medium_priority: "Orta Öncelik", low_priority: "Düşük Öncelik"
+    medium_priority: "Orta Öncelik", low_priority: "Düşük Öncelik",
+    // Floating Tabs and Suggestions System
+    live_demo: "Canlı Demo", suggestions: "Öneriler", suggestions_form_title: "Önerilerinizi Bize Gönderin",
+    name_label: "Ad", email_label: "E-posta", suggestions_label: "Önerileriniz",
+    name_placeholder: "Adınızı girin", email_placeholder: "E-posta adresinizi girin",
+    suggestions_placeholder: "Önerilerinizi, geri bildirimlerinizi veya fikirlerinizi bizimle paylaşın (500 kelimeye kadar)...",
+    submit_suggestions: "Önerileri Gönder", character_count: "karakter kaldı",
+    success_title: "Teşekkürler!", success_message: "Mesajınız başarıyla gönderildi.",
+    name_required: "Ad gereklidir", email_required: "E-posta gereklidir",
+    email_invalid: "Lütfen geçerli bir e-posta adresi girin", suggestions_required: "Lütfen önerilerinizi bizimle paylaşın",
+    suggestions_too_long: "Öneriler 500 kelime veya daha az olmalıdır"
   },
   ar: {
     view_day: "يوم", view_week: "أسبوع", view_month: "شهر", add_task: "إضافة مهمة", cancel: "إلغاء",
@@ -268,7 +358,17 @@ const translations = {
     month_6: "يوليو", month_7: "أغسطس", month_8: "سبتمبر", month_9: "أكتوبر", month_10: "نوفمبر", month_11: "ديسمبر",
     // Priority Legend
     priority_legend: "مفتاح الأولويات", high_priority: "أولوية عالية",
-    medium_priority: "أولوية متوسطة", low_priority: "أولوية منخفضة"
+    medium_priority: "أولوية متوسطة", low_priority: "أولوية منخفضة",
+    // Floating Tabs and Suggestions System
+    live_demo: "عرض مباشر", suggestions: "اقتراحات", suggestions_form_title: "أرسل لنا اقتراحاتك",
+    name_label: "الاسم", email_label: "البريد الإلكتروني", suggestions_label: "اقتراحاتك",
+    name_placeholder: "أدخل اسمك", email_placeholder: "أدخل عنوان بريدك الإلكتروني",
+    suggestions_placeholder: "شاركنا اقتراحاتك أو تعليقاتك أو أفكارك (حتى 500 كلمة)...",
+    submit_suggestions: "إرسال الاقتراحات", character_count: "حرف متبقي",
+    success_title: "شكراً لك!", success_message: "تم إرسال رسالتك بنجاح.",
+    name_required: "الاسم مطلوب", email_required: "البريد الإلكتروني مطلوب",
+    email_invalid: "يرجى إدخال عنوان بريد إلكتروني صحيح", suggestions_required: "يرجى مشاركة اقتراحاتك معنا",
+    suggestions_too_long: "يجب أن تكون الاقتراحات 500 كلمة أو أقل"
   }
 };
 
