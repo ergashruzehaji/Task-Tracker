@@ -1,8 +1,19 @@
 <!DOCTYPE html>
 <!-- Cache Buster: 1758743199 - Force Complete Refresh -->
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
+<head>                    <label class="weekday-item"><input type="checkbox" value="0"> <span data-translate="sun">Sun</span></label>
+                    <label class="weekday-                      <label class="weekday-item"><input type="checkbox" value="0"> <span data-translate="sun">Sun</span></label>
+                      <label class="weekday-item"><input type="checkbox" value="1"> <span data-translate="mon">Mon</span></label>
+                      <label class="weekday-item"><input type="checkbox" value="2"> <span data-translate="tue">Tue</span></label>
+                      <label class="weekday-item"><input type="checkbox" value="3"> <span data-translate="wed">Wed</span></label>
+                      <label class="weekday-item"><input type="checkbox" value="4"> <span data-translate="thu">Thu</span></label>
+                      <label class="weekday-item"><input type="checkbox" value="5"> <span data-translate="fri">Fri</span></label>
+                      <label class="weekday-item"><input type="checkbox" value="6"> <span data-translate="sat">Sat</span></label>input type="checkbox" value="1"> <span data-translate="mon">Mon</span></label>
+                    <label class="weekday-item"><input type="checkbox" value="2"> <span data-translate="tue">Tue</span></label>
+                    <label class="weekday-item"><input type="checkbox" value="3"> <span data-translate="wed">Wed</span></label>
+                    <label class="weekday-item"><input type="checkbox" value="4"> <span data-translate="thu">Thu</span></label>
+                    <label class="weekday-item"><input type="checkbox" value="5"> <span data-translate="fri">Fri</span></label>
+                    <label class="weekday-item"><input type="checkbox" value="6"> <span data-translate="sat">Sat</span></label>a charset="UTF-8" />
   <meta name="viewport" cont            <!-- View Controls Below -->
             <div class="view-controls-section">
               <div class="view-controls">
@@ -28,7 +39,7 @@
         <!-- Compact Task Form - Initially Hidden (Replaced by Sidebar) -->
         <div id="quick-task-form" class="quick-form" style="display: none !important;">
           <div class="form-header">
-            <h3 id="form-title">Add Task for <span id="selected-date"></span></h3>
+            <h3 id="form-title" data-translate="task_form_title">Add Task for <span id="selected-date"></span></h3>
             <button type="button" id="cancel-form" class="close-btn">✕</button>
           </div>
           <form id="task-form">
@@ -38,13 +49,13 @@
             
             <div class="form-row time-row">
               <div class="form-section">
-                <label class="form-label">🕐 Start Time:</label>
+                <label class="form-label" data-translate="start_time">🕐 Start Time:</label>
                 <div class="time-input-container">
                   <input type="time" id="start-time" class="time-input" placeholder="Select time" />
                 </div>
               </div>
               <div class="form-section">
-                <label class="form-label">🕐 End Time (Optional):</label>
+                <label class="form-label" data-translate="end_time">🕐 End Time (Optional):</label>
                 <div class="time-input-container">
                   <input type="time" id="end-time" class="time-input" placeholder="Select time" />
                 </div>
@@ -59,11 +70,11 @@
 
             <div class="form-row">              
               <div class="form-section">
-                <label class="form-label">🎯 Priority:</label>
+                <label class="form-label" data-translate="priority">🎯 Priority:</label>
                 <select id="priority-select" class="priority-dropdown">
-                  <option value="low">Low Priority</option>
-                  <option value="medium" selected>Medium Priority</option>
-                  <option value="high">High Priority</option>
+                  <option value="low" data-translate="low">Low Priority</option>
+                  <option value="medium" data-translate="medium" selected>Medium Priority</option>
+                  <option value="high" data-translate="high">High Priority</option>
                 </select>
               </div>
             </div>
@@ -72,7 +83,7 @@
             <div class="recurring-section">
               <div class="recurring-header">
                 <button type="button" id="toggle-recurring" class="recurring-toggle-btn" title="Add recurring schedule">
-                  🔄 <span class="toggle-text">Add Recurring</span> <span class="toggle-icon">▼</span>
+                  🔄 <span class="toggle-text" data-translate="recurring">Add Recurring</span> <span class="toggle-icon">▼</span>
                 </button>
               </div>
               <div id="recurring-options" class="recurring-options" style="display: none;">
@@ -81,9 +92,9 @@
                     <label class="form-label">📅 Repeat:</label>
                     <select id="recurring-type" class="recurring-dropdown">
                       <option value="none">No Repeat</option>
-                      <option value="daily">Daily</option>
-                      <option value="weekly">Weekly</option>
-                      <option value="monthly">Monthly</option>
+                      <option value="daily" data-translate="daily">Daily</option>
+                      <option value="weekly" data-translate="weekly">Weekly</option>
+                      <option value="monthly" data-translate="monthly">Monthly</option>
                     </select>
                   </div>
                   <div class="form-section">
@@ -143,7 +154,7 @@
                   <!-- Years will be populated by JavaScript -->
                 </select>
               </div>
-              <div class="language-accessibility-controls">
+              <div class="language-controls">
                 <select id="language-select" class="language-select" aria-label="Select language">
                   <option value="en">English</option>
                   <option value="es">Español</option>
@@ -155,7 +166,6 @@
                   <option value="tr">Türkçe</option>
                   <option value="ar">العربية</option>
                 </select>
-                <button id="accessibility-toggle" class="accessibility-btn" aria-label="Accessibility options" title="Accessibility options">♿</button>
               </div>
             </div>
 
@@ -185,7 +195,7 @@
             <!-- Month View (Traditional Calendar) -->
             <div class="month-view hidden" id="month-view">
               <div class="calendar-weekdays">
-                <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+                <div data-translate="sun">Sun</div><div data-translate="mon">Mon</div><div data-translate="tue">Tue</div><div data-translate="wed">Wed</div><div data-translate="thu">Thu</div><div data-translate="fri">Fri</div><div data-translate="sat">Sat</div>
               </div>
               <div class="calendar-days" id="calendar-days">
                 <!-- Traditional calendar days -->
@@ -238,7 +248,7 @@
               <div class="recurring-section">
                 <div class="recurring-header">
                   <button type="button" id="sidebar-toggle-recurring" class="recurring-toggle-btn">
-                    🔄 <span class="toggle-text">Add Recurring</span> <span class="toggle-icon">▼</span>
+                    🔄 <span class="toggle-text" data-translate="recurring">Add Recurring</span> <span class="toggle-icon">▼</span>
                   </button>
                 </div>
                 <div id="sidebar-recurring-options" class="recurring-options" style="display: none;">
@@ -247,9 +257,9 @@
                       <label class="form-label">📅 Repeat</label>
                       <select id="sidebar-recurring-type" class="form-select">
                         <option value="none">No Repeat</option>
-                        <option value="daily">Daily</option>
-                        <option value="weekly">Weekly</option>
-                        <option value="monthly">Monthly</option>
+                        <option value="daily" data-translate="daily">Daily</option>
+                        <option value="weekly" data-translate="weekly">Weekly</option>
+                        <option value="monthly" data-translate="monthly">Monthly</option>
                       </select>
                     </div>
                     <div class="form-group half">
@@ -295,19 +305,19 @@
 
             <!-- Priority Legend -->
             <div class="sidebar-legend">
-              <h4>📊 Priority Legend</h4>
+              <h4 data-translate="priority_legend">📊 Priority Legend</h4>
               <div class="legend-items">
                 <div class="legend-item">
                   <span class="legend-dot high"></span>
-                  <span class="legend-text">High Priority</span>
+                  <span class="legend-text" data-translate="high_priority">High Priority</span>
                 </div>
                 <div class="legend-item">
                   <span class="legend-dot medium"></span>
-                  <span class="legend-text">Medium Priority</span>
+                  <span class="legend-text" data-translate="medium_priority">Medium Priority</span>
                 </div>
                 <div class="legend-item">
                   <span class="legend-dot low"></span>
-                  <span class="legend-text">Low Priority</span>
+                  <span class="legend-text" data-translate="low_priority">Low Priority</span>
                 </div>
               </div>
             </div>

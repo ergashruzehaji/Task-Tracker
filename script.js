@@ -21,10 +21,17 @@ const translations = {
     weekly: "Weekly", monthly: "Monthly", save_task: "Save Task", close: "Close",
     monday: "Monday", tuesday: "Tuesday", wednesday: "Wednesday", thursday: "Thursday",
     friday: "Friday", saturday: "Saturday", sunday: "Sunday",
-    accessibility_options: "Accessibility Options", high_contrast: "High Contrast Mode",
-    large_text: "Large Text", keyboard_nav: "Enhanced Keyboard Navigation", font_size: "Font Size",
     task_form_title: "Add New Task", select_days: "Select Days", every: "Every",
-    weekdays_only: "Weekdays Only", weekends_only: "Weekends Only", custom: "Custom"
+    weekdays_only: "Weekdays Only", weekends_only: "Weekends Only", custom: "Custom",
+    // Short day names
+    mon: "Mon", tue: "Tue", wed: "Wed", thu: "Thu", fri: "Fri", sat: "Sat", sun: "Sun",
+    // Months
+    january: "January", february: "February", march: "March", april: "April",
+    may: "May", june: "June", july: "July", august: "August",
+    september: "September", october: "October", november: "November", december: "December",
+    // Priority Legend
+    priority_legend: "Priority Legend", high_priority: "High Priority", 
+    medium_priority: "Medium Priority", low_priority: "Low Priority"
   },
   es: {
     view_day: "Día", view_week: "Semana", view_month: "Mes", add_task: "Agregar Tarea", cancel: "Cancelar",
@@ -33,10 +40,17 @@ const translations = {
     weekly: "Semanal", monthly: "Mensual", save_task: "Guardar Tarea", close: "Cerrar",
     monday: "Lunes", tuesday: "Martes", wednesday: "Miércoles", thursday: "Jueves",
     friday: "Viernes", saturday: "Sábado", sunday: "Domingo",
-    accessibility_options: "Opciones de Accesibilidad", high_contrast: "Modo de Alto Contraste",
-    large_text: "Texto Grande", keyboard_nav: "Navegación Mejorada por Teclado", font_size: "Tamaño de Fuente",
     task_form_title: "Agregar Nueva Tarea", select_days: "Seleccionar Días", every: "Cada",
-    weekdays_only: "Solo Días Laborables", weekends_only: "Solo Fines de Semana", custom: "Personalizado"
+    weekdays_only: "Solo Días Laborables", weekends_only: "Solo Fines de Semana", custom: "Personalizado",
+    // Short day names  
+    mon: "Lun", tue: "Mar", wed: "Mié", thu: "Jue", fri: "Vie", sat: "Sáb", sun: "Dom",
+    // Months
+    january: "Enero", february: "Febrero", march: "Marzo", april: "Abril",
+    may: "Mayo", june: "Junio", july: "Julio", august: "Agosto", 
+    september: "Septiembre", october: "Octubre", november: "Noviembre", december: "Diciembre",
+    // Priority Legend
+    priority_legend: "Leyenda de Prioridades", high_priority: "Alta Prioridad",
+    medium_priority: "Prioridad Media", low_priority: "Baja Prioridad"
   },
   fr: {
     view_day: "Jour", view_week: "Semaine", view_month: "Mois", add_task: "Ajouter Tâche", cancel: "Annuler",
@@ -45,10 +59,19 @@ const translations = {
     weekly: "Hebdomadaire", monthly: "Mensuel", save_task: "Enregistrer Tâche", close: "Fermer",
     monday: "Lundi", tuesday: "Mardi", wednesday: "Mercredi", thursday: "Jeudi",
     friday: "Vendredi", saturday: "Samedi", sunday: "Dimanche",
-    accessibility_options: "Options d'Accessibilité", high_contrast: "Mode Contraste Élevé",
-    large_text: "Texte Large", keyboard_nav: "Navigation Clavier Améliorée", font_size: "Taille de Police",
     task_form_title: "Ajouter Nouvelle Tâche", select_days: "Sélectionner Jours", every: "Chaque",
-    weekdays_only: "Jours de Semaine Seulement", weekends_only: "Week-ends Seulement", custom: "Personnalisé"
+    weekdays_only: "Jours de Semaine Seulement", weekends_only: "Week-ends Seulement", custom: "Personnalisé",
+    // Short day names
+    mon: "Lun", tue: "Mar", wed: "Mer", thu: "Jeu", fri: "Ven", sat: "Sam", sun: "Dim",
+    // Months
+    january: "Janvier", february: "Février", march: "Mars", april: "Avril",
+    may: "Mai", june: "Juin", july: "Juillet", august: "Août",
+    september: "Septembre", october: "Octobre", november: "Novembre", december: "Décembre",
+    month_0: "Janvier", month_1: "Février", month_2: "Mars", month_3: "Avril", month_4: "Mai", month_5: "Juin",
+    month_6: "Juillet", month_7: "Août", month_8: "Septembre", month_9: "Octobre", month_10: "Novembre", month_11: "Décembre",
+    // Priority Legend
+    priority_legend: "Légende des priorités", high_priority: "Priorité élevée",
+    medium_priority: "Priorité moyenne", low_priority: "Priorité faible"
   },
   zh: {
     view_day: "日", view_week: "周", view_month: "月", add_task: "添加任务", cancel: "取消",
@@ -56,7 +79,20 @@ const translations = {
     high: "高", medium: "中", low: "低", recurring: "重复", daily: "每日",
     weekly: "每周", monthly: "每月", save_task: "保存任务", close: "关闭",
     monday: "星期一", tuesday: "星期二", wednesday: "星期三", thursday: "星期四",
-    friday: "星期五", saturday: "星期六", sunday: "星期日"
+    friday: "星期五", saturday: "星期六", sunday: "星期日",
+    task_form_title: "添加新任务", select_days: "选择日期", every: "每",
+    weekdays_only: "仅工作日", weekends_only: "仅周末", custom: "自定义",
+    // Short day names
+    mon: "周一", tue: "周二", wed: "周三", thu: "周四", fri: "周五", sat: "周六", sun: "周日",
+    // Months
+    january: "一月", february: "二月", march: "三月", april: "四月",
+    may: "五月", june: "六月", july: "七月", august: "八月",
+    september: "九月", october: "十月", november: "十一月", december: "十二月",
+    month_0: "一月", month_1: "二月", month_2: "三月", month_3: "四月", month_4: "五月", month_5: "六月",
+    month_6: "七月", month_7: "八月", month_8: "九月", month_9: "十月", month_10: "十一月", month_11: "十二月",
+    // Priority Legend
+    priority_legend: "优先级图例", high_priority: "高优先级",
+    medium_priority: "中优先级", low_priority: "低优先级"
   },
   it: {
     view_day: "Giorno", view_week: "Settimana", view_month: "Mese", add_task: "Aggiungi Attività", cancel: "Annulla",
@@ -64,7 +100,20 @@ const translations = {
     high: "Alta", medium: "Media", low: "Bassa", recurring: "Ricorrente", daily: "Giornaliero",
     weekly: "Settimanale", monthly: "Mensile", save_task: "Salva Attività", close: "Chiudi",
     monday: "Lunedì", tuesday: "Martedì", wednesday: "Mercoledì", thursday: "Giovedì",
-    friday: "Venerdì", saturday: "Sabato", sunday: "Domenica"
+    friday: "Venerdì", saturday: "Sabato", sunday: "Domenica",
+    task_form_title: "Aggiungi Nuova Attività", select_days: "Seleziona Giorni", every: "Ogni",
+    weekdays_only: "Solo Giorni Feriali", weekends_only: "Solo Weekend", custom: "Personalizzato",
+    // Short day names
+    mon: "Lun", tue: "Mar", wed: "Mer", thu: "Gio", fri: "Ven", sat: "Sab", sun: "Dom",
+    // Months
+    january: "Gennaio", february: "Febbraio", march: "Marzo", april: "Aprile",
+    may: "Maggio", june: "Giugno", july: "Luglio", august: "Agosto",
+    september: "Settembre", october: "Ottobre", november: "Novembre", december: "Dicembre",
+    month_0: "Gennaio", month_1: "Febbraio", month_2: "Marzo", month_3: "Aprile", month_4: "Maggio", month_5: "Giugno",
+    month_6: "Luglio", month_7: "Agosto", month_8: "Settembre", month_9: "Ottobre", month_10: "Novembre", month_11: "Dicembre",
+    // Priority Legend
+    priority_legend: "Legenda Priorità", high_priority: "Alta Priorità",
+    medium_priority: "Media Priorità", low_priority: "Bassa Priorità"
   },
   ru: {
     view_day: "День", view_week: "Неделя", view_month: "Месяц", add_task: "Добавить Задачу", cancel: "Отмена",
@@ -72,7 +121,20 @@ const translations = {
     high: "Высокий", medium: "Средний", low: "Низкий", recurring: "Повторяющийся", daily: "Ежедневно",
     weekly: "Еженедельно", monthly: "Ежемесячно", save_task: "Сохранить Задачу", close: "Закрыть",
     monday: "Понедельник", tuesday: "Вторник", wednesday: "Среда", thursday: "Четверг",
-    friday: "Пятница", saturday: "Суббота", sunday: "Воскресенье"
+    friday: "Пятница", saturday: "Суббота", sunday: "Воскресенье",
+    task_form_title: "Добавить Новую Задачу", select_days: "Выбрать Дни", every: "Каждый",
+    weekdays_only: "Только Будни", weekends_only: "Только Выходные", custom: "Настроить",
+    // Short day names
+    mon: "Пн", tue: "Вт", wed: "Ср", thu: "Чт", fri: "Пт", sat: "Сб", sun: "Вс",
+    // Months
+    january: "Январь", february: "Февраль", march: "Март", april: "Апрель",
+    may: "Май", june: "Июнь", july: "Июль", august: "Август",
+    september: "Сентябрь", october: "Октябрь", november: "Ноябрь", december: "Декабрь",
+    month_0: "Январь", month_1: "Февраль", month_2: "Март", month_3: "Апрель", month_4: "Май", month_5: "Июнь",
+    month_6: "Июль", month_7: "Август", month_8: "Сентябрь", month_9: "Октябрь", month_10: "Ноябрь", month_11: "Декабрь",
+    // Priority Legend
+    priority_legend: "Легенда Приоритетов", high_priority: "Высокий Приоритет",
+    medium_priority: "Средний Приоритет", low_priority: "Низкий Приоритет"
   },
   ja: {
     view_day: "日", view_week: "週", view_month: "月", add_task: "タスクを追加", cancel: "キャンセル",
@@ -80,7 +142,20 @@ const translations = {
     high: "高", medium: "中", low: "低", recurring: "繰り返し", daily: "毎日",
     weekly: "毎週", monthly: "毎月", save_task: "タスクを保存", close: "閉じる",
     monday: "月曜日", tuesday: "火曜日", wednesday: "水曜日", thursday: "木曜日",
-    friday: "金曜日", saturday: "土曜日", sunday: "日曜日"
+    friday: "金曜日", saturday: "土曜日", sunday: "日曜日",
+    task_form_title: "新しいタスクを追加", select_days: "日を選択", every: "毎",
+    weekdays_only: "平日のみ", weekends_only: "週末のみ", custom: "カスタム",
+    // Short day names
+    mon: "月", tue: "火", wed: "水", thu: "木", fri: "金", sat: "土", sun: "日",
+    // Months
+    january: "1月", february: "2月", march: "3月", april: "4月",
+    may: "5月", june: "6月", july: "7月", august: "8月",
+    september: "9月", october: "10月", november: "11月", december: "12月",
+    month_0: "1月", month_1: "2月", month_2: "3月", month_3: "4月", month_4: "5月", month_5: "6月",
+    month_6: "7月", month_7: "8月", month_8: "9月", month_9: "10月", month_10: "11月", month_11: "12月",
+    // Priority Legend
+    priority_legend: "優先度凡例", high_priority: "高優先度",
+    medium_priority: "中優先度", low_priority: "低優先度"
   },
   tr: {
     view_day: "Gün", view_week: "Hafta", view_month: "Ay", add_task: "Görev Ekle", cancel: "İptal",
@@ -88,7 +163,20 @@ const translations = {
     high: "Yüksek", medium: "Orta", low: "Düşük", recurring: "Tekrarlayan", daily: "Günlük",
     weekly: "Haftalık", monthly: "Aylık", save_task: "Görevi Kaydet", close: "Kapat",
     monday: "Pazartesi", tuesday: "Salı", wednesday: "Çarşamba", thursday: "Perşembe",
-    friday: "Cuma", saturday: "Cumartesi", sunday: "Pazar"
+    friday: "Cuma", saturday: "Cumartesi", sunday: "Pazar",
+    task_form_title: "Yeni Görev Ekle", select_days: "Günleri Seç", every: "Her",
+    weekdays_only: "Sadece Hafta İçi", weekends_only: "Sadece Hafta Sonu", custom: "Özel",
+    // Short day names
+    mon: "Pzt", tue: "Sal", wed: "Çar", thu: "Per", fri: "Cum", sat: "Cmt", sun: "Paz",
+    // Months
+    january: "Ocak", february: "Şubat", march: "Mart", april: "Nisan",
+    may: "Mayıs", june: "Haziran", july: "Temmuz", august: "Ağustos",
+    september: "Eylül", october: "Ekim", november: "Kasım", december: "Aralık",
+    month_0: "Ocak", month_1: "Şubat", month_2: "Mart", month_3: "Nisan", month_4: "Mayıs", month_5: "Haziran",
+    month_6: "Temmuz", month_7: "Ağustos", month_8: "Eylül", month_9: "Ekim", month_10: "Kasım", month_11: "Aralık",
+    // Priority Legend
+    priority_legend: "Öncelik Açıklaması", high_priority: "Yüksek Öncelik",
+    medium_priority: "Orta Öncelik", low_priority: "Düşük Öncelik"
   },
   ar: {
     view_day: "يوم", view_week: "أسبوع", view_month: "شهر", add_task: "إضافة مهمة", cancel: "إلغاء",
@@ -96,7 +184,20 @@ const translations = {
     high: "عالية", medium: "متوسطة", low: "منخفضة", recurring: "متكررة", daily: "يومياً",
     weekly: "أسبوعياً", monthly: "شهرياً", save_task: "حفظ المهمة", close: "إغلاق",
     monday: "الإثنين", tuesday: "الثلاثاء", wednesday: "الأربعاء", thursday: "الخميس",
-    friday: "الجمعة", saturday: "السبت", sunday: "الأحد"
+    friday: "الجمعة", saturday: "السبت", sunday: "الأحد",
+    task_form_title: "إضافة مهمة جديدة", select_days: "اختر الأيام", every: "كل",
+    weekdays_only: "أيام العمل فقط", weekends_only: "عطلة نهاية الأسبوع فقط", custom: "مخصص",
+    // Short day names
+    mon: "إثن", tue: "ثلا", wed: "أرب", thu: "خمي", fri: "جمع", sat: "سبت", sun: "أحد",
+    // Months
+    january: "يناير", february: "فبراير", march: "مارس", april: "أبريل",
+    may: "مايو", june: "يونيو", july: "يوليو", august: "أغسطس",
+    september: "سبتمبر", october: "أكتوبر", november: "نوفمبر", december: "ديسمبر",
+    month_0: "يناير", month_1: "فبراير", month_2: "مارس", month_3: "أبريل", month_4: "مايو", month_5: "يونيو",
+    month_6: "يوليو", month_7: "أغسطس", month_8: "سبتمبر", month_9: "أكتوبر", month_10: "نوفمبر", month_11: "ديسمبر",
+    // Priority Legend
+    priority_legend: "مفتاح الأولويات", high_priority: "أولوية عالية",
+    medium_priority: "أولوية متوسطة", low_priority: "أولوية منخفضة"
   }
 };
 
@@ -1183,8 +1284,7 @@ function updateUITexts() {
     
     // Update button text content
     const buttons = {
-        'sidebar-submit-btn': translate('save_task'),
-        'close-accessibility-menu': translate('close')
+        'sidebar-submit-btn': translate('save_task')
     };
     
     Object.entries(buttons).forEach(([className, text]) => {
@@ -1194,15 +1294,7 @@ function updateUITexts() {
         }
     });
     
-    // Update labels
-    const labels = document.querySelectorAll('label');
-    labels.forEach(label => {
-        const text = label.textContent.trim();
-        if (text.includes('High Contrast')) label.textContent = translate('high_contrast');
-        if (text.includes('Large Text')) label.textContent = translate('large_text');
-        if (text.includes('Enhanced Keyboard')) label.textContent = translate('keyboard_nav');
-        if (text.includes('Font Size')) label.textContent = `${translate('font_size')}: ${label.querySelector('#font-size-value')?.textContent || '16px'}`;
-    });
+
     
     // Update select options
     const prioritySelect = document.getElementById('sidebar-priority');
@@ -1222,11 +1314,7 @@ function updateUITexts() {
         if (options[2]) options[2].textContent = translate('monthly');
     }
     
-    // Update accessibility menu title
-    const accessibilityTitle = document.querySelector('#accessibility-menu h3');
-    if (accessibilityTitle) {
-        accessibilityTitle.textContent = translate('accessibility_options');
-    }
+
     
     // Set text direction for Arabic
     if (currentLanguage === 'ar') {
@@ -1236,9 +1324,8 @@ function updateUITexts() {
     }
 }
 
-function initializeLanguageAndAccessibility() {
+function initializeLanguage() {
     const languageSelect = document.getElementById('language-select');
-    const accessibilityBtn = document.getElementById('accessibility-toggle');
     
     // Load saved language
     const savedLanguage = localStorage.getItem('task-tracker-language') || 'en';
@@ -1250,152 +1337,9 @@ function initializeLanguageAndAccessibility() {
             updateLanguage(e.target.value);
         });
     }
-    
-    // Initialize accessibility features
-    if (accessibilityBtn) {
-        accessibilityBtn.addEventListener('click', toggleAccessibilityMenu);
-    }
-    
-    // Load saved accessibility settings
-    loadAccessibilitySettings();
 }
 
-function toggleAccessibilityMenu() {
-    let menu = document.getElementById('accessibility-menu');
-    if (!menu) {
-        menu = createAccessibilityMenu();
-        document.body.appendChild(menu);
-    }
-    
-    menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
-}
 
-function createAccessibilityMenu() {
-    const menu = document.createElement('div');
-    menu.id = 'accessibility-menu';
-    menu.innerHTML = `
-        <div class="accessibility-menu-content">
-            <h3>Accessibility Options</h3>
-            <div class="accessibility-option">
-                <label>
-                    <input type="checkbox" id="high-contrast-toggle"> High Contrast Mode
-                </label>
-            </div>
-            <div class="accessibility-option">
-                <label>
-                    <input type="checkbox" id="large-text-toggle"> Large Text
-                </label>
-            </div>
-            <div class="accessibility-option">
-                <label>
-                    <input type="checkbox" id="keyboard-navigation-toggle"> Enhanced Keyboard Navigation
-                </label>
-            </div>
-            <div class="accessibility-option">
-                <label>
-                    <input type="range" id="font-size-slider" min="12" max="24" value="16"> Font Size: <span id="font-size-value">16px</span>
-                </label>
-            </div>
-            <button class="close-accessibility-menu">Close</button>
-        </div>
-    `;
-    
-    // Add event listeners
-    menu.querySelector('#high-contrast-toggle').addEventListener('change', toggleHighContrast);
-    menu.querySelector('#large-text-toggle').addEventListener('change', toggleLargeText);
-    menu.querySelector('#keyboard-navigation-toggle').addEventListener('change', toggleKeyboardNavigation);
-    menu.querySelector('#font-size-slider').addEventListener('input', adjustFontSize);
-    menu.querySelector('.close-accessibility-menu').addEventListener('click', () => {
-        menu.style.display = 'none';
-    });
-    
-    return menu;
-}
-
-function toggleHighContrast(e) {
-    document.body.classList.toggle('high-contrast', e.target.checked);
-    saveAccessibilitySetting('highContrast', e.target.checked);
-}
-
-function toggleLargeText(e) {
-    document.body.classList.toggle('large-text', e.target.checked);
-    saveAccessibilitySetting('largeText', e.target.checked);
-}
-
-function toggleKeyboardNavigation(e) {
-    document.body.classList.toggle('keyboard-navigation', e.target.checked);
-    saveAccessibilitySetting('keyboardNavigation', e.target.checked);
-    
-    if (e.target.checked) {
-        addKeyboardNavigationSupport();
-    }
-}
-
-function adjustFontSize(e) {
-    const size = e.target.value;
-    document.documentElement.style.fontSize = size + 'px';
-    document.getElementById('font-size-value').textContent = size + 'px';
-    saveAccessibilitySetting('fontSize', size);
-}
-
-function addKeyboardNavigationSupport() {
-    // Add tabindex to interactive elements
-    document.querySelectorAll('.time-block, .day-header, .view-btn, button').forEach((element, index) => {
-        if (!element.tabIndex) {
-            element.tabIndex = 0;
-        }
-    });
-    
-    // Add keyboard event listeners
-    document.addEventListener('keydown', handleKeyboardNavigation);
-}
-
-function handleKeyboardNavigation(e) {
-    if (e.key === 'Enter' && e.target.classList.contains('time-block')) {
-        e.target.click();
-    }
-    if (e.key === 'Escape' && document.getElementById('task-sidebar').classList.contains('show')) {
-        closeSidebar();
-    }
-}
-
-function saveAccessibilitySetting(key, value) {
-    const settings = JSON.parse(localStorage.getItem('accessibility-settings') || '{}');
-    settings[key] = value;
-    localStorage.setItem('accessibility-settings', JSON.stringify(settings));
-}
-
-function loadAccessibilitySettings() {
-    const settings = JSON.parse(localStorage.getItem('accessibility-settings') || '{}');
-    
-    if (settings.highContrast) {
-        document.body.classList.add('high-contrast');
-        const toggle = document.getElementById('high-contrast-toggle');
-        if (toggle) toggle.checked = true;
-    }
-    
-    if (settings.largeText) {
-        document.body.classList.add('large-text');
-        const toggle = document.getElementById('large-text-toggle');
-        if (toggle) toggle.checked = true;
-    }
-    
-    if (settings.keyboardNavigation) {
-        document.body.classList.add('keyboard-navigation');
-        const toggle = document.getElementById('keyboard-navigation-toggle');
-        if (toggle) toggle.checked = true;
-        addKeyboardNavigationSupport();
-    }
-    
-    if (settings.fontSize) {
-        document.documentElement.style.fontSize = settings.fontSize + 'px';
-        const slider = document.getElementById('font-size-slider');
-        if (slider) {
-            slider.value = settings.fontSize;
-            document.getElementById('font-size-value').textContent = settings.fontSize + 'px';
-        }
-    }
-}
 
 function initializeApp() {
     try {
@@ -1451,7 +1395,7 @@ function initializeApp() {
     startNotificationChecker();
     initializeRecurringSection(); // Initialize recurring task functionality
     initializeTaskSidebar(); // Initialize task sidebar functionality
-    initializeLanguageAndAccessibility(); // Initialize language and accessibility features
+    initializeLanguage(); // Initialize language features
     
     // Initialize dropdowns
     
@@ -2286,10 +2230,9 @@ function renderCalendar() {
   
   // Update month display
     if (currentMonthDisplay) {
-        currentMonthDisplay.textContent = new Intl.DateTimeFormat('en-US', { 
-            month: 'long', 
-            year: 'numeric' 
-        }).format(currentCalendarDate);
+        const monthKey = `month_${month}`;
+        const monthName = translations[currentLanguage][monthKey] || translations['en'][monthKey];
+        currentMonthDisplay.textContent = `${monthName} ${year}`;
     }
   
   // Get first day of month and number of days
