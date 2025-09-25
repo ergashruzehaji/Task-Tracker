@@ -19,25 +19,6 @@
     <!-- Streamlined Main Content -->
     <div class="main-content" id="main-content">
       <div class="container">
-        <!-- Search Bar -->
-        <div class="search-container">
-          <div class="search-wrapper">
-            <input type="text" id="search-input" class="search-input" placeholder="🔍 Search tasks..." />
-            <button id="clear-search" class="clear-search-btn" style="display: none;">✕</button>
-          </div>
-          <div class="quick-actions">
-            <button id="quick-add-btn" class="quick-add-btn" title="Quick Add Task">+ Add Task</button>
-            <button id="export-btn" class="export-btn" title="Export Tasks">📤 Export</button>
-            <input type="file" id="import-input" accept=".json" style="display: none;" />
-            <button id="import-btn" class="import-btn" title="Import Tasks">📥 Import</button>
-            <div class="bulk-actions" id="bulk-actions" style="display: none;">
-              <button id="select-all-btn" class="bulk-btn">Select All</button>
-              <button id="delete-selected-btn" class="bulk-btn delete-btn">Delete Selected</button>
-              <button id="complete-selected-btn" class="bulk-btn complete-btn">Complete Selected</button>
-            </div>
-          </div>
-        </div>
-
         <!-- Compact Task Form - Initially Hidden (Replaced by Sidebar) -->
         <div id="quick-task-form" class="quick-form" style="display: none !important;">
           <div class="form-header">
@@ -156,18 +137,24 @@
                   <!-- Years will be populated by JavaScript -->
                 </select>
               </div>
-              <div class="language-controls">
-                <select id="language-select" class="language-select" aria-label="Select language">
-                  <option value="en">English</option>
-                  <option value="es">Español</option>
-                  <option value="fr">Français</option>
-                  <option value="zh">中文</option>
-                  <option value="it">Italiano</option>
-                  <option value="ru">Русский</option>
-                  <option value="ja">日本語</option>
-                  <option value="tr">Türkçe</option>
-                  <option value="ar">العربية</option>
-                </select>
+              <div class="header-controls">
+                <div class="language-controls">
+                  <select id="language-select" class="language-select" aria-label="Select language">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="zh">中文</option>
+                    <option value="it">Italiano</option>
+                    <option value="ru">Русский</option>
+                    <option value="ja">日本語</option>
+                    <option value="tr">Türkçe</option>
+                    <option value="ar">العربية</option>
+                  </select>
+                </div>
+                <button id="sidebar-toggle" class="sidebar-toggle-btn" title="Open Tools & Search">
+                  <span class="toggle-icon">⚡</span>
+                  <span class="toggle-text" data-translate="tools">Tools</span>
+                </button>
               </div>
             </div>
 
@@ -205,18 +192,60 @@
             </div>
           </div>
           
-          <!-- Task Form Sidebar - Appears when day is selected -->
+          <!-- Enhanced Task Sidebar - Tools, Search & Task Management -->
           <div id="task-sidebar" class="task-sidebar">
             <div class="sidebar-header">
-              <h3 id="sidebar-title" data-translate="add_task">Add Task for <span id="sidebar-selected-date"></span></h3>
+              <h3 id="sidebar-title" data-translate="tools_panel">Tools & Tasks</h3>
               <button type="button" id="close-sidebar" class="close-btn" title="Close">✕</button>
             </div>
             
-            <form id="sidebar-task-form" class="sidebar-form">
-                            <div class="form-group">
-                <label class="form-label" data-translate="task_title">📝 Task Description</label>
-                <input type="text" id="sidebar-task-title" data-translate-placeholder="task_title" placeholder="Enter task description..." required>
+            <!-- Search Section -->
+            <div class="sidebar-section">
+              <h4 class="section-title" data-translate="search_tasks">🔍 Search Tasks</h4>
+              <div class="search-wrapper">
+                <input type="text" id="search-input" class="search-input" placeholder="Search tasks..." data-translate-placeholder="search_placeholder"/>
+                <button id="clear-search" class="clear-search-btn" style="display: none;">✕</button>
               </div>
+            </div>
+            
+            <!-- Quick Actions Section -->
+            <div class="sidebar-section">
+              <h4 class="section-title" data-translate="quick_actions">⚡ Quick Actions</h4>
+              <div class="action-buttons">
+                <button id="quick-add-btn" class="action-btn primary" title="Quick Add Task">
+                  <span>➕</span> <span data-translate="add_task">Add Task</span>
+                </button>
+                <div class="action-row">
+                  <button id="export-btn" class="action-btn secondary" title="Export Tasks">
+                    <span>📤</span> <span data-translate="export">Export</span>
+                  </button>
+                  <input type="file" id="import-input" accept=".json" style="display: none;" />
+                  <button id="import-btn" class="action-btn secondary" title="Import Tasks">
+                    <span>📥</span> <span data-translate="import">Import</span>
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Bulk Actions -->
+              <div class="bulk-actions" id="bulk-actions" style="display: none;">
+                <h5 class="bulk-title" data-translate="bulk_actions">Bulk Actions</h5>
+                <div class="bulk-buttons">
+                  <button id="select-all-btn" class="bulk-btn" data-translate="select_all">Select All</button>
+                  <button id="delete-selected-btn" class="bulk-btn delete-btn" data-translate="delete_selected">Delete Selected</button>
+                  <button id="complete-selected-btn" class="bulk-btn complete-btn" data-translate="complete_selected">Complete Selected</button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Task Form Section -->
+            <div class="sidebar-section task-form-section" id="task-form-section" style="display: none;">
+              <h4 class="section-title">📝 <span data-translate="add_task_for">Add Task for</span> <span id="sidebar-selected-date"></span></h4>
+              
+              <form id="sidebar-task-form" class="sidebar-form">
+                <div class="form-group">
+                  <label class="form-label" data-translate="task_title">📝 Task Description</label>
+                  <input type="text" id="sidebar-task-title" data-translate-placeholder="task_title" placeholder="Enter task description..." required>
+                </div>
               
               <div class="form-row">
                 <div class="form-group">
@@ -305,9 +334,11 @@
                 </div>
               </div>
             </form>
-
+            </div>
+            
             <!-- Priority Legend -->
-            <div class="sidebar-legend">
+            <div class="sidebar-section">
+              <div class="sidebar-legend">
               <h4 data-translate="priority_legend">📊 Priority Legend</h4>
               <div class="legend-items">
                 <div class="legend-item">
@@ -323,6 +354,7 @@
                   <span class="legend-text" data-translate="low_priority">Low Priority</span>
                 </div>
               </div>
+            </div>
             </div>
           </div>
         </div>

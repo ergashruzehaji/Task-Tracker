@@ -8,6 +8,8 @@ let searchInput, clearSearchBtn, quickAddBtn, exportBtn, importBtn, importInput;
 let quickAddModal, quickAddForm, quickTaskInput, quickDate, quickPriority;
 // Bulk operations elements
 let bulkActions, selectAllBtn, deleteSelectedBtn, completeSelectedBtn;
+// Sidebar toggle
+let sidebarToggleBtn, taskSidebar;
 // Initialize these inside DOMContentLoaded to ensure elements exist
 let quickForm, cancelFormBtn, selectedDateTitle;
 let notificationSidebar, closeNotificationsBtn, activeNotifications, mainContent;
@@ -34,6 +36,15 @@ const translations = {
     january: "January", february: "February", march: "March", april: "April",
     may: "May", june: "June", july: "July", august: "August",
     september: "September", october: "October", november: "November", december: "December",
+    // Month index translations for calendar
+    month_0: "January", month_1: "February", month_2: "March", month_3: "April", month_4: "May", month_5: "June",
+    month_6: "July", month_7: "August", month_8: "September", month_9: "October", month_10: "November", month_11: "December",
+    // New UI elements
+    tools: "Tools", tools_panel: "Tools & Tasks", search_tasks: "Search Tasks", 
+    search_placeholder: "Search tasks...", quick_actions: "Quick Actions",
+    export: "Export", import: "Import", bulk_actions: "Bulk Actions",
+    select_all: "Select All", delete_selected: "Delete Selected", 
+    complete_selected: "Complete Selected", add_task_for: "Add Task for",
     // Priority Legend
     priority_legend: "Priority Legend", high_priority: "High Priority", 
     medium_priority: "Medium Priority", low_priority: "Low Priority"
@@ -53,6 +64,15 @@ const translations = {
     january: "Enero", february: "Febrero", march: "Marzo", april: "Abril",
     may: "Mayo", june: "Junio", july: "Julio", august: "Agosto", 
     september: "Septiembre", october: "Octubre", november: "Noviembre", december: "Diciembre",
+    // Month index translations for calendar
+    month_0: "Enero", month_1: "Febrero", month_2: "Marzo", month_3: "Abril", month_4: "Mayo", month_5: "Junio",
+    month_6: "Julio", month_7: "Agosto", month_8: "Septiembre", month_9: "Octubre", month_10: "Noviembre", month_11: "Diciembre",
+    // New UI elements
+    tools: "Herramientas", tools_panel: "Herramientas y Tareas", search_tasks: "Buscar Tareas", 
+    search_placeholder: "Buscar tareas...", quick_actions: "Acciones Rápidas",
+    export: "Exportar", import: "Importar", bulk_actions: "Acciones en Lote",
+    select_all: "Seleccionar Todo", delete_selected: "Eliminar Seleccionadas", 
+    complete_selected: "Completar Seleccionadas", add_task_for: "Agregar Tarea para",
     // Priority Legend
     priority_legend: "Leyenda de Prioridades", high_priority: "Alta Prioridad",
     medium_priority: "Prioridad Media", low_priority: "Baja Prioridad"
@@ -74,6 +94,12 @@ const translations = {
     september: "Septembre", october: "Octobre", november: "Novembre", december: "Décembre",
     month_0: "Janvier", month_1: "Février", month_2: "Mars", month_3: "Avril", month_4: "Mai", month_5: "Juin",
     month_6: "Juillet", month_7: "Août", month_8: "Septembre", month_9: "Octobre", month_10: "Novembre", month_11: "Décembre",
+    // New UI elements
+    tools: "Outils", tools_panel: "Outils et Tâches", search_tasks: "Rechercher Tâches", 
+    search_placeholder: "Rechercher tâches...", quick_actions: "Actions Rapides",
+    export: "Exporter", import: "Importer", bulk_actions: "Actions en Lot",
+    select_all: "Tout Sélectionner", delete_selected: "Supprimer Sélectionnées", 
+    complete_selected: "Terminer Sélectionnées", add_task_for: "Ajouter Tâche pour",
     // Priority Legend
     priority_legend: "Légende des priorités", high_priority: "Priorité élevée",
     medium_priority: "Priorité moyenne", low_priority: "Priorité faible"
@@ -95,6 +121,12 @@ const translations = {
     september: "九月", october: "十月", november: "十一月", december: "十二月",
     month_0: "一月", month_1: "二月", month_2: "三月", month_3: "四月", month_4: "五月", month_5: "六月",
     month_6: "七月", month_7: "八月", month_8: "九月", month_9: "十月", month_10: "十一月", month_11: "十二月",
+    // New UI elements
+    tools: "工具", tools_panel: "工具和任务", search_tasks: "搜索任务", 
+    search_placeholder: "搜索任务...", quick_actions: "快速操作",
+    export: "导出", import: "导入", bulk_actions: "批量操作",
+    select_all: "全选", delete_selected: "删除选中", 
+    complete_selected: "完成选中", add_task_for: "为...添加任务",
     // Priority Legend
     priority_legend: "优先级图例", high_priority: "高优先级",
     medium_priority: "中优先级", low_priority: "低优先级"
@@ -116,6 +148,12 @@ const translations = {
     september: "Settembre", october: "Ottobre", november: "Novembre", december: "Dicembre",
     month_0: "Gennaio", month_1: "Febbraio", month_2: "Marzo", month_3: "Aprile", month_4: "Maggio", month_5: "Giugno",
     month_6: "Luglio", month_7: "Agosto", month_8: "Settembre", month_9: "Ottobre", month_10: "Novembre", month_11: "Dicembre",
+    // New UI elements
+    tools: "Strumenti", tools_panel: "Strumenti e Attività", search_tasks: "Cerca Attività", 
+    search_placeholder: "Cerca attività...", quick_actions: "Azioni Rapide",
+    export: "Esporta", import: "Importa", bulk_actions: "Azioni Multiple",
+    select_all: "Seleziona Tutto", delete_selected: "Elimina Selezionate", 
+    complete_selected: "Completa Selezionate", add_task_for: "Aggiungi Attività per",
     // Priority Legend
     priority_legend: "Legenda Priorità", high_priority: "Alta Priorità",
     medium_priority: "Media Priorità", low_priority: "Bassa Priorità"
@@ -722,6 +760,12 @@ function showTaskSidebar(dateString) {
     console.log('🔧 Adding show class to sidebar');
     sidebar.classList.add('show');
     document.body.classList.add('sidebar-open');
+    
+    // Show task form section when opening for task creation
+    const taskFormSection = document.getElementById('task-form-section');
+    if (taskFormSection) {
+        taskFormSection.style.display = 'block';
+    }
     sidebarOpen = true;
     
     console.log('🔧 Sidebar classes after show:', sidebar.className);
@@ -1667,6 +1711,29 @@ function importTasks(e) {
     reader.readAsText(file);
 }
 
+// Sidebar toggle functionality
+function setupSidebarToggle() {
+    if (!sidebarToggleBtn || !taskSidebar) return;
+    
+    sidebarToggleBtn.addEventListener('click', () => {
+        const isOpen = taskSidebar.classList.contains('show');
+        
+        if (isOpen) {
+            closeSidebar();
+        } else {
+            // Open sidebar in tools mode (not task creation mode)
+            taskSidebar.classList.add('show');
+            document.body.classList.add('sidebar-open');
+            
+            // Hide task form section when opening in tools mode
+            const taskFormSection = document.getElementById('task-form-section');
+            if (taskFormSection) {
+                taskFormSection.style.display = 'none';
+            }
+        }
+    });
+}
+
 // Bulk operations functionality
 function setupBulkOperations() {
     if (!bulkActions) return;
@@ -1867,6 +1934,10 @@ function initializeApp() {
     selectAllBtn = document.getElementById('select-all-btn');
     deleteSelectedBtn = document.getElementById('delete-selected-btn');
     completeSelectedBtn = document.getElementById('complete-selected-btn');
+    
+    // Initialize sidebar toggle elements
+    sidebarToggleBtn = document.getElementById('sidebar-toggle');
+    taskSidebar = document.getElementById('task-sidebar');
   // Optional list element if present in DOM
   list = document.getElementById('task-list') || document.getElementById('tasks-list') || document.querySelector('.task-list') || null;
     
@@ -1897,6 +1968,7 @@ function initializeApp() {
     setupQuickAdd();
     setupDataManagement();
     setupBulkOperations();
+    setupSidebarToggle();
     
     // Initialize dropdowns
     
