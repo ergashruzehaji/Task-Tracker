@@ -2199,27 +2199,9 @@ function completeTaskFromNotification(taskId) {
 
 // Add task
 async function addTask(task) {
-  try {
-    const response = await fetch(`${API_BASE}/api/tasks`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(task),
-    });
-    
-    if (response.ok) {
-      const savedTask = await response.json();
-      tasks.push(savedTask);
-    } else {
-      throw new Error('Backend not available');
-    }
-  } catch (error) {
-    console.error('Error adding task:', error);
-    // Fallback to local storage
-    tasks.push(task);
-    saveTasksToLocalStorage();
-  }
+  // Use localStorage directly for better performance and reliability
+  tasks.push(task);
+  saveTasksToLocalStorage();
   
   // Refresh calendar and check for notifications
   renderCalendar();
@@ -2232,18 +2214,8 @@ async function addTask(task) {
 
 // Load tasks
 async function loadTasks() {
-  try {
-    const response = await fetch(`${API_BASE}/api/tasks`);
-    if (response.ok) {
-      tasks = await response.json();
-    } else {
-      throw new Error('Backend not available');
-    }
-  } catch (error) {
-    console.error('Error loading tasks:', error);
-    // Fallback to local storage
-    loadTasksFromLocalStorage();
-  }
+  // Use localStorage directly for better performance
+  loadTasksFromLocalStorage();
   
   // Initialize calendar with loaded tasks
   renderCalendar();
@@ -2341,21 +2313,8 @@ async function toggleTaskCompletion(id) {
   
   task.completed = !task.completed;
   
-  try {
-    const response = await fetch(`${API_BASE}/api/tasks/${task.date}/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(task),
-    });
-    
-    if (!response.ok) {
-      throw new Error('Backend not available');
-    }
-  } catch (error) {
-    console.error('Error updating task:', error);
-  }
+  // Save to localStorage
+  saveTasksToLocalStorage();
   
   saveTasksToLocalStorage();
   renderCalendar();
@@ -2364,18 +2323,6 @@ async function toggleTaskCompletion(id) {
 
 // Delete task
 async function deleteTask(date, id) {
-  try {
-    const response = await fetch(`${API_BASE}/api/tasks/${date}/${id}`, {
-      method: 'DELETE'
-    });
-    
-    if (!response.ok) {
-      throw new Error('Backend not available');
-    }
-  } catch (error) {
-    console.error('Error deleting task:', error);
-  }
-  
   // Remove from local array
   tasks = tasks.filter(task => task.id !== id);
   saveTasksToLocalStorage();
@@ -3154,18 +3101,7 @@ function clearCompleted() {
     }
     
     if (confirm(`Remove ${completedTasks.length} completed task(s)?`)) {
-        // Delete completed tasks from backend
-        completedTasks.forEach(async (task) => {
-            try {
-                await fetch(`${API_BASE}/api/tasks/${task.date}/${task.id}`, {
-                    method: 'DELETE'
-                });
-            } catch (error) {
-                console.error('Error deleting completed task:', error);
-            }
-        });
-        
-        // Remove from local array
+        // Remove completed tasks from local array
         tasks = tasks.filter(task => !task.completed);
         saveTasksToLocalStorage();
         displayTasks();
