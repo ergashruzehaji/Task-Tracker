@@ -3250,3 +3250,239 @@ addTask = async function(task) {
     await originalAddTask.call(this, task);
     updateDashboard();
 };
+
+// ==========================================
+// SUGGESTIONS SYSTEM
+// ==========================================
+
+function initializeSuggestions() {
+    const suggestionsTab = document.getElementById('suggestions-trigger');
+    const suggestionsModal = document.getElementById('suggestions-modal');
+    const closeSuggestions = document.getElementById('close-suggestions');
+    const cancelSuggestions = document.getElementById('cancel-suggestions');
+    const suggestionsForm = document.getElementById('suggestions-form');
+    const successModal = document.getElementById('success-modal');
+    const closeSuccess = document.getElementById('close-success');
+    const charCount = document.getElementById('char-count');
+    const suggestionText = document.getElementById('suggestion-text');
+
+    // Character counter for textarea
+    if (suggestionText && charCount) {
+        suggestionText.addEventListener('input', function() {
+            const length = this.value.length;
+            charCount.textContent = length;
+            
+            // Visual feedback for character limit
+            if (length > 450) {
+                charCount.style.color = '#e74c3c';
+            } else if (length > 400) {
+                charCount.style.color = '#f39c12';
+            } else {
+                charCount.style.color = '#666';
+            }
+        });
+    }
+
+    // Open suggestions modal
+    if (suggestionsTab) {
+        suggestionsTab.addEventListener('click', function() {
+            if (suggestionsModal) {
+                suggestionsModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                
+                // Focus on first input
+                const nameInput = document.getElementById('suggestion-name');
+                if (nameInput) {
+                    setTimeout(() => nameInput.focus(), 100);
+                }
+            }
+        });
+    }
+
+    // Close suggestions modal functions
+    function closeSuggestionsModal() {
+        if (suggestionsModal) {
+            suggestionsModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Reset form
+        if (suggestionsForm) {
+            suggestionsForm.reset();
+            if (charCount) charCount.textContent = '0';
+        }
+    }
+
+    // Close modal events
+    if (closeSuggestions) {
+        closeSuggestions.addEventListener('click', closeSuggestionsModal);
+    }
+    
+    if (cancelSuggestions) {
+        cancelSuggestions.addEventListener('click', closeSuggestionsModal);
+    }
+
+    // Close on overlay click
+    if (suggestionsModal) {
+        suggestionsModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSuggestionsModal();
+            }
+        });
+    }
+
+    // Form submission
+    if (suggestionsForm) {
+        suggestionsForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const name = formData.get('name').trim();
+            const email = formData.get('email').trim();
+            const suggestion = formData.get('suggestion').trim();
+            
+            // Validation
+            if (!name || !email || !suggestion) {
+                showNotification('Please fill in all required fields.', 'error');
+                return;
+            }
+            
+            if (suggestion.length < 10) {
+                showNotification('Please provide a more detailed suggestion (at least 10 characters).', 'error');
+                return;
+            }
+            
+            if (suggestion.length > 500) {
+                showNotification('Suggestion is too long. Please keep it under 500 characters.', 'error');
+                return;
+            }
+            
+            // Simulate form submission
+            submitSuggestion(name, email, suggestion);
+        });
+    }
+
+    // Success modal close
+    if (closeSuccess) {
+        closeSuccess.addEventListener('click', function() {
+            if (successModal) {
+                successModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+
+    // Close success modal on overlay click
+    if (successModal) {
+        successModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+
+    // ESC key to close modals
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (suggestionsModal && suggestionsModal.style.display === 'flex') {
+                closeSuggestionsModal();
+            }
+            if (successModal && successModal.style.display === 'flex') {
+                successModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+    });
+}
+
+function submitSuggestion(name, email, suggestion) {
+    const submitBtn = document.getElementById('submit-suggestions');
+    const originalText = submitBtn.innerHTML;
+    
+    // Show loading state
+    submitBtn.innerHTML = '📤 Sending...';
+    submitBtn.disabled = true;
+    
+    // Simulate API call (replace with actual implementation)
+    setTimeout(() => {
+        // Hide suggestions modal
+        const suggestionsModal = document.getElementById('suggestions-modal');
+        if (suggestionsModal) {
+            suggestionsModal.style.display = 'none';
+        }
+        
+        // Show success modal
+        const successModal = document.getElementById('success-modal');
+        if (successModal) {
+            successModal.style.display = 'flex';
+        }
+        
+        // Reset form and button
+        const suggestionsForm = document.getElementById('suggestions-form');
+        if (suggestionsForm) {
+            suggestionsForm.reset();
+        }
+        
+        const charCount = document.getElementById('char-count');
+        if (charCount) {
+            charCount.textContent = '0';
+            charCount.style.color = '#666';
+        }
+        
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        
+        console.log('Suggestion submitted:', { name, email, suggestion });
+        
+        // In a real implementation, you would send this to your backend:
+        // fetch('/api/suggestions', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ name, email, suggestion })
+        // });
+        
+    }, 1500); // Simulate network delay
+}
+
+// Enhanced notification function for suggestions
+function showSuggestionNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `suggestion-notification ${type}`;
+    notification.textContent = message;
+    
+    // Style the notification
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'error' ? '#e74c3c' : '#667eea'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        z-index: 3001;
+        font-weight: 500;
+        animation: slideInRight 0.3s ease;
+        max-width: 300px;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Initialize suggestions system when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Add to existing initialization
+    initializeSuggestions();
+});
