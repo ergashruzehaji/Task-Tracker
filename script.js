@@ -57,7 +57,10 @@ const translations = {
     success_title: "Thank you!", success_message: "Your message has been successfully sent.",
     name_required: "Name is required", email_required: "Email is required",
     email_invalid: "Please enter a valid email address", suggestions_required: "Please share your suggestions with us",
-    suggestions_too_long: "Suggestions must be 500 words or less"
+    suggestions_too_long: "Suggestions must be 500 words or less",
+    // Additional Interface Elements
+    task_input_placeholder: "Enter a task...", daily_month: "Daily for Month", 
+    weekly_year: "Weekly for Year", time_format: "Time Format"
   },
   es: {
     view_day: "Día", view_week: "Semana", view_month: "Mes", add_task: "Agregar Tarea", cancel: "Cancelar",
@@ -95,7 +98,10 @@ const translations = {
     success_title: "¡Gracias!", success_message: "Tu mensaje ha sido enviado exitosamente.",
     name_required: "El nombre es obligatorio", email_required: "El correo electrónico es obligatorio",
     email_invalid: "Por favor ingresa un correo electrónico válido", suggestions_required: "Por favor comparte tus sugerencias con nosotros",
-    suggestions_too_long: "Las sugerencias deben tener 500 palabras o menos"
+    suggestions_too_long: "Las sugerencias deben tener 500 palabras o menos",
+    // Additional Interface Elements
+    task_input_placeholder: "Ingresa una tarea...", daily_month: "Diario por Mes",
+    weekly_year: "Semanal por Año", time_format: "Formato de Hora"
   },
   fr: {
     view_day: "Jour", view_week: "Semaine", view_month: "Mois", add_task: "Ajouter Tâche", cancel: "Annuler",
@@ -132,7 +138,10 @@ const translations = {
     success_title: "Merci!", success_message: "Votre message a été envoyé avec succès.",
     name_required: "Le nom est requis", email_required: "L'e-mail est requis",
     email_invalid: "Veuillez entrer une adresse e-mail valide", suggestions_required: "Veuillez partager vos suggestions avec nous",
-    suggestions_too_long: "Les suggestions doivent contenir 500 mots ou moins"
+    suggestions_too_long: "Les suggestions doivent contenir 500 mots ou moins",
+    // Additional Interface Elements
+    task_input_placeholder: "Entrez une tâche...", daily_month: "Quotidien pour le Mois",
+    weekly_year: "Hebdomadaire pour l'Année", time_format: "Format de l'Heure"
   },
   de: {
     view_day: "Tag", view_week: "Woche", view_month: "Monat", add_task: "Aufgabe hinzufügen", cancel: "Abbrechen",
@@ -170,7 +179,10 @@ const translations = {
     success_title: "Vielen Dank!", success_message: "Ihre Nachricht wurde erfolgreich gesendet.",
     name_required: "Name ist erforderlich", email_required: "E-Mail ist erforderlich",
     email_invalid: "Bitte geben Sie eine gültige E-Mail-Adresse ein", suggestions_required: "Bitte teilen Sie Ihre Vorschläge mit uns",
-    suggestions_too_long: "Vorschläge müssen 500 Wörter oder weniger enthalten"
+    suggestions_too_long: "Vorschläge müssen 500 Wörter oder weniger enthalten",
+    // Additional Interface Elements
+    task_input_placeholder: "Geben Sie eine Aufgabe ein...", daily_month: "Täglich für den Monat",
+    weekly_year: "Wöchentlich für das Jahr", time_format: "Zeitformat"
   },
   zh: {
     view_day: "日", view_week: "周", view_month: "月", add_task: "添加任务", cancel: "取消",
@@ -207,7 +219,10 @@ const translations = {
     success_title: "谢谢！", success_message: "您的消息已成功发送。",
     name_required: "姓名为必填项", email_required: "电子邮件为必填项",
     email_invalid: "请输入有效的电子邮件地址", suggestions_required: "请与我们分享您的建议",
-    suggestions_too_long: "建议必须在500字以内"
+    suggestions_too_long: "建议必须在500字以内",
+    // Additional Interface Elements
+    task_input_placeholder: "请输入任务...", daily_month: "每日一个月",
+    weekly_year: "每周一年", time_format: "时间格式"
   },
   it: {
     view_day: "Giorno", view_week: "Settimana", view_month: "Mese", add_task: "Aggiungi Attività", cancel: "Annulla",
@@ -244,7 +259,10 @@ const translations = {
     success_title: "Grazie!", success_message: "Il tuo messaggio è stato inviato con successo.",
     name_required: "Il nome è obbligatorio", email_required: "L'e-mail è obbligatoria",
     email_invalid: "Inserisci un indirizzo e-mail valido", suggestions_required: "Condividi i tuoi suggerimenti con noi",
-    suggestions_too_long: "I suggerimenti devono essere di 500 parole o meno"
+    suggestions_too_long: "I suggerimenti devono essere di 500 parole o meno",
+    // Additional Interface Elements
+    task_input_placeholder: "Inserisci un'attività...", daily_month: "Giornaliero per Mese",
+    weekly_year: "Settimanale per Anno", time_format: "Formato Orario"
   },
   ru: {
     view_day: "День", view_week: "Неделя", view_month: "Месяц", add_task: "Добавить Задачу", cancel: "Отмена",
@@ -275,7 +293,10 @@ const translations = {
     success_title: "Спасибо!", success_message: "Ваше сообщение было успешно отправлено.",
     name_required: "Имя обязательно", email_required: "Электронная почта обязательна",
     email_invalid: "Пожалуйста, введите действительный адрес электронной почты", suggestions_required: "Пожалуйста, поделитесь с нами вашими предложениями",
-    suggestions_too_long: "Предложения должны содержать не более 500 слов"
+    suggestions_too_long: "Предложения должны содержать не более 500 слов",
+    // Additional Interface Elements
+    task_input_placeholder: "Введите задачу...", daily_month: "Ежедневно в течение месяца",
+    weekly_year: "Еженедельно в течение года", time_format: "Формат времени"
   },
   ja: {
     view_day: "日", view_week: "週", view_month: "月", add_task: "タスクを追加", cancel: "キャンセル",
@@ -306,7 +327,10 @@ const translations = {
     success_title: "ありがとうございます！", success_message: "メッセージが正常に送信されました。",
     name_required: "お名前は必須です", email_required: "メールアドレスは必須です",
     email_invalid: "有効なメールアドレスを入力してください", suggestions_required: "ご提案をお聞かせください",
-    suggestions_too_long: "提案は500文字以下にしてください"
+    suggestions_too_long: "提案は500文字以下にしてください",
+    // Additional Interface Elements
+    task_input_placeholder: "タスクを入力してください...", daily_month: "月間毎日",
+    weekly_year: "年間毎週", time_format: "時刻形式"
   },
   tr: {
     view_day: "Gün", view_week: "Hafta", view_month: "Ay", add_task: "Görev Ekle", cancel: "İptal",
@@ -332,12 +356,15 @@ const translations = {
     live_demo: "Canlı Demo", suggestions: "Öneriler", suggestions_form_title: "Önerilerinizi Bize Gönderin",
     name_label: "Ad", email_label: "E-posta", suggestions_label: "Önerileriniz",
     name_placeholder: "Adınızı girin", email_placeholder: "E-posta adresinizi girin",
-    suggestions_placeholder: "Önerilerinizi, geri bildirimlerinizi veya fikirlerinizi bizimle paylaşın (500 kelimeye kadar)...",
+    suggestions_placeholder: "Önerilerinizi, geri bildirimlerinizi veya fikirlerinizi bizimle paylaşin (500 kelimeye kadar)...",
     submit_suggestions: "Önerileri Gönder", character_count: "karakter kaldı",
     success_title: "Teşekkürler!", success_message: "Mesajınız başarıyla gönderildi.",
     name_required: "Ad gereklidir", email_required: "E-posta gereklidir",
     email_invalid: "Lütfen geçerli bir e-posta adresi girin", suggestions_required: "Lütfen önerilerinizi bizimle paylaşın",
-    suggestions_too_long: "Öneriler 500 kelime veya daha az olmalıdır"
+    suggestions_too_long: "Öneriler 500 kelime veya daha az olmalıdır",
+    // Additional Interface Elements
+    task_input_placeholder: "Bir görev girin...", daily_month: "Ay için Günlük",
+    weekly_year: "Yıl için Haftalık", time_format: "Saat Formatı"
   },
   ar: {
     view_day: "يوم", view_week: "أسبوع", view_month: "شهر", add_task: "إضافة مهمة", cancel: "إلغاء",
@@ -368,7 +395,10 @@ const translations = {
     success_title: "شكراً لك!", success_message: "تم إرسال رسالتك بنجاح.",
     name_required: "الاسم مطلوب", email_required: "البريد الإلكتروني مطلوب",
     email_invalid: "يرجى إدخال عنوان بريد إلكتروني صحيح", suggestions_required: "يرجى مشاركة اقتراحاتك معنا",
-    suggestions_too_long: "يجب أن تكون الاقتراحات 500 كلمة أو أقل"
+    suggestions_too_long: "يجب أن تكون الاقتراحات 500 كلمة أو أقل",
+    // Additional Interface Elements
+    task_input_placeholder: "أدخل مهمة...", daily_month: "يومياً للشهر",
+    weekly_year: "أسبوعياً للسنة", time_format: "صيغة الوقت"
   }
 };
 

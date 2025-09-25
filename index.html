@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Cache Buster: 1758743199 - Force Complete Refresh -->
+<!-- Cache Buster: 1758845000 - Complete Interface Translation Update -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -7,10 +7,10 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <meta name="cache-buster" content="1758760200" />
+  <meta name="cache-buster" content="1758845000" />
   <title>Task Tracker - Production Ready</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
-  <link rel="stylesheet" href="style.css?v=1758760200&cb=force-refresh" />
+  <link rel="stylesheet" href="style.css?v=1758845000&cb=complete-translations" />
 </head>
 <body>
   <div class="app-container">
@@ -27,7 +27,7 @@
           </div>
           <form id="task-form">
             <div class="form-row">
-              <input type="text" id="task-input" placeholder="Enter a task..." required />
+              <input type="text" id="task-input" data-translate-placeholder="task_input_placeholder" placeholder="Enter a task..." required />
             </div>
             
             <div class="form-row time-row">
@@ -88,54 +88,54 @@
                 
                 <!-- Weekly Options -->
                 <div id="weekly-options" class="weekly-options" style="display: none;">
-                  <label class="form-label">📆 Select days to repeat:</label>
+                  <label class="form-label" data-translate="select_days">📆 Select days to repeat:</label>
                   <div class="weekday-selector">
                     <label class="weekday-item">
                       <input type="checkbox" value="0">
                       <div class="weekday-content">
-                        <div class="weekday-label">Sun</div>
+                        <div class="weekday-label" data-translate="sun">Sun</div>
                         <div class="weekday-toggle"></div>
                       </div>
                     </label>
                     <label class="weekday-item">
                       <input type="checkbox" value="1">
                       <div class="weekday-content">
-                        <div class="weekday-label">Mon</div>
+                        <div class="weekday-label" data-translate="mon">Mon</div>
                         <div class="weekday-toggle"></div>
                       </div>
                     </label>
                     <label class="weekday-item">
                       <input type="checkbox" value="2">
                       <div class="weekday-content">
-                        <div class="weekday-label">Tue</div>
+                        <div class="weekday-label" data-translate="tue">Tue</div>
                         <div class="weekday-toggle"></div>
                       </div>
                     </label>
                     <label class="weekday-item">
                       <input type="checkbox" value="3">
                       <div class="weekday-content">
-                        <div class="weekday-label">Wed</div>
+                        <div class="weekday-label" data-translate="wed">Wed</div>
                         <div class="weekday-toggle"></div>
                       </div>
                     </label>
                     <label class="weekday-item">
                       <input type="checkbox" value="4">
                       <div class="weekday-content">
-                        <div class="weekday-label">Thu</div>
+                        <div class="weekday-label" data-translate="thu">Thu</div>
                         <div class="weekday-toggle"></div>
                       </div>
                     </label>
                     <label class="weekday-item">
                       <input type="checkbox" value="5">
                       <div class="weekday-content">
-                        <div class="weekday-label">Fri</div>
+                        <div class="weekday-label" data-translate="fri">Fri</div>
                         <div class="weekday-toggle"></div>
                       </div>
                     </label>
                     <label class="weekday-item">
                       <input type="checkbox" value="6">
                       <div class="weekday-content">
-                        <div class="weekday-label">Sat</div>
+                        <div class="weekday-label" data-translate="sat">Sat</div>
                         <div class="weekday-toggle"></div>
                       </div>
                     </label>
@@ -146,10 +146,10 @@
                 <div class="recurring-presets">
                   <label class="form-label">⚡ Quick Presets:</label>
                   <div class="preset-buttons">
-                    <button type="button" class="preset-btn" data-preset="work-week">Work Week (Mon-Fri)</button>
-                    <button type="button" class="preset-btn" data-preset="weekends">Weekends</button>
-                    <button type="button" class="preset-btn" data-preset="daily-month">Daily for Month</button>
-                    <button type="button" class="preset-btn" data-preset="weekly-year">Weekly for Year</button>
+                    <button type="button" class="preset-btn" data-preset="work-week" data-translate="weekdays_only">Work Week (Mon-Fri)</button>
+                    <button type="button" class="preset-btn" data-preset="weekends" data-translate="weekends_only">Weekends</button>
+                    <button type="button" class="preset-btn" data-preset="daily-month" data-translate="daily_month">Daily for Month</button>
+                    <button type="button" class="preset-btn" data-preset="weekly-year" data-translate="weekly_year">Weekly for Year</button>
                   </div>
                 </div>
               </div>
@@ -157,9 +157,9 @@
             
             <div class="form-actions">
               <button type="submit" class="btn-primary">
-                <span id="submit-text">Add Task</span>
+                <span id="submit-text" data-translate="add_task">Add Task</span>
               </button>
-              <button type="button" class="btn-secondary" onclick="document.getElementById('cancel-form').click()">Cancel</button>
+              <button type="button" class="btn-secondary" onclick="document.getElementById('cancel-form').click()" data-translate="cancel">Cancel</button>
             </div>
           </form>
         </div>
@@ -205,9 +205,9 @@
             <!-- View Controls Below -->
             <div class="view-controls-section">
               <div class="view-controls">
-                <button class="view-btn" data-view="day">� Day</button>
-                <button class="view-btn active" data-view="week">� Week</button>
-                <button class="view-btn" data-view="month">🗓 Month</button>
+                <button class="view-btn" data-view="day" data-translate="view_day">📅 Day</button>
+                <button class="view-btn active" data-view="week" data-translate="view_week">📊 Week</button>
+                <button class="view-btn" data-view="month" data-translate="view_month">🗓 Month</button>
               </div>
             </div>
 
@@ -620,6 +620,6 @@
     </div>
   </div>
 
-    <script src="script.js?v=1758760200"></script>
+    <script src="script.js?v=1758845000"></script>
 </body>
 </html>
