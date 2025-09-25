@@ -1449,8 +1449,8 @@ li.completed {
   top: 0;
   width: 400px;
   height: 100vh;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(12px);
   border-left: 2px solid rgba(218, 165, 32, 0.4);
   box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
   z-index: 1000;
@@ -1468,7 +1468,7 @@ li.completed {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.4);
   color: #333;
   border-bottom: 1px solid rgba(218, 165, 32, 0.2);
   backdrop-filter: blur(12px);
@@ -1507,7 +1507,7 @@ li.completed {
 
 .sidebar-form {
   padding: 25px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(8px);
   height: calc(100% - 80px);
   overflow-y: auto;
@@ -1523,6 +1523,15 @@ li.completed {
   background: rgba(255, 255, 255, 0.9);
   margin: 20px -25px -25px;
   padding: 20px 25px;
+}
+
+.form-actions-inline {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: none !important;
+  background: transparent !important;
+  margin: 15px 0 !important;
+  padding: 0 !important;
 }
 
 .sidebar-form .form-group {
