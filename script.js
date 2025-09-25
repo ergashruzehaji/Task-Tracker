@@ -3,6 +3,11 @@ const API_BASE = window.location.origin;
 
 // Initialize these inside DOMContentLoaded to ensure elements exist
 let form, input, prioritySelect, yearSelect, timeFormatToggle, alarmAudio;
+// Search and Quick Add elements
+let searchInput, clearSearchBtn, quickAddBtn, exportBtn, importBtn, importInput;
+let quickAddModal, quickAddForm, quickTaskInput, quickDate, quickPriority;
+// Bulk operations elements
+let bulkActions, selectAllBtn, deleteSelectedBtn, completeSelectedBtn;
 // Initialize these inside DOMContentLoaded to ensure elements exist
 let quickForm, cancelFormBtn, selectedDateTitle;
 let notificationSidebar, closeNotificationsBtn, activeNotifications, mainContent;
@@ -1374,6 +1379,444 @@ function initializeLanguage() {
 
 
 
+// Search functionality
+function setupSearchFeature() {
+    if (!searchInput) return;
+    
+    let searchTimeout;
+    
+    searchInput.addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+        const query = e.target.value.toLowerCase().trim();
+        
+        // Show/hide clear button
+        if (clearSearchBtn) {
+            clearSearchBtn.style.display = query ? 'block' : 'none';
+        }
+        
+        // Debounced search
+        searchTimeout = setTimeout(() => {
+            searchTasks(query);
+        }, 300);
+    });
+    
+    if (clearSearchBtn) {
+        clearSearchBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            clearSearchBtn.style.display = 'none';
+            searchTasks(''); // Show all tasks
+        });
+    }
+}
+
+function searchTasks(query) {
+    const taskItems = document.querySelectorAll('.task-item');
+    let hasResults = false;
+    
+    taskItems.forEach(item => {
+        if (!query) {
+            item.classList.remove('search-hidden', 'search-match');
+            hasResults = true;
+            return;
+        }
+        
+        const taskText = item.textContent.toLowerCase();
+        const isMatch = taskText.includes(query);
+        
+        if (isMatch) {
+            item.classList.remove('search-hidden');
+            item.classList.add('search-match');
+            hasResults = true;
+        } else {
+            item.classList.add('search-hidden');
+            item.classList.remove('search-match');
+        }
+    });
+    
+    // Show no results message if needed
+    updateSearchResultsMessage(hasResults, query);
+}
+
+function updateSearchResultsMessage(hasResults, query) {
+    let messageEl = document.getElementById('search-no-results');
+    
+    if (!hasResults && query) {
+        if (!messageEl) {
+            messageEl = document.createElement('div');
+            messageEl.id = 'search-no-results';
+            messageEl.className = 'search-no-results';
+            messageEl.style.cssText = `
+                text-align: center;
+                padding: 20px;
+                color: #666;
+                font-style: italic;
+                background: rgba(255, 255, 255, 0.7);
+                border-radius: 10px;
+                margin: 20px;
+            `;
+            
+            // Insert after calendar or at start of main content
+            const calendar = document.querySelector('.calendar-layout');
+            if (calendar) {
+                calendar.parentNode.insertBefore(messageEl, calendar.nextSibling);
+            }
+        }
+        messageEl.textContent = `No tasks found for "${query}"`;
+        messageEl.style.display = 'block';
+    } else if (messageEl) {
+        messageEl.style.display = 'none';
+    }
+}
+
+// Quick Add Modal functionality
+function setupQuickAdd() {
+    if (!quickAddBtn || !quickAddModal) return;
+    
+    quickAddBtn.addEventListener('click', () => {
+        quickAddModal.style.display = 'flex';
+        if (quickTaskInput) {
+            quickTaskInput.focus();
+            // Set default date to today
+            if (quickDate) {
+                quickDate.value = new Date().toISOString().split('T')[0];
+            }
+        }
+    });
+    
+    // Close modal handlers
+    const closeBtn = document.getElementById('close-quick-add');
+    const cancelBtn = document.getElementById('cancel-quick-add');
+    
+    [closeBtn, cancelBtn].forEach(btn => {
+        if (btn) {
+            btn.addEventListener('click', closeQuickAddModal);
+        }
+    });
+    
+    // Close on overlay click
+    quickAddModal.addEventListener('click', (e) => {
+        if (e.target === quickAddModal) {
+            closeQuickAddModal();
+        }
+    });
+    
+    // Handle form submission
+    if (quickAddForm) {
+        quickAddForm.addEventListener('submit', handleQuickAddSubmit);
+    }
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        // Ctrl+N or Cmd+N for quick add
+        if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+            e.preventDefault();
+            quickAddBtn?.click();
+        }
+        
+        // Escape to close modal
+        if (e.key === 'Escape' && quickAddModal.style.display === 'flex') {
+            closeQuickAddModal();
+        }
+        
+        // Ctrl+F or Cmd+F for search focus
+        if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+            e.preventDefault();
+            searchInput?.focus();
+        }
+        
+        // Ctrl+A or Cmd+A to select all tasks (when not in input)
+        if ((e.ctrlKey || e.metaKey) && e.key === 'a' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+            e.preventDefault();
+            selectAllBtn?.click();
+        }
+        
+        // Delete key to delete selected tasks
+        if (e.key === 'Delete' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+            const selectedTasks = getSelectedTasks();
+            if (selectedTasks.length > 0) {
+                e.preventDefault();
+                deleteSelectedBtn?.click();
+            }
+        }
+        
+        // Ctrl+E or Cmd+E for export
+        if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+            e.preventDefault();
+            exportBtn?.click();
+        }
+    });
+}
+
+function closeQuickAddModal() {
+    if (quickAddModal) {
+        quickAddModal.style.display = 'none';
+        if (quickAddForm) {
+            quickAddForm.reset();
+        }
+    }
+}
+
+function handleQuickAddSubmit(e) {
+    e.preventDefault();
+    
+    const taskText = quickTaskInput?.value?.trim();
+    const taskDate = quickDate?.value;
+    const taskPriority = quickPriority?.value || 'medium';
+    
+    if (!taskText) return;
+    
+    // Create task object
+    const task = {
+        id: Date.now(),
+        text: taskText,
+        priority: taskPriority,
+        completed: false,
+        day: taskDate || new Date().toISOString().split('T')[0]
+    };
+    
+    // Add task using existing function
+    addTask(task);
+    
+    // Close modal and show success message
+    closeQuickAddModal();
+    showNotification(`✅ Task "${taskText}" added successfully!`);
+}
+
+// Export/Import functionality
+function setupDataManagement() {
+    if (exportBtn) {
+        exportBtn.addEventListener('click', exportTasks);
+    }
+    
+    if (importBtn && importInput) {
+        importBtn.addEventListener('click', () => importInput.click());
+        importInput.addEventListener('change', importTasks);
+    }
+}
+
+function exportTasks() {
+    const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    const settings = {
+        language: localStorage.getItem('language') || 'en',
+        exportDate: new Date().toISOString()
+    };
+    
+    const exportData = {
+        tasks,
+        settings,
+        version: '2.0'
+    };
+    
+    const dataStr = JSON.stringify(exportData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `task-tracker-backup-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    showNotification('📤 Tasks exported successfully!');
+}
+
+function importTasks(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const importData = JSON.parse(e.target.result);
+            
+            // Validate data structure
+            if (!importData.tasks || !Array.isArray(importData.tasks)) {
+                throw new Error('Invalid file format');
+            }
+            
+            // Confirm import
+            const confirmImport = confirm(
+                `Import ${importData.tasks.length} tasks?\n\nThis will replace all existing tasks. This action cannot be undone.`
+            );
+            
+            if (!confirmImport) return;
+            
+            // Import tasks
+            localStorage.setItem('tasks', JSON.stringify(importData.tasks));
+            
+            // Import settings if available
+            if (importData.settings?.language) {
+                localStorage.setItem('language', importData.settings.language);
+                currentLanguage = importData.settings.language;
+            }
+            
+            // Refresh the app
+            loadTasks();
+            renderCalendar();
+            
+            showNotification(`✅ Successfully imported ${importData.tasks.length} tasks!`);
+            
+        } catch (error) {
+            console.error('Import error:', error);
+            showNotification('❌ Failed to import tasks. Please check the file format.');
+        }
+    };
+    
+    reader.readAsText(file);
+}
+
+// Bulk operations functionality
+function setupBulkOperations() {
+    if (!bulkActions) return;
+    
+    // Select all button
+    if (selectAllBtn) {
+        selectAllBtn.addEventListener('click', () => {
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            
+            checkboxes.forEach(cb => {
+                cb.checked = !allChecked;
+                toggleTaskSelection(cb);
+            });
+            
+            selectAllBtn.textContent = allChecked ? 'Select All' : 'Deselect All';
+        });
+    }
+    
+    // Delete selected button
+    if (deleteSelectedBtn) {
+        deleteSelectedBtn.addEventListener('click', () => {
+            const selectedTasks = getSelectedTasks();
+            if (selectedTasks.length === 0) {
+                showNotification('No tasks selected');
+                return;
+            }
+            
+            const confirmDelete = confirm(`Delete ${selectedTasks.length} selected task(s)?`);
+            if (confirmDelete) {
+                deleteSelectedTasks(selectedTasks);
+            }
+        });
+    }
+    
+    // Complete selected button
+    if (completeSelectedBtn) {
+        completeSelectedBtn.addEventListener('click', () => {
+            const selectedTasks = getSelectedTasks();
+            if (selectedTasks.length === 0) {
+                showNotification('No tasks selected');
+                return;
+            }
+            
+            completeSelectedTasks(selectedTasks);
+        });
+    }
+}
+
+function addTaskCheckbox(taskElement, taskId) {
+    if (taskElement.querySelector('.task-checkbox')) return; // Already has checkbox
+    
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'task-checkbox';
+    checkbox.dataset.taskId = taskId;
+    
+    checkbox.addEventListener('change', () => {
+        toggleTaskSelection(checkbox);
+        updateBulkActionsVisibility();
+    });
+    
+    taskElement.insertBefore(checkbox, taskElement.firstChild);
+    
+    // Wrap existing content
+    const existingContent = Array.from(taskElement.children).slice(1);
+    const contentWrapper = document.createElement('div');
+    contentWrapper.className = 'task-content';
+    
+    existingContent.forEach(child => {
+        contentWrapper.appendChild(child);
+    });
+    
+    taskElement.appendChild(contentWrapper);
+}
+
+function toggleTaskSelection(checkbox) {
+    const taskElement = checkbox.closest('.task-item');
+    if (taskElement) {
+        taskElement.classList.toggle('selected', checkbox.checked);
+    }
+}
+
+function updateBulkActionsVisibility() {
+    const selectedCount = document.querySelectorAll('.task-checkbox:checked').length;
+    
+    if (bulkActions) {
+        bulkActions.style.display = selectedCount > 0 ? 'flex' : 'none';
+    }
+    
+    // Update select all button text
+    if (selectAllBtn) {
+        const totalCheckboxes = document.querySelectorAll('.task-checkbox').length;
+        const allSelected = selectedCount === totalCheckboxes && totalCheckboxes > 0;
+        selectAllBtn.textContent = allSelected ? 'Deselect All' : 'Select All';
+    }
+}
+
+function getSelectedTasks() {
+    const selectedCheckboxes = document.querySelectorAll('.task-checkbox:checked');
+    return Array.from(selectedCheckboxes).map(cb => ({
+        id: cb.dataset.taskId,
+        element: cb.closest('.task-item')
+    }));
+}
+
+function deleteSelectedTasks(selectedTasks) {
+    selectedTasks.forEach(task => {
+        // Remove from DOM
+        if (task.element) {
+            task.element.remove();
+        }
+        
+        // Remove from storage
+        let tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+        tasks = tasks.filter(t => t.id.toString() !== task.id);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    });
+    
+    updateBulkActionsVisibility();
+    showNotification(`🗑️ Deleted ${selectedTasks.length} task(s)`);
+}
+
+function completeSelectedTasks(selectedTasks) {
+    selectedTasks.forEach(task => {
+        const taskElement = task.element;
+        if (taskElement) {
+            // Toggle completion visually
+            taskElement.classList.add('completed');
+            
+            // Update in storage
+            let tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+            const taskIndex = tasks.findIndex(t => t.id.toString() === task.id);
+            if (taskIndex !== -1) {
+                tasks[taskIndex].completed = true;
+            }
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+    });
+    
+    // Clear selections
+    document.querySelectorAll('.task-checkbox:checked').forEach(cb => {
+        cb.checked = false;
+        toggleTaskSelection(cb);
+    });
+    
+    updateBulkActionsVisibility();
+    showNotification(`✅ Completed ${selectedTasks.length} task(s)`);
+}
+
 function initializeApp() {
     try {
     // Check if all elements exist
@@ -1405,6 +1848,25 @@ function initializeApp() {
     closeNotificationsBtn = document.getElementById('close-notifications');
     activeNotifications = document.getElementById('active-notifications');
     mainContent = document.querySelector('.main-content');
+    
+    // Initialize search and quick add elements
+    searchInput = document.getElementById('search-input');
+    clearSearchBtn = document.getElementById('clear-search');
+    quickAddBtn = document.getElementById('quick-add-btn');
+    exportBtn = document.getElementById('export-btn');
+    importBtn = document.getElementById('import-btn');
+    importInput = document.getElementById('import-input');
+    quickAddModal = document.getElementById('quick-add-modal');
+    quickAddForm = document.getElementById('quick-add-form');
+    quickTaskInput = document.getElementById('quick-task-input');
+    quickDate = document.getElementById('quick-date');
+    quickPriority = document.getElementById('quick-priority');
+    
+    // Initialize bulk operations elements
+    bulkActions = document.getElementById('bulk-actions');
+    selectAllBtn = document.getElementById('select-all-btn');
+    deleteSelectedBtn = document.getElementById('delete-selected-btn');
+    completeSelectedBtn = document.getElementById('complete-selected-btn');
   // Optional list element if present in DOM
   list = document.getElementById('task-list') || document.getElementById('tasks-list') || document.querySelector('.task-list') || null;
     
@@ -1429,6 +1891,12 @@ function initializeApp() {
     initializeRecurringSection(); // Initialize recurring task functionality
     initializeTaskSidebar(); // Initialize task sidebar functionality
     initializeLanguage(); // Initialize language features
+    
+    // Initialize new features
+    setupSearchFeature();
+    setupQuickAdd();
+    setupDataManagement();
+    setupBulkOperations();
     
     // Initialize dropdowns
     
@@ -1802,6 +2270,9 @@ function displayTasks() {
 // Display individual task
 function displayTask(task) {
   const li = document.createElement('li');
+  li.classList.add('task-item'); // Add task-item class for styling and selection
+  li.dataset.taskId = task.id; // Add task ID for bulk operations
+  
   if (task.alarmTime) {
     li.classList.add('has-alarm');
   }
@@ -1833,9 +2304,10 @@ function displayTask(task) {
   }
   
   li.innerHTML = `
+    <input type="checkbox" class="task-checkbox" data-task-id="${task.id}">
     <div class="task-content">
       <div style="display: flex; align-items: center;">
-        <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''} 
+        <input type="checkbox" class="completion-checkbox" ${task.completed ? 'checked' : ''} 
                onchange="toggleTaskCompletion(${task.id})" style="margin-right: 10px;">
         <div class="task-priority ${task.priority || 'medium'}"></div>
         <div class="task-text ${task.completed ? 'completed' : ''}">${task.text}</div>
@@ -1845,12 +2317,21 @@ function displayTask(task) {
       </div>
     </div>
     <div class="task-actions">
-      <button class="delete-btn" onclick="deleteTask(${task.id})">Delete</button>
+      <button class="delete-btn" onclick="deleteTask('${task.day || new Date().toISOString().split('T')[0]}', ${task.id})">Delete</button>
     </div>
   `;
   
   if (!list) return;
   list.appendChild(li);
+  
+  // Add event listener for bulk selection checkbox
+  const bulkCheckbox = li.querySelector('.task-checkbox');
+  if (bulkCheckbox) {
+    bulkCheckbox.addEventListener('change', () => {
+      toggleTaskSelection(bulkCheckbox);
+      updateBulkActionsVisibility();
+    });
+  }
 }
 
 // Toggle task completion

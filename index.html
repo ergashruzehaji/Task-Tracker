@@ -18,6 +18,25 @@
     <!-- Streamlined Main Content -->
     <div class="main-content" id="main-content">
       <div class="container">
+        <!-- Search Bar -->
+        <div class="search-container">
+          <div class="search-wrapper">
+            <input type="text" id="search-input" class="search-input" placeholder="🔍 Search tasks..." />
+            <button id="clear-search" class="clear-search-btn" style="display: none;">✕</button>
+          </div>
+          <div class="quick-actions">
+            <button id="quick-add-btn" class="quick-add-btn" title="Quick Add Task">+ Add Task</button>
+            <button id="export-btn" class="export-btn" title="Export Tasks">📤 Export</button>
+            <input type="file" id="import-input" accept=".json" style="display: none;" />
+            <button id="import-btn" class="import-btn" title="Import Tasks">📥 Import</button>
+            <div class="bulk-actions" id="bulk-actions" style="display: none;">
+              <button id="select-all-btn" class="bulk-btn">Select All</button>
+              <button id="delete-selected-btn" class="bulk-btn delete-btn">Delete Selected</button>
+              <button id="complete-selected-btn" class="bulk-btn complete-btn">Complete Selected</button>
+            </div>
+          </div>
+        </div>
+
         <!-- Compact Task Form - Initially Hidden (Replaced by Sidebar) -->
         <div id="quick-task-form" class="quick-form" style="display: none !important;">
           <div class="form-header">
@@ -318,6 +337,33 @@
       </div>
       <div id="active-notifications" class="notifications-list">
         <!-- Active task notifications will be populated here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Add Modal -->
+  <div id="quick-add-modal" class="quick-add-overlay" style="display: none;">
+    <div class="quick-add-modal">
+      <div class="modal-header">
+        <h3>⚡ Quick Add Task</h3>
+        <button id="close-quick-add" class="close-btn">✕</button>
+      </div>
+      <div class="modal-content">
+        <form id="quick-add-form">
+          <input type="text" id="quick-task-input" class="quick-input" placeholder="What needs to be done?" required />
+          <div class="quick-options">
+            <input type="date" id="quick-date" class="quick-date" />
+            <select id="quick-priority" class="quick-priority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div class="modal-actions">
+            <button type="button" id="cancel-quick-add" class="cancel-btn">Cancel</button>
+            <button type="submit" class="add-btn">Add Task</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
