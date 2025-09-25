@@ -104,6 +104,34 @@ const translations = {
     priority_legend: "Légende des priorités", high_priority: "Priorité élevée",
     medium_priority: "Priorité moyenne", low_priority: "Priorité faible"
   },
+  de: {
+    view_day: "Tag", view_week: "Woche", view_month: "Monat", add_task: "Aufgabe hinzufügen", cancel: "Abbrechen",
+    task_title: "Aufgabentitel", start_time: "Startzeit", end_time: "Endzeit", priority: "Priorität",
+    high: "Hoch", medium: "Mittel", low: "Niedrig", recurring: "Wiederkehrend", daily: "Täglich",
+    weekly: "Wöchentlich", monthly: "Monatlich", save_task: "Aufgabe speichern", close: "Schließen",
+    monday: "Montag", tuesday: "Dienstag", wednesday: "Mittwoch", thursday: "Donnerstag",
+    friday: "Freitag", saturday: "Samstag", sunday: "Sonntag",
+    task_form_title: "Neue Aufgabe hinzufügen", select_days: "Tage auswählen", every: "Jeden",
+    weekdays_only: "Nur Wochentage", weekends_only: "Nur Wochenenden", custom: "Benutzerdefiniert",
+    // Short day names
+    mon: "Mo", tue: "Di", wed: "Mi", thu: "Do", fri: "Fr", sat: "Sa", sun: "So",
+    // Months
+    january: "Januar", february: "Februar", march: "März", april: "April",
+    may: "Mai", june: "Juni", july: "Juli", august: "August",
+    september: "September", october: "Oktober", november: "November", december: "Dezember",
+    // Month index translations for calendar
+    month_0: "Januar", month_1: "Februar", month_2: "März", month_3: "April", month_4: "Mai", month_5: "Juni",
+    month_6: "Juli", month_7: "August", month_8: "September", month_9: "Oktober", month_10: "November", month_11: "Dezember",
+    // New UI elements
+    tools: "Werkzeuge", tools_panel: "Werkzeuge & Aufgaben", search_tasks: "Aufgaben suchen", 
+    search_placeholder: "Aufgaben suchen...", quick_actions: "Schnelle Aktionen",
+    export: "Exportieren", import: "Importieren", bulk_actions: "Massenaktionen",
+    select_all: "Alle auswählen", delete_selected: "Ausgewählte löschen", 
+    complete_selected: "Ausgewählte abschließen", add_task_for: "Aufgabe hinzufügen für",
+    // Priority Legend
+    priority_legend: "Prioritäts-Legende", high_priority: "Hohe Priorität",
+    medium_priority: "Mittlere Priorität", low_priority: "Niedrige Priorität"
+  },
   zh: {
     view_day: "日", view_week: "周", view_month: "月", add_task: "添加任务", cancel: "取消",
     task_title: "任务标题", start_time: "开始时间", end_time: "结束时间", priority: "优先级",
