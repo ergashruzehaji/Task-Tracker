@@ -9,6 +9,97 @@ let notificationSidebar, closeNotificationsBtn, activeNotifications, mainContent
 let list; // Optional task list element (may not exist after sidebar removal)
 let prevMonthBtn, nextMonthBtn, currentMonthDisplay, calendarDays;
 
+// Global variables for language and accessibility
+let currentLanguage = 'en';
+
+// Translations object
+const translations = {
+  en: {
+    view_day: "Day", view_week: "Week", view_month: "Month", add_task: "Add Task", cancel: "Cancel",
+    task_title: "Task Title", start_time: "Start Time", end_time: "End Time", priority: "Priority",
+    high: "High", medium: "Medium", low: "Low", recurring: "Recurring", daily: "Daily",
+    weekly: "Weekly", monthly: "Monthly", save_task: "Save Task", close: "Close",
+    monday: "Monday", tuesday: "Tuesday", wednesday: "Wednesday", thursday: "Thursday",
+    friday: "Friday", saturday: "Saturday", sunday: "Sunday",
+    accessibility_options: "Accessibility Options", high_contrast: "High Contrast Mode",
+    large_text: "Large Text", keyboard_nav: "Enhanced Keyboard Navigation", font_size: "Font Size",
+    task_form_title: "Add New Task", select_days: "Select Days", every: "Every",
+    weekdays_only: "Weekdays Only", weekends_only: "Weekends Only", custom: "Custom"
+  },
+  es: {
+    view_day: "Día", view_week: "Semana", view_month: "Mes", add_task: "Agregar Tarea", cancel: "Cancelar",
+    task_title: "Título de Tarea", start_time: "Hora de Inicio", end_time: "Hora de Fin", priority: "Prioridad",
+    high: "Alta", medium: "Media", low: "Baja", recurring: "Recurrente", daily: "Diario",
+    weekly: "Semanal", monthly: "Mensual", save_task: "Guardar Tarea", close: "Cerrar",
+    monday: "Lunes", tuesday: "Martes", wednesday: "Miércoles", thursday: "Jueves",
+    friday: "Viernes", saturday: "Sábado", sunday: "Domingo",
+    accessibility_options: "Opciones de Accesibilidad", high_contrast: "Modo de Alto Contraste",
+    large_text: "Texto Grande", keyboard_nav: "Navegación Mejorada por Teclado", font_size: "Tamaño de Fuente",
+    task_form_title: "Agregar Nueva Tarea", select_days: "Seleccionar Días", every: "Cada",
+    weekdays_only: "Solo Días Laborables", weekends_only: "Solo Fines de Semana", custom: "Personalizado"
+  },
+  fr: {
+    view_day: "Jour", view_week: "Semaine", view_month: "Mois", add_task: "Ajouter Tâche", cancel: "Annuler",
+    task_title: "Titre de Tâche", start_time: "Heure de Début", end_time: "Heure de Fin", priority: "Priorité",
+    high: "Élevée", medium: "Moyenne", low: "Faible", recurring: "Récurrent", daily: "Quotidien",
+    weekly: "Hebdomadaire", monthly: "Mensuel", save_task: "Enregistrer Tâche", close: "Fermer",
+    monday: "Lundi", tuesday: "Mardi", wednesday: "Mercredi", thursday: "Jeudi",
+    friday: "Vendredi", saturday: "Samedi", sunday: "Dimanche",
+    accessibility_options: "Options d'Accessibilité", high_contrast: "Mode Contraste Élevé",
+    large_text: "Texte Large", keyboard_nav: "Navigation Clavier Améliorée", font_size: "Taille de Police",
+    task_form_title: "Ajouter Nouvelle Tâche", select_days: "Sélectionner Jours", every: "Chaque",
+    weekdays_only: "Jours de Semaine Seulement", weekends_only: "Week-ends Seulement", custom: "Personnalisé"
+  },
+  zh: {
+    view_day: "日", view_week: "周", view_month: "月", add_task: "添加任务", cancel: "取消",
+    task_title: "任务标题", start_time: "开始时间", end_time: "结束时间", priority: "优先级",
+    high: "高", medium: "中", low: "低", recurring: "重复", daily: "每日",
+    weekly: "每周", monthly: "每月", save_task: "保存任务", close: "关闭",
+    monday: "星期一", tuesday: "星期二", wednesday: "星期三", thursday: "星期四",
+    friday: "星期五", saturday: "星期六", sunday: "星期日"
+  },
+  it: {
+    view_day: "Giorno", view_week: "Settimana", view_month: "Mese", add_task: "Aggiungi Attività", cancel: "Annulla",
+    task_title: "Titolo Attività", start_time: "Ora Inizio", end_time: "Ora Fine", priority: "Priorità",
+    high: "Alta", medium: "Media", low: "Bassa", recurring: "Ricorrente", daily: "Giornaliero",
+    weekly: "Settimanale", monthly: "Mensile", save_task: "Salva Attività", close: "Chiudi",
+    monday: "Lunedì", tuesday: "Martedì", wednesday: "Mercoledì", thursday: "Giovedì",
+    friday: "Venerdì", saturday: "Sabato", sunday: "Domenica"
+  },
+  ru: {
+    view_day: "День", view_week: "Неделя", view_month: "Месяц", add_task: "Добавить Задачу", cancel: "Отмена",
+    task_title: "Название Задачи", start_time: "Время Начала", end_time: "Время Окончания", priority: "Приоритет",
+    high: "Высокий", medium: "Средний", low: "Низкий", recurring: "Повторяющийся", daily: "Ежедневно",
+    weekly: "Еженедельно", monthly: "Ежемесячно", save_task: "Сохранить Задачу", close: "Закрыть",
+    monday: "Понедельник", tuesday: "Вторник", wednesday: "Среда", thursday: "Четверг",
+    friday: "Пятница", saturday: "Суббота", sunday: "Воскресенье"
+  },
+  ja: {
+    view_day: "日", view_week: "週", view_month: "月", add_task: "タスクを追加", cancel: "キャンセル",
+    task_title: "タスクタイトル", start_time: "開始時間", end_time: "終了時間", priority: "優先度",
+    high: "高", medium: "中", low: "低", recurring: "繰り返し", daily: "毎日",
+    weekly: "毎週", monthly: "毎月", save_task: "タスクを保存", close: "閉じる",
+    monday: "月曜日", tuesday: "火曜日", wednesday: "水曜日", thursday: "木曜日",
+    friday: "金曜日", saturday: "土曜日", sunday: "日曜日"
+  },
+  tr: {
+    view_day: "Gün", view_week: "Hafta", view_month: "Ay", add_task: "Görev Ekle", cancel: "İptal",
+    task_title: "Görev Başlığı", start_time: "Başlangıç Saati", end_time: "Bitiş Saati", priority: "Öncelik",
+    high: "Yüksek", medium: "Orta", low: "Düşük", recurring: "Tekrarlayan", daily: "Günlük",
+    weekly: "Haftalık", monthly: "Aylık", save_task: "Görevi Kaydet", close: "Kapat",
+    monday: "Pazartesi", tuesday: "Salı", wednesday: "Çarşamba", thursday: "Perşembe",
+    friday: "Cuma", saturday: "Cumartesi", sunday: "Pazar"
+  },
+  ar: {
+    view_day: "يوم", view_week: "أسبوع", view_month: "شهر", add_task: "إضافة مهمة", cancel: "إلغاء",
+    task_title: "عنوان المهمة", start_time: "وقت البداية", end_time: "وقت النهاية", priority: "الأولوية",
+    high: "عالية", medium: "متوسطة", low: "منخفضة", recurring: "متكررة", daily: "يومياً",
+    weekly: "أسبوعياً", monthly: "شهرياً", save_task: "حفظ المهمة", close: "إغلاق",
+    monday: "الإثنين", tuesday: "الثلاثاء", wednesday: "الأربعاء", thursday: "الخميس",
+    friday: "الجمعة", saturday: "السبت", sunday: "الأحد"
+  }
+};
+
 let tasks = [];
 let currentCalendarDate = new Date(); // Current calendar view
 let selectedDate = null; // Selected calendar date
@@ -419,7 +510,13 @@ function initializeTaskSidebar() {
     
     // Close sidebar
     if (closeSidebarBtn) {
-        closeSidebarBtn.addEventListener('click', closeSidebar);
+        console.log('🔧 Close button found, adding event listener');
+        closeSidebarBtn.addEventListener('click', () => {
+            console.log('🔧 Close button clicked');
+            closeSidebar();
+        });
+    } else {
+        console.error('🚨 Close button not found');
     }
     
     // Handle recurring toggle
@@ -459,10 +556,15 @@ function initializeTaskSidebar() {
 }
 
 function showTaskSidebar(dateString) {
+    console.log('🔧 showTaskSidebar called with:', dateString);
     const sidebar = document.getElementById('task-sidebar');
     const sidebarSelectedDate = document.getElementById('sidebar-selected-date');
     
+    console.log('🔧 Sidebar element:', sidebar);
+    console.log('🔧 Current sidebar classes:', sidebar ? sidebar.className : 'NO SIDEBAR');
+    
     if (!sidebar) {
+        console.error('🚨 Sidebar element not found!');
         return;
     }
     
@@ -478,25 +580,36 @@ function showTaskSidebar(dateString) {
         });
     }
     
+    console.log('🔧 Adding show class to sidebar');
     sidebar.classList.add('show');
     document.body.classList.add('sidebar-open');
     sidebarOpen = true;
     
+    console.log('🔧 Sidebar classes after show:', sidebar.className);
+    console.log('🔧 Body classes:', document.body.className);
+    
     // Focus on task input
     setTimeout(() => {
         const taskInput = document.getElementById('sidebar-task-input');
+        console.log('🔧 Task input found:', !!taskInput);
         if (taskInput) taskInput.focus();
     }, 300);
 }
 
 function closeSidebar() {
+    console.log('🔧 Closing sidebar');
     const sidebar = document.getElementById('task-sidebar');
-    if (!sidebar) return;
+    if (!sidebar) {
+        console.error('🚨 Sidebar not found when trying to close');
+        return;
+    }
     
     sidebar.classList.remove('show');
     document.body.classList.remove('sidebar-open');
     sidebarOpen = false;
     selectedSidebarDate = null;
+    
+    console.log('🔧 Sidebar closed, classes:', sidebar.className);
     
     // Reset form
     const sidebarForm = document.getElementById('sidebar-task-form');
@@ -508,6 +621,10 @@ function closeSidebar() {
     
     const weeklyOptions = document.getElementById('sidebar-weekly-options');
     if (weeklyOptions) weeklyOptions.style.display = 'none';
+    
+    // Reset recurring toggle
+    const recurringToggle = document.getElementById('sidebar-toggle-recurring');
+    if (recurringToggle) recurringToggle.classList.remove('expanded');
 }
 
 function toggleSidebarTimeFormat() {
@@ -1011,6 +1128,275 @@ function updatePrioritySelectColor() {
 }
 
 // Initialize when both DOM and window are fully loaded
+// Language and Accessibility Functions
+function translate(key) {
+    return translations[currentLanguage][key] || translations['en'][key] || key;
+}
+
+function updateLanguage(langCode) {
+    currentLanguage = langCode;
+    
+    // Update all elements with data-translate attribute
+    document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (element.tagName === 'OPTION') {
+            element.textContent = translate(key);
+        } else if (element.innerHTML && element.innerHTML.includes('<')) {
+            // For elements with HTML content, preserve structure
+            const htmlContent = element.innerHTML;
+            const textNodes = element.childNodes;
+            textNodes.forEach(node => {
+                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                    node.textContent = translate(key);
+                }
+            });
+        } else {
+            element.textContent = translate(key);
+        }
+    });
+    
+    // Update placeholders
+    document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-translate-placeholder');
+        element.placeholder = translate(key);
+    });
+    
+    // Update placeholders and other text
+    updateUITexts();
+    
+    // Save language preference
+    localStorage.setItem('task-tracker-language', langCode);
+}
+
+function updateUITexts() {
+    // Update placeholders
+    const placeholders = {
+        'sidebar-task-title': translate('task_title')
+    };
+    
+    Object.entries(placeholders).forEach(([id, text]) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.placeholder = text;
+        }
+    });
+    
+    // Update button text content
+    const buttons = {
+        'sidebar-submit-btn': translate('save_task'),
+        'close-accessibility-menu': translate('close')
+    };
+    
+    Object.entries(buttons).forEach(([className, text]) => {
+        const element = document.querySelector(`.${className}`) || document.getElementById(className);
+        if (element) {
+            element.textContent = text;
+        }
+    });
+    
+    // Update labels
+    const labels = document.querySelectorAll('label');
+    labels.forEach(label => {
+        const text = label.textContent.trim();
+        if (text.includes('High Contrast')) label.textContent = translate('high_contrast');
+        if (text.includes('Large Text')) label.textContent = translate('large_text');
+        if (text.includes('Enhanced Keyboard')) label.textContent = translate('keyboard_nav');
+        if (text.includes('Font Size')) label.textContent = `${translate('font_size')}: ${label.querySelector('#font-size-value')?.textContent || '16px'}`;
+    });
+    
+    // Update select options
+    const prioritySelect = document.getElementById('sidebar-priority');
+    if (prioritySelect) {
+        const options = prioritySelect.querySelectorAll('option');
+        if (options[0]) options[0].textContent = translate('high');
+        if (options[1]) options[1].textContent = translate('medium');
+        if (options[2]) options[2].textContent = translate('low');
+    }
+    
+    // Update recurring select options
+    const recurringSelect = document.getElementById('sidebar-recurring-type');
+    if (recurringSelect) {
+        const options = recurringSelect.querySelectorAll('option');
+        if (options[0]) options[0].textContent = translate('daily');
+        if (options[1]) options[1].textContent = translate('weekly');
+        if (options[2]) options[2].textContent = translate('monthly');
+    }
+    
+    // Update accessibility menu title
+    const accessibilityTitle = document.querySelector('#accessibility-menu h3');
+    if (accessibilityTitle) {
+        accessibilityTitle.textContent = translate('accessibility_options');
+    }
+    
+    // Set text direction for Arabic
+    if (currentLanguage === 'ar') {
+        document.documentElement.setAttribute('dir', 'rtl');
+    } else {
+        document.documentElement.setAttribute('dir', 'ltr');
+    }
+}
+
+function initializeLanguageAndAccessibility() {
+    const languageSelect = document.getElementById('language-select');
+    const accessibilityBtn = document.getElementById('accessibility-toggle');
+    
+    // Load saved language
+    const savedLanguage = localStorage.getItem('task-tracker-language') || 'en';
+    if (languageSelect) {
+        languageSelect.value = savedLanguage;
+        updateLanguage(savedLanguage);
+        
+        languageSelect.addEventListener('change', (e) => {
+            updateLanguage(e.target.value);
+        });
+    }
+    
+    // Initialize accessibility features
+    if (accessibilityBtn) {
+        accessibilityBtn.addEventListener('click', toggleAccessibilityMenu);
+    }
+    
+    // Load saved accessibility settings
+    loadAccessibilitySettings();
+}
+
+function toggleAccessibilityMenu() {
+    let menu = document.getElementById('accessibility-menu');
+    if (!menu) {
+        menu = createAccessibilityMenu();
+        document.body.appendChild(menu);
+    }
+    
+    menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+}
+
+function createAccessibilityMenu() {
+    const menu = document.createElement('div');
+    menu.id = 'accessibility-menu';
+    menu.innerHTML = `
+        <div class="accessibility-menu-content">
+            <h3>Accessibility Options</h3>
+            <div class="accessibility-option">
+                <label>
+                    <input type="checkbox" id="high-contrast-toggle"> High Contrast Mode
+                </label>
+            </div>
+            <div class="accessibility-option">
+                <label>
+                    <input type="checkbox" id="large-text-toggle"> Large Text
+                </label>
+            </div>
+            <div class="accessibility-option">
+                <label>
+                    <input type="checkbox" id="keyboard-navigation-toggle"> Enhanced Keyboard Navigation
+                </label>
+            </div>
+            <div class="accessibility-option">
+                <label>
+                    <input type="range" id="font-size-slider" min="12" max="24" value="16"> Font Size: <span id="font-size-value">16px</span>
+                </label>
+            </div>
+            <button class="close-accessibility-menu">Close</button>
+        </div>
+    `;
+    
+    // Add event listeners
+    menu.querySelector('#high-contrast-toggle').addEventListener('change', toggleHighContrast);
+    menu.querySelector('#large-text-toggle').addEventListener('change', toggleLargeText);
+    menu.querySelector('#keyboard-navigation-toggle').addEventListener('change', toggleKeyboardNavigation);
+    menu.querySelector('#font-size-slider').addEventListener('input', adjustFontSize);
+    menu.querySelector('.close-accessibility-menu').addEventListener('click', () => {
+        menu.style.display = 'none';
+    });
+    
+    return menu;
+}
+
+function toggleHighContrast(e) {
+    document.body.classList.toggle('high-contrast', e.target.checked);
+    saveAccessibilitySetting('highContrast', e.target.checked);
+}
+
+function toggleLargeText(e) {
+    document.body.classList.toggle('large-text', e.target.checked);
+    saveAccessibilitySetting('largeText', e.target.checked);
+}
+
+function toggleKeyboardNavigation(e) {
+    document.body.classList.toggle('keyboard-navigation', e.target.checked);
+    saveAccessibilitySetting('keyboardNavigation', e.target.checked);
+    
+    if (e.target.checked) {
+        addKeyboardNavigationSupport();
+    }
+}
+
+function adjustFontSize(e) {
+    const size = e.target.value;
+    document.documentElement.style.fontSize = size + 'px';
+    document.getElementById('font-size-value').textContent = size + 'px';
+    saveAccessibilitySetting('fontSize', size);
+}
+
+function addKeyboardNavigationSupport() {
+    // Add tabindex to interactive elements
+    document.querySelectorAll('.time-block, .day-header, .view-btn, button').forEach((element, index) => {
+        if (!element.tabIndex) {
+            element.tabIndex = 0;
+        }
+    });
+    
+    // Add keyboard event listeners
+    document.addEventListener('keydown', handleKeyboardNavigation);
+}
+
+function handleKeyboardNavigation(e) {
+    if (e.key === 'Enter' && e.target.classList.contains('time-block')) {
+        e.target.click();
+    }
+    if (e.key === 'Escape' && document.getElementById('task-sidebar').classList.contains('show')) {
+        closeSidebar();
+    }
+}
+
+function saveAccessibilitySetting(key, value) {
+    const settings = JSON.parse(localStorage.getItem('accessibility-settings') || '{}');
+    settings[key] = value;
+    localStorage.setItem('accessibility-settings', JSON.stringify(settings));
+}
+
+function loadAccessibilitySettings() {
+    const settings = JSON.parse(localStorage.getItem('accessibility-settings') || '{}');
+    
+    if (settings.highContrast) {
+        document.body.classList.add('high-contrast');
+        const toggle = document.getElementById('high-contrast-toggle');
+        if (toggle) toggle.checked = true;
+    }
+    
+    if (settings.largeText) {
+        document.body.classList.add('large-text');
+        const toggle = document.getElementById('large-text-toggle');
+        if (toggle) toggle.checked = true;
+    }
+    
+    if (settings.keyboardNavigation) {
+        document.body.classList.add('keyboard-navigation');
+        const toggle = document.getElementById('keyboard-navigation-toggle');
+        if (toggle) toggle.checked = true;
+        addKeyboardNavigationSupport();
+    }
+    
+    if (settings.fontSize) {
+        document.documentElement.style.fontSize = settings.fontSize + 'px';
+        const slider = document.getElementById('font-size-slider');
+        if (slider) {
+            slider.value = settings.fontSize;
+            document.getElementById('font-size-value').textContent = settings.fontSize + 'px';
+        }
+    }
+}
+
 function initializeApp() {
     try {
     // Check if all elements exist
@@ -1065,6 +1451,7 @@ function initializeApp() {
     startNotificationChecker();
     initializeRecurringSection(); // Initialize recurring task functionality
     initializeTaskSidebar(); // Initialize task sidebar functionality
+    initializeLanguageAndAccessibility(); // Initialize language and accessibility features
     
     // Initialize dropdowns
     

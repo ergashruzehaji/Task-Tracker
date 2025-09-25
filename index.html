@@ -3,7 +3,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" cont            <!-- View Controls Below -->
+            <div class="view-controls-section">
+              <div class="view-controls">
+                <button class="view-btn" data-view="day" data-translate="view_day">📅 Day</button>
+                <button class="view-btn active" data-view="week" data-translate="view_week">📊 Week</button>
+                <button class="view-btn" data-view="month" data-translate="view_month">🗓 Month</button>
+              </div>
+            </div>th=device-width, initial-scale=1.0" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -136,6 +143,20 @@
                   <!-- Years will be populated by JavaScript -->
                 </select>
               </div>
+              <div class="language-accessibility-controls">
+                <select id="language-select" class="language-select" aria-label="Select language">
+                  <option value="en">English</option>
+                  <option value="es">Español</option>
+                  <option value="fr">Français</option>
+                  <option value="zh">中文</option>
+                  <option value="it">Italiano</option>
+                  <option value="ru">Русский</option>
+                  <option value="ja">日本語</option>
+                  <option value="tr">Türkçe</option>
+                  <option value="ar">العربية</option>
+                </select>
+                <button id="accessibility-toggle" class="accessibility-btn" aria-label="Accessibility options" title="Accessibility options">♿</button>
+              </div>
             </div>
 
             <!-- View Controls Below -->
@@ -173,35 +194,35 @@
           </div>
           
           <!-- Task Form Sidebar - Appears when day is selected -->
-          <div id="task-sidebar" class="task-sidebar" style="display: none;">
+          <div id="task-sidebar" class="task-sidebar">
             <div class="sidebar-header">
-              <h3 id="sidebar-title">Add Task for <span id="sidebar-selected-date"></span></h3>
-              <button type="button" id="close-sidebar" class="close-btn">✕</button>
+              <h3 id="sidebar-title" data-translate="add_task">Add Task for <span id="sidebar-selected-date"></span></h3>
+              <button type="button" id="close-sidebar" class="close-btn" title="Close">✕</button>
             </div>
             
             <form id="sidebar-task-form" class="sidebar-form">
-              <div class="form-group">
-                <label class="form-label">📝 Task Description</label>
-                <input type="text" id="sidebar-task-input" class="form-input" placeholder="Enter a task..." required />
+                            <div class="form-group">
+                <label class="form-label" data-translate="task_title">📝 Task Description</label>
+                <input type="text" id="sidebar-task-title" data-translate-placeholder="task_title" placeholder="Enter task description..." required>
               </div>
               
               <div class="form-row">
-                <div class="form-group half">
-                  <label class="form-label">🕐 Start Time</label>
-                  <input type="time" id="sidebar-start-time" class="form-input" />
+                <div class="form-group">
+                  <label class="form-label" data-translate="start_time">⏰ Start Time</label>
+                  <input type="time" id="sidebar-start-time" required>
                 </div>
-                <div class="form-group half">
-                  <label class="form-label">🕐 End Time</label>
-                  <input type="time" id="sidebar-end-time" class="form-input" />
+                <div class="form-group">
+                  <label class="form-label" data-translate="end_time">⏰ End Time</label>
+                  <input type="time" id="sidebar-end-time" required>
                 </div>
               </div>
               
               <div class="form-group">
-                <label class="form-label">🎯 Priority</label>
-                <select id="sidebar-priority-select" class="form-select">
-                  <option value="low">Low Priority</option>
-                  <option value="medium" selected>Medium Priority</option>
-                  <option value="high">High Priority</option>
+                <label class="form-label" data-translate="priority">🎯 Priority</label>
+                <select id="sidebar-priority">
+                  <option value="high" data-translate="high">High Priority</option>
+                  <option value="medium" data-translate="medium" selected>Medium Priority</option>
+                  <option value="low" data-translate="low">Low Priority</option>
                 </select>
               </div>
 
@@ -265,10 +286,10 @@
               </div>
               
               <div class="form-actions">
-                <button type="submit" class="btn-primary">
-                  <span id="sidebar-submit-text">Add Task</span>
+                                <button type="submit" class="btn-primary" id="sidebar-submit">
+                  <span id="sidebar-submit-text" data-translate="add_task">Add Task</span>
                 </button>
-                <button type="button" class="btn-secondary" onclick="document.getElementById('close-sidebar').click()">Cancel</button>
+                <button type="button" class="btn-secondary" data-translate="cancel" onclick="document.getElementById('close-sidebar').click()">Cancel</button>
               </div>
             </form>
 
