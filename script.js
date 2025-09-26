@@ -60,7 +60,9 @@ const translations = {
     suggestions_too_long: "Suggestions must be 500 words or less",
     // Additional Interface Elements
     task_input_placeholder: "Enter a task...", daily_month: "Daily for Month", 
-    weekly_year: "Weekly for Year", time_format: "Time Format"
+    weekly_year: "Weekly for Year", time_format: "Time Format",
+    // Calendar-specific translations
+    tasks_for: "Tasks for", tasks: "Tasks", tomorrow: "Tomorrow"
   },
   es: {
     view_day: "Día", view_week: "Semana", view_month: "Mes", add_task: "Agregar Tarea", cancel: "Cancelar",
@@ -101,7 +103,9 @@ const translations = {
     suggestions_too_long: "Las sugerencias deben tener 500 palabras o menos",
     // Additional Interface Elements
     task_input_placeholder: "Ingresa una tarea...", daily_month: "Diario por Mes",
-    weekly_year: "Semanal por Año", time_format: "Formato de Hora"
+    weekly_year: "Semanal por Año", time_format: "Formato de Hora",
+    // Calendar Translation Keys
+    tasks_for: "Tareas para", tasks: "Tareas", tomorrow: "Mañana"
   },
   fr: {
     view_day: "Jour", view_week: "Semaine", view_month: "Mois", add_task: "Ajouter Tâche", cancel: "Annuler",
@@ -141,7 +145,9 @@ const translations = {
     suggestions_too_long: "Les suggestions doivent contenir 500 mots ou moins",
     // Additional Interface Elements
     task_input_placeholder: "Entrez une tâche...", daily_month: "Quotidien pour le Mois",
-    weekly_year: "Hebdomadaire pour l'Année", time_format: "Format de l'Heure"
+    weekly_year: "Hebdomadaire pour l'Année", time_format: "Format de l'Heure",
+    // Calendar Translation Keys
+    tasks_for: "Tâches pour", tasks: "Tâches", tomorrow: "Demain"
   },
   de: {
     view_day: "Tag", view_week: "Woche", view_month: "Monat", add_task: "Aufgabe hinzufügen", cancel: "Abbrechen",
@@ -182,7 +188,9 @@ const translations = {
     suggestions_too_long: "Vorschläge müssen 500 Wörter oder weniger enthalten",
     // Additional Interface Elements
     task_input_placeholder: "Geben Sie eine Aufgabe ein...", daily_month: "Täglich für den Monat",
-    weekly_year: "Wöchentlich für das Jahr", time_format: "Zeitformat"
+    weekly_year: "Wöchentlich für das Jahr", time_format: "Zeitformat",
+    // Calendar Translation Keys
+    tasks_for: "Aufgaben für", tasks: "Aufgaben", tomorrow: "Morgen"
   },
   zh: {
     view_day: "日", view_week: "周", view_month: "月", add_task: "添加任务", cancel: "取消",
@@ -222,7 +230,9 @@ const translations = {
     suggestions_too_long: "建议必须在500字以内",
     // Additional Interface Elements
     task_input_placeholder: "请输入任务...", daily_month: "每日一个月",
-    weekly_year: "每周一年", time_format: "时间格式"
+    weekly_year: "每周一年", time_format: "时间格式",
+    // Calendar Translation Keys
+    tasks_for: "任务为", tasks: "任务", tomorrow: "明天"
   },
   it: {
     view_day: "Giorno", view_week: "Settimana", view_month: "Mese", add_task: "Aggiungi Attività", cancel: "Annulla",
@@ -262,7 +272,9 @@ const translations = {
     suggestions_too_long: "I suggerimenti devono essere di 500 parole o meno",
     // Additional Interface Elements
     task_input_placeholder: "Inserisci un'attività...", daily_month: "Giornaliero per Mese",
-    weekly_year: "Settimanale per Anno", time_format: "Formato Orario"
+    weekly_year: "Settimanale per Anno", time_format: "Formato Orario",
+    // Calendar Translation Keys
+    tasks_for: "Attività per", tasks: "Attività", tomorrow: "Domani"
   },
   ru: {
     view_day: "День", view_week: "Неделя", view_month: "Месяц", add_task: "Добавить Задачу", cancel: "Отмена",
@@ -296,7 +308,9 @@ const translations = {
     suggestions_too_long: "Предложения должны содержать не более 500 слов",
     // Additional Interface Elements
     task_input_placeholder: "Введите задачу...", daily_month: "Ежедневно в течение месяца",
-    weekly_year: "Еженедельно в течение года", time_format: "Формат времени"
+    weekly_year: "Еженедельно в течение года", time_format: "Формат времени",
+    // Calendar Translation Keys
+    tasks_for: "Задачи на", tasks: "Задачи", tomorrow: "Завтра"
   },
   ja: {
     view_day: "日", view_week: "週", view_month: "月", add_task: "タスクを追加", cancel: "キャンセル",
@@ -330,7 +344,9 @@ const translations = {
     suggestions_too_long: "提案は500文字以下にしてください",
     // Additional Interface Elements
     task_input_placeholder: "タスクを入力してください...", daily_month: "月間毎日",
-    weekly_year: "年間毎週", time_format: "時刻形式"
+    weekly_year: "年間毎週", time_format: "時刻形式",
+    // Calendar Translation Keys
+    tasks_for: "のタスク", tasks: "タスク", tomorrow: "明日"
   },
   tr: {
     view_day: "Gün", view_week: "Hafta", view_month: "Ay", add_task: "Görev Ekle", cancel: "İptal",
@@ -364,7 +380,9 @@ const translations = {
     suggestions_too_long: "Öneriler 500 kelime veya daha az olmalıdır",
     // Additional Interface Elements
     task_input_placeholder: "Bir görev girin...", daily_month: "Ay için Günlük",
-    weekly_year: "Yıl için Haftalık", time_format: "Saat Formatı"
+    weekly_year: "Yıl için Haftalık", time_format: "Saat Formatı",
+    // Calendar Translation Keys
+    tasks_for: "Görevler için", tasks: "Görevler", tomorrow: "Yarın"
   },
   ar: {
     view_day: "يوم", view_week: "أسبوع", view_month: "شهر", add_task: "إضافة مهمة", cancel: "إلغاء",
@@ -398,7 +416,9 @@ const translations = {
     suggestions_too_long: "يجب أن تكون الاقتراحات 500 كلمة أو أقل",
     // Additional Interface Elements
     task_input_placeholder: "أدخل مهمة...", daily_month: "يومياً للشهر",
-    weekly_year: "أسبوعياً للسنة", time_format: "صيغة الوقت"
+    weekly_year: "أسبوعياً للسنة", time_format: "صيغة الوقت",
+    // Calendar Translation Keys
+    tasks_for: "مهام لـ", tasks: "مهام", tomorrow: "غداً"
   }
 };
 
@@ -907,12 +927,7 @@ function showTaskSidebar(dateString) {
     const date = new Date(dateString);
     
     if (sidebarSelectedDate) {
-        sidebarSelectedDate.textContent = date.toLocaleDateString('en-US', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        });
+        sidebarSelectedDate.textContent = formatTranslatedDate(date, 'full');
     }
     
     console.log('🔧 Adding show class to sidebar');
@@ -1236,17 +1251,17 @@ function updatePeriodDisplay() {
   let text = '';
   switch (currentView) {
     case 'day':
-      text = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      text = formatTranslatedDate(date, 'full');
       break;
     case 'week':
       const s = new Date(date);
       s.setDate(date.getDate() - date.getDay());
       const e = new Date(s);
       e.setDate(s.getDate() + 6);
-      text = `${s.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${e.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+      text = `${formatTranslatedDate(s, 'shortDate')} - ${formatTranslatedDate(e, 'shortDate')}, ${e.getFullYear()}`;
       break;
     case 'month':
-      text = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+      text = formatTranslatedDate(date, 'monthYear');
       break;
     case 'year':
       text = date.getFullYear().toString();
@@ -1312,7 +1327,7 @@ function getDaysForView() {
 
 // Create day column HTML
 function createDayColumn(date) {
-    const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+    const dayName = formatTranslatedDate(date, 'dayOnly');
     const dayNumber = date.getDate();
     const dateStr = date.toISOString().split('T')[0];
     
@@ -1507,6 +1522,52 @@ function updateLanguage(langCode) {
     
     // Save language preference
     localStorage.setItem('task-tracker-language', langCode);
+    
+    // Update calendar after language change
+    updateCurrentPeriod();
+    if (currentView === 'week' || currentView === 'day') {
+        renderTimeSlotCalendar();
+    }
+}
+
+// Translation helper functions for calendar dates
+function getTranslatedMonthName(monthIndex) {
+    const key = `month_${monthIndex}`;
+    return translate(key);
+}
+
+function getTranslatedDayName(dayIndex) {
+    const dayKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+    return translate(dayKeys[dayIndex]);
+}
+
+function getTranslatedFullDayName(dayIndex) {
+    const dayKeys = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    return translate(dayKeys[dayIndex]);
+}
+
+function formatTranslatedDate(date, format = 'full') {
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear();
+    const dayIndex = date.getDay();
+    
+    switch (format) {
+        case 'full':
+            // "Monday, January 15, 2024"
+            return `${getTranslatedFullDayName(dayIndex)}, ${getTranslatedMonthName(month)} ${day}, ${year}`;
+        case 'monthYear':
+            // "January 2024"
+            return `${getTranslatedMonthName(month)} ${year}`;
+        case 'shortDate':
+            // "Jan 15"
+            return `${getTranslatedMonthName(month).substring(0, 3)} ${day}`;
+        case 'dayOnly':
+            // "Mon"
+            return getTranslatedDayName(dayIndex);
+        default:
+            return `${getTranslatedMonthName(month)} ${day}, ${year}`;
+    }
 }
 
 function updateUITexts() {
@@ -2487,11 +2548,7 @@ function displayTask(task) {
   // Add date
   if (task.date) {
     const taskDate = new Date(task.date);
-    const formattedDate = taskDate.toLocaleDateString('en-US', { 
-      month: 'short', 
-      day: 'numeric',
-      ...(taskDate.getFullYear() !== new Date().getFullYear() && { year: 'numeric' })
-    });
+    const formattedDate = formatTranslatedDate(taskDate, 'shortDate');
     taskDetails.push(`<span class="task-day">📅 ${formattedDate}</span>`);
   }
   
@@ -2771,7 +2828,7 @@ function showAlarmModal(task) {
             <strong>${task.text}</strong>
         </div>
         <div class="task-details">
-            📅 ${new Date(task.date).toLocaleDateString()}
+            📅 ${formatTranslatedDate(new Date(task.date), 'shortDate')}
             ⏰ ${timeRange}
         </div>
     `;
@@ -3079,12 +3136,7 @@ function filterTasksByDate(dateString) {
   selectedDate = dateString;
   const date = new Date(dateString);
   const currentDayTitle = document.getElementById('current-day-title');
-  if (currentDayTitle) currentDayTitle.textContent = `Tasks for ${date.toLocaleDateString('en-US', { 
-    weekday: 'long', 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
-  })}`;
+  if (currentDayTitle) currentDayTitle.textContent = `${translate('tasks_for')} ${formatTranslatedDate(date, 'full')}`;
   displayTasks();
 }
 
@@ -3097,9 +3149,9 @@ function filterTasksByWeek() {
 
 function filterTasksByMonth() {
   currentFilter = 'month';
-  const monthName = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  const monthName = formatTranslatedDate(new Date(), 'monthYear');
   const currentDayTitle = document.getElementById('current-day-title');
-  if (currentDayTitle) currentDayTitle.textContent = `${monthName} Tasks`;
+  if (currentDayTitle) currentDayTitle.textContent = `${monthName} ${translate('tasks')}`;
   displayTasks();
 }
 
@@ -3353,9 +3405,9 @@ function formatDateForDisplay(date) {
     if (date.toDateString() === today.toDateString()) {
         return 'Today';
     } else if (date.toDateString() === tomorrow.toDateString()) {
-        return 'Tomorrow';
+        return translate('tomorrow') || 'Tomorrow';
     } else {
-        return date.toLocaleDateString();
+        return formatTranslatedDate(date, 'shortDate');
     }
 }
 
