@@ -2612,6 +2612,9 @@ async function loadTasks() {
   // Use localStorage directly for better performance
   loadTasksFromLocalStorage();
   
+  // Remove any existing gym tasks
+  removeGymTasks();
+  
   // Initialize calendar with loaded tasks
   renderCalendar();
   setupAllAlarms();
@@ -3338,6 +3341,33 @@ function loadTasksFromLocalStorage() {
 function saveTasksToLocalStorage() {
   localStorage.setItem('taskTrackerTasks', JSON.stringify(tasks));
 }
+
+// Function to remove gym tasks specifically
+function removeGymTasks() {
+  const originalLength = tasks.length;
+  tasks = tasks.filter(task => !task.title.toLowerCase().includes('gym'));
+  
+  const removedCount = originalLength - tasks.length;
+  if (removedCount > 0) {
+    saveTasksToLocalStorage();
+    renderCalendar();
+    renderFilteredSidebar();
+    updateDashboard();
+    console.log(`Removed ${removedCount} gym task(s)`);
+    
+    // Show notification to user
+    if (typeof showNotification === 'function') {
+      showNotification(`Removed ${removedCount} gym task(s)`, 'success');
+    }
+  } else {
+    console.log('No gym tasks found to remove');
+  }
+  
+  return removedCount;
+}
+
+// Make removeGymTasks available globally for console use
+window.removeGymTasks = removeGymTasks;
 
 function updateDashboard() {
     updateDashboardStats();
