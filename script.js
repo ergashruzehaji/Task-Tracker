@@ -49,7 +49,7 @@ const translations = {
     priority_legend: "Priority Legend", high_priority: "High Priority", 
     medium_priority: "Medium Priority", low_priority: "Low Priority",
     // Floating Tabs and Suggestions System
-    live_demo: "Live Demo", suggestions: "Suggestions", suggestions_form_title: "Send us Your Suggestions",
+    suggestions: "Suggestions", suggestions_form_title: "Send us Your Suggestions",
     name_label: "Name", email_label: "Email", suggestions_label: "Your Suggestions",
     name_placeholder: "Enter your name", email_placeholder: "Enter your email address",
     suggestions_placeholder: "Share your suggestions, feedback, or ideas with us (up to 500 words)...",
@@ -97,7 +97,7 @@ const translations = {
     priority_legend: "Leyenda de Prioridades", high_priority: "Alta Prioridad",
     medium_priority: "Prioridad Media", low_priority: "Baja Prioridad",
     // Floating Tabs and Suggestions System
-    live_demo: "Demostración", suggestions: "Sugerencias", suggestions_form_title: "Envíanos tus Sugerencias",
+    suggestions: "Sugerencias", suggestions_form_title: "Envíanos tus Sugerencias",
     name_label: "Nombre", email_label: "Correo Electrónico", suggestions_label: "Tus Sugerencias",
     name_placeholder: "Ingresa tu nombre", email_placeholder: "Ingresa tu correo electrónico",
     suggestions_placeholder: "Comparte tus sugerencias, comentarios o ideas con nosotros (hasta 500 palabras)...",
@@ -144,7 +144,7 @@ const translations = {
     priority_legend: "Légende des priorités", high_priority: "Priorité élevée",
     medium_priority: "Priorité moyenne", low_priority: "Priorité faible",
     // Floating Tabs and Suggestions System
-    live_demo: "Démo en Direct", suggestions: "Suggestions", suggestions_form_title: "Envoyez-nous vos Suggestions",
+    suggestions: "Suggestions", suggestions_form_title: "Envoyez-nous vos Suggestions",
     name_label: "Nom", email_label: "E-mail", suggestions_label: "Vos Suggestions",
     name_placeholder: "Entrez votre nom", email_placeholder: "Entrez votre adresse e-mail",
     suggestions_placeholder: "Partagez vos suggestions, commentaires ou idées avec nous (jusqu'à 500 mots)...",
@@ -192,7 +192,7 @@ const translations = {
     priority_legend: "Prioritäts-Legende", high_priority: "Hohe Priorität",
     medium_priority: "Mittlere Priorität", low_priority: "Niedrige Priorität",
     // Floating Tabs and Suggestions System
-    live_demo: "Live Demo", suggestions: "Vorschläge", suggestions_form_title: "Senden Sie uns Ihre Vorschläge",
+    suggestions: "Vorschläge", suggestions_form_title: "Senden Sie uns Ihre Vorschläge",
     name_label: "Name", email_label: "E-Mail", suggestions_label: "Ihre Vorschläge",
     name_placeholder: "Geben Sie Ihren Namen ein", email_placeholder: "Geben Sie Ihre E-Mail-Adresse ein",
     suggestions_placeholder: "Teilen Sie Ihre Vorschläge, Feedback oder Ideen mit uns (bis zu 500 Wörter)...",
@@ -239,7 +239,7 @@ const translations = {
     priority_legend: "优先级图例", high_priority: "高优先级",
     medium_priority: "中优先级", low_priority: "低优先级",
     // Floating Tabs and Suggestions System
-    live_demo: "实时演示", suggestions: "建议", suggestions_form_title: "向我们发送您的建议",
+    suggestions: "建议", suggestions_form_title: "向我们发送您的建议",
     name_label: "姓名", email_label: "电子邮件", suggestions_label: "您的建议",
     name_placeholder: "请输入您的姓名", email_placeholder: "请输入您的电子邮件地址",
     suggestions_placeholder: "与我们分享您的建议、反馈或想法（最多500字）...",
@@ -286,7 +286,7 @@ const translations = {
     priority_legend: "Legenda Priorità", high_priority: "Alta Priorità",
     medium_priority: "Media Priorità", low_priority: "Bassa Priorità",
     // Floating Tabs and Suggestions System
-    live_demo: "Demo Live", suggestions: "Suggerimenti", suggestions_form_title: "Inviaci i Tuoi Suggerimenti",
+    suggestions: "Suggerimenti", suggestions_form_title: "Inviaci i Tuoi Suggerimenti",
     name_label: "Nome", email_label: "E-mail", suggestions_label: "I Tuoi Suggerimenti",
     name_placeholder: "Inserisci il tuo nome", email_placeholder: "Inserisci il tuo indirizzo e-mail",
     suggestions_placeholder: "Condividi i tuoi suggerimenti, feedback o idee con noi (fino a 500 parole)...",
@@ -327,7 +327,7 @@ const translations = {
     priority_legend: "Легенда Приоритетов", high_priority: "Высокий Приоритет",
     medium_priority: "Средний Приоритет", low_priority: "Низкий Приоритет",
     // Floating Tabs and Suggestions System
-    live_demo: "Живая Демонстрация", suggestions: "Предложения", suggestions_form_title: "Отправьте нам Ваши Предложения",
+    suggestions: "Предложения", suggestions_form_title: "Отправьте нам Ваши Предложения",
     name_label: "Имя", email_label: "Электронная почта", suggestions_label: "Ваши Предложения",
     name_placeholder: "Введите ваше имя", email_placeholder: "Введите ваш адрес электронной почты",
     suggestions_placeholder: "Поделитесь с нами вашими предложениями, отзывами или идеями (до 500 слов)...",
@@ -368,7 +368,7 @@ const translations = {
     priority_legend: "優先度凡例", high_priority: "高優先度",
     medium_priority: "中優先度", low_priority: "低優先度",
     // Floating Tabs and Suggestions System
-    live_demo: "ライブデモ", suggestions: "提案", suggestions_form_title: "ご提案をお送りください",
+    suggestions: "提案", suggestions_form_title: "ご提案をお送りください",
     name_label: "お名前", email_label: "メールアドレス", suggestions_label: "ご提案",
     name_placeholder: "お名前を入力してください", email_placeholder: "メールアドレスを入力してください",
     suggestions_placeholder: "ご提案、フィードバック、アイデアをお聞かせください（500文字まで）...",
@@ -409,7 +409,7 @@ const translations = {
     priority_legend: "Öncelik Açıklaması", high_priority: "Yüksek Öncelik",
     medium_priority: "Orta Öncelik", low_priority: "Düşük Öncelik",
     // Floating Tabs and Suggestions System
-    live_demo: "Canlı Demo", suggestions: "Öneriler", suggestions_form_title: "Önerilerinizi Bize Gönderin",
+    suggestions: "Öneriler", suggestions_form_title: "Önerilerinizi Bize Gönderin",
     name_label: "Ad", email_label: "E-posta", suggestions_label: "Önerileriniz",
     name_placeholder: "Adınızı girin", email_placeholder: "E-posta adresinizi girin",
     suggestions_placeholder: "Önerilerinizi, geri bildirimlerinizi veya fikirlerinizi bizimle paylaşin (500 kelimeye kadar)...",
@@ -450,7 +450,7 @@ const translations = {
     priority_legend: "مفتاح الأولويات", high_priority: "أولوية عالية",
     medium_priority: "أولوية متوسطة", low_priority: "أولوية منخفضة",
     // Floating Tabs and Suggestions System
-    live_demo: "عرض مباشر", suggestions: "اقتراحات", suggestions_form_title: "أرسل لنا اقتراحاتك",
+    suggestions: "اقتراحات", suggestions_form_title: "أرسل لنا اقتراحاتك",
     name_label: "الاسم", email_label: "البريد الإلكتروني", suggestions_label: "اقتراحاتك",
     name_placeholder: "أدخل اسمك", email_placeholder: "أدخل عنوان بريدك الإلكتروني",
     suggestions_placeholder: "شاركنا اقتراحاتك أو تعليقاتك أو أفكارك (حتى 500 كلمة)...",
@@ -1577,7 +1577,7 @@ function updateLanguage(langCode) {
     localStorage.setItem('task-tracker-language', langCode);
     
     // Update calendar after language change
-    updateCurrentPeriod();
+    updatePeriodDisplay();
     if (currentView === 'week' || currentView === 'day') {
         renderTimeSlotCalendar();
     }
@@ -3345,7 +3345,7 @@ function saveTasksToLocalStorage() {
 // Function to remove gym tasks specifically
 function removeGymTasks() {
   const originalLength = tasks.length;
-  tasks = tasks.filter(task => !task.title.toLowerCase().includes('gym'));
+  tasks = tasks.filter(task => task && task.title && !task.title.toLowerCase().includes('gym'));
   
   const removedCount = originalLength - tasks.length;
   if (removedCount > 0) {
