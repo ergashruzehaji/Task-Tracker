@@ -1636,43 +1636,42 @@ function updatePrioritySelectColor() {
 // Initialize when both DOM and window are fully loaded
 // Language and Accessibility Functions
 function translate(key) {
-    return translations[currentLanguage][key] || translations['en'][key] || key;
+    console.log(`🔤 Translating key: ${key}, Language: ${currentLanguage}`);
+    
+    if (!translations[currentLanguage]) {
+        console.error(`❌ No translations found for language: ${currentLanguage}`);
+        return key;
+    }
+    
+    const translated = translations[currentLanguage][key] || translations['en'][key] || key;
+    console.log(`🌐 Translation result: ${key} -> ${translated}`);
+    return translated;
 }
 
 function updateLanguage(langCode) {
+    console.log('🚀 Starting language update to:', langCode);
     currentLanguage = langCode;
-    console.log('Updating language to:', langCode);
+    
+    // Check if translations exist for this language
+    if (!translations[langCode]) {
+        console.error('❌ Language not found in translations:', langCode);
+        return;
+    }
+    
+    console.log('✅ Language found, starting translation...');
     
     // Update all elements with data-translate attribute
-    document.querySelectorAll('[data-translate]').forEach(element => {
+    const elements = document.querySelectorAll('[data-translate]');
+    console.log(`📝 Found ${elements.length} elements to translate`);
+    
+    elements.forEach((element, index) => {
         const key = element.getAttribute('data-translate');
         const translatedText = translate(key);
-        console.log(`Translating ${key} to: ${translatedText}`);
         
-        if (element.tagName === 'OPTION') {
-            element.textContent = translatedText;
-        } else if (element.children.length > 0) {
-            // For elements with child elements, find and update only text nodes
-            const walker = document.createTreeWalker(
-                element,
-                NodeFilter.SHOW_TEXT,
-                null,
-                false
-            );
-            
-            let textNode;
-            while (textNode = walker.nextNode()) {
-                if (textNode.textContent.trim() && 
-                    !textNode.parentElement.hasAttribute('data-translate') ||
-                    textNode.parentElement === element) {
-                    textNode.textContent = translatedText;
-                    break; // Only update the first meaningful text node
-                }
-            }
-        } else {
-            // Simple text content
-            element.textContent = translatedText;
-        }
+        console.log(`🔄 Element ${index + 1}: ${key} -> "${translatedText}"`);
+        
+        // Simply update the text content - we've removed conflicting attributes
+        element.textContent = translatedText;
     });
     
     // Update placeholders
@@ -1842,16 +1841,16 @@ function initializeLanguage() {
     const languageSelect = document.getElementById('language-select');
     console.log('Initializing language system...');
     
-    // Set English as default
-    const defaultLanguage = 'en';
-    currentLanguage = defaultLanguage;
+    // Load saved language or default to English
+    const savedLanguage = localStorage.getItem('task-tracker-language') || 'en';
+    currentLanguage = savedLanguage;
     
     if (languageSelect) {
         console.log('Language select element found');
-        languageSelect.value = defaultLanguage;
+        languageSelect.value = savedLanguage;
         
-        // Initial translation to English
-        updateLanguage(defaultLanguage);
+        // Initial translation
+        updateLanguage(savedLanguage);
         
         // Add event listener for language changes
         languageSelect.addEventListener('change', (e) => {

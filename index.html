@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Cache Buster: 1758920585 - Multilingual Interface Complete -->
+<!-- Cache Buster: 1758921810 - Fixed Language Switching & Removed Empty Dropdown -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -7,10 +7,10 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <meta name="cache-buster" content="1758920585" />
+  <meta name="cache-buster" content="1758921810" />
   <title>Task Tracker - Production Ready</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
-  <link rel="stylesheet" href="style.css?v=1758920585&cb=multilingual" />
+  <link rel="stylesheet" href="style.css?v=1758921810&cb=fixed-language" />
 </head>
 <body>
   <div class="app-container">
@@ -175,9 +175,6 @@
                   <h2 id="current-period">September 2025</h2>
                 </div>
                 <button id="next-period">›</button>
-                <select id="year-select" class="year-dropdown-inline">
-                  <!-- Years will be populated by JavaScript -->
-                </select>
               </div>
               <div class="header-controls">
                 <div class="language-controls">
@@ -528,7 +525,7 @@
       
       <form id="suggestions-form" class="suggestions-form">
         <div class="form-group">
-          <label for="suggestion-name" class="form-label" data-translate="name_label">
+          <label for="suggestion-name" class="form-label">
             👤 <span data-translate="your_name">Your Name</span> <span class="required">*</span>
           </label>
           <input 
@@ -544,7 +541,7 @@
         </div>
 
         <div class="form-group">
-          <label for="suggestion-email" class="form-label" data-translate="email_label">
+          <label for="suggestion-email" class="form-label">
             📧 <span data-translate="email_address">Email Address</span> <span class="required">*</span>
           </label>
           <input 
@@ -560,7 +557,7 @@
         </div>
 
         <div class="form-group">
-          <label for="suggestion-text" class="form-label" data-translate="suggestions_label">
+          <label for="suggestion-text" class="form-label">
             💭 <span data-translate="your_suggestions">Your Suggestions</span> <span class="required">*</span>
           </label>
           <div class="textarea-wrapper">
@@ -607,6 +604,6 @@
     </div>
   </div>
 
-    <script src="script.js?v=1758921507"></script>
+    <script src="script.js?v=1758921971"></script>
 </body>
 </html>
