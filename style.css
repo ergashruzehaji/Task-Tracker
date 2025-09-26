@@ -2734,7 +2734,9 @@ form {
 .header-controls {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 30px;
+  margin-left: auto;
+  padding-left: 40px;
 }
 
 .demo-controls {

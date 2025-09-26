@@ -62,7 +62,12 @@ const translations = {
     task_input_placeholder: "Enter a task...", daily_month: "Daily for Month", 
     weekly_year: "Weekly for Year", time_format: "Time Format",
     // Calendar-specific translations
-    tasks_for: "Tasks for", tasks: "Tasks", tomorrow: "Tomorrow"
+    tasks_for: "Tasks for", tasks: "Tasks", tomorrow: "Tomorrow",
+    explore_demo: "Explore Demo",
+    // Additional form translations
+    your_name: "Your Name", email_address: "Email Address", 
+    your_suggestions: "Your Suggestions", characters: "characters", 
+    submit_suggestion: "Submit Suggestion"
   },
   es: {
     view_day: "Día", view_week: "Semana", view_month: "Mes", add_task: "Agregar Tarea", cancel: "Cancelar",
@@ -105,7 +110,12 @@ const translations = {
     task_input_placeholder: "Ingresa una tarea...", daily_month: "Diario por Mes",
     weekly_year: "Semanal por Año", time_format: "Formato de Hora",
     // Calendar Translation Keys
-    tasks_for: "Tareas para", tasks: "Tareas", tomorrow: "Mañana"
+    tasks_for: "Tareas para", tasks: "Tareas", tomorrow: "Mañana",
+    explore_demo: "Explorar Demo",
+    // Additional form translations
+    your_name: "Su Nombre", email_address: "Dirección de Correo", 
+    your_suggestions: "Sus Sugerencias", characters: "caracteres", 
+    submit_suggestion: "Enviar Sugerencia"
   },
   fr: {
     view_day: "Jour", view_week: "Semaine", view_month: "Mois", add_task: "Ajouter Tâche", cancel: "Annuler",
@@ -147,7 +157,12 @@ const translations = {
     task_input_placeholder: "Entrez une tâche...", daily_month: "Quotidien pour le Mois",
     weekly_year: "Hebdomadaire pour l'Année", time_format: "Format de l'Heure",
     // Calendar Translation Keys
-    tasks_for: "Tâches pour", tasks: "Tâches", tomorrow: "Demain"
+    tasks_for: "Tâches pour", tasks: "Tâches", tomorrow: "Demain",
+    explore_demo: "Explorer Démo",
+    // Additional form translations
+    your_name: "Votre Nom", email_address: "Adresse E-mail", 
+    your_suggestions: "Vos Suggestions", characters: "caractères", 
+    submit_suggestion: "Soumettre Suggestion"
   },
   de: {
     view_day: "Tag", view_week: "Woche", view_month: "Monat", add_task: "Aufgabe hinzufügen", cancel: "Abbrechen",
@@ -190,7 +205,12 @@ const translations = {
     task_input_placeholder: "Geben Sie eine Aufgabe ein...", daily_month: "Täglich für den Monat",
     weekly_year: "Wöchentlich für das Jahr", time_format: "Zeitformat",
     // Calendar Translation Keys
-    tasks_for: "Aufgaben für", tasks: "Aufgaben", tomorrow: "Morgen"
+    tasks_for: "Aufgaben für", tasks: "Aufgaben", tomorrow: "Morgen",
+    explore_demo: "Demo Erkunden",
+    // Additional form translations
+    your_name: "Ihr Name", email_address: "E-Mail-Adresse", 
+    your_suggestions: "Ihre Vorschläge", characters: "zeichen", 
+    submit_suggestion: "Vorschlag Senden"
   },
   zh: {
     view_day: "日", view_week: "周", view_month: "月", add_task: "添加任务", cancel: "取消",
@@ -232,7 +252,12 @@ const translations = {
     task_input_placeholder: "请输入任务...", daily_month: "每日一个月",
     weekly_year: "每周一年", time_format: "时间格式",
     // Calendar Translation Keys
-    tasks_for: "任务为", tasks: "任务", tomorrow: "明天"
+    tasks_for: "任务为", tasks: "任务", tomorrow: "明天",
+    explore_demo: "探索演示",
+    // Additional form translations
+    your_name: "您的姓名", email_address: "电子邮件地址", 
+    your_suggestions: "您的建议", characters: "字符", 
+    submit_suggestion: "提交建议"
   },
   it: {
     view_day: "Giorno", view_week: "Settimana", view_month: "Mese", add_task: "Aggiungi Attività", cancel: "Annulla",
@@ -274,7 +299,12 @@ const translations = {
     task_input_placeholder: "Inserisci un'attività...", daily_month: "Giornaliero per Mese",
     weekly_year: "Settimanale per Anno", time_format: "Formato Orario",
     // Calendar Translation Keys
-    tasks_for: "Attività per", tasks: "Attività", tomorrow: "Domani"
+    tasks_for: "Attività per", tasks: "Attività", tomorrow: "Domani",
+    explore_demo: "Esplora Demo",
+    // Additional form translations
+    your_name: "Il Tuo Nome", email_address: "Indirizzo E-mail", 
+    your_suggestions: "I Tuoi Suggerimenti", characters: "caratteri", 
+    submit_suggestion: "Invia Suggerimento"
   },
   ru: {
     view_day: "День", view_week: "Неделя", view_month: "Месяц", add_task: "Добавить Задачу", cancel: "Отмена",
@@ -310,7 +340,12 @@ const translations = {
     task_input_placeholder: "Введите задачу...", daily_month: "Ежедневно в течение месяца",
     weekly_year: "Еженедельно в течение года", time_format: "Формат времени",
     // Calendar Translation Keys
-    tasks_for: "Задачи на", tasks: "Задачи", tomorrow: "Завтра"
+    tasks_for: "Задачи на", tasks: "Задачи", tomorrow: "Завтра",
+    explore_demo: "Исследовать Демо",
+    // Additional form translations
+    your_name: "Ваше Имя", email_address: "Адрес Электронной Почты", 
+    your_suggestions: "Ваши Предложения", characters: "символов", 
+    submit_suggestion: "Отправить Предложение"
   },
   ja: {
     view_day: "日", view_week: "週", view_month: "月", add_task: "タスクを追加", cancel: "キャンセル",
@@ -346,7 +381,12 @@ const translations = {
     task_input_placeholder: "タスクを入力してください...", daily_month: "月間毎日",
     weekly_year: "年間毎週", time_format: "時刻形式",
     // Calendar Translation Keys
-    tasks_for: "のタスク", tasks: "タスク", tomorrow: "明日"
+    tasks_for: "のタスク", tasks: "タスク", tomorrow: "明日",
+    explore_demo: "デモを探索",
+    // Additional form translations
+    your_name: "お名前", email_address: "メールアドレス", 
+    your_suggestions: "ご提案", characters: "文字", 
+    submit_suggestion: "提案を送信"
   },
   tr: {
     view_day: "Gün", view_week: "Hafta", view_month: "Ay", add_task: "Görev Ekle", cancel: "İptal",
@@ -382,7 +422,12 @@ const translations = {
     task_input_placeholder: "Bir görev girin...", daily_month: "Ay için Günlük",
     weekly_year: "Yıl için Haftalık", time_format: "Saat Formatı",
     // Calendar Translation Keys
-    tasks_for: "Görevler için", tasks: "Görevler", tomorrow: "Yarın"
+    tasks_for: "Görevler için", tasks: "Görevler", tomorrow: "Yarın",
+    explore_demo: "Demoyu Keşfet",
+    // Additional form translations
+    your_name: "Adınız", email_address: "E-posta Adresi", 
+    your_suggestions: "Önerileriniz", characters: "karakter", 
+    submit_suggestion: "Öneri Gönder"
   },
   ar: {
     view_day: "يوم", view_week: "أسبوع", view_month: "شهر", add_task: "إضافة مهمة", cancel: "إلغاء",
@@ -418,7 +463,12 @@ const translations = {
     task_input_placeholder: "أدخل مهمة...", daily_month: "يومياً للشهر",
     weekly_year: "أسبوعياً للسنة", time_format: "صيغة الوقت",
     // Calendar Translation Keys
-    tasks_for: "مهام لـ", tasks: "مهام", tomorrow: "غداً"
+    tasks_for: "مهام لـ", tasks: "مهام", tomorrow: "غداً",
+    explore_demo: "استكشاف العرض",
+    // Additional form translations
+    your_name: "اسمك", email_address: "عنوان البريد الإلكتروني", 
+    your_suggestions: "اقتراحاتك", characters: "أحرف", 
+    submit_suggestion: "إرسال اقتراح"
   }
 };
 
@@ -1520,6 +1570,9 @@ function updateLanguage(langCode) {
     // Update placeholders and other text
     updateUITexts();
     
+    // Update dynamic content that uses translations
+    updateDynamicTranslations();
+    
     // Save language preference
     localStorage.setItem('task-tracker-language', langCode);
     
@@ -1528,6 +1581,9 @@ function updateLanguage(langCode) {
     if (currentView === 'week' || currentView === 'day') {
         renderTimeSlotCalendar();
     }
+    
+    // Re-render sidebar tasks to update task displays
+    renderFilteredSidebar();
 }
 
 // Translation helper functions for calendar dates
@@ -1573,7 +1629,8 @@ function formatTranslatedDate(date, format = 'full') {
 function updateUITexts() {
     // Update placeholders
     const placeholders = {
-        'sidebar-task-title': translate('task_title')
+        'sidebar-task-title': translate('task_title'),
+        'search-tasks': translate('search_placeholder')
     };
     
     Object.entries(placeholders).forEach(([id, text]) => {
@@ -1594,8 +1651,57 @@ function updateUITexts() {
             element.textContent = text;
         }
     });
-    
+}
 
+function updateDynamicTranslations() {
+    // Update floating tab titles
+    const demoTab = document.querySelector('.tab-btn[data-tab="demo"]');
+    if (demoTab) {
+        demoTab.textContent = translate('live_demo');
+    }
+    
+    const suggestionsTab = document.querySelector('.tab-btn[data-tab="suggestions"]');
+    if (suggestionsTab) {
+        suggestionsTab.textContent = translate('suggestions');
+    }
+    
+    // Update suggestion form elements that might not have data-translate
+    const nameLabel = document.querySelector('label[for="user-name"]');
+    if (nameLabel) {
+        nameLabel.textContent = translate('name_label');
+    }
+    
+    const emailLabel = document.querySelector('label[for="user-email"]');
+    if (emailLabel) {
+        emailLabel.textContent = translate('email_label');
+    }
+    
+    const suggestionsLabel = document.querySelector('label[for="user-suggestions"]');
+    if (suggestionsLabel) {
+        suggestionsLabel.textContent = translate('suggestions_label');
+    }
+
+    // Update form placeholders
+    const nameInput = document.getElementById('user-name');
+    if (nameInput) {
+        nameInput.placeholder = translate('name_placeholder');
+    }
+    
+    const emailInput = document.getElementById('user-email');
+    if (emailInput) {
+        emailInput.placeholder = translate('email_placeholder');
+    }
+    
+    const suggestionsTextarea = document.getElementById('user-suggestions');
+    if (suggestionsTextarea) {
+        suggestionsTextarea.placeholder = translate('suggestions_placeholder');
+    }
+    
+    // Update submit button
+    const submitBtn = document.getElementById('submit-suggestions');
+    if (submitBtn) {
+        submitBtn.textContent = translate('submit_suggestions');
+    }
     
     // Update select options
     const prioritySelect = document.getElementById('sidebar-priority');
@@ -1614,8 +1720,6 @@ function updateUITexts() {
         if (options[1]) options[1].textContent = translate('weekly');
         if (options[2]) options[2].textContent = translate('monthly');
     }
-    
-
     
     // Set text direction for Arabic
     if (currentLanguage === 'ar') {
