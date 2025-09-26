@@ -74,7 +74,9 @@ const translations = {
     describe_suggestions: "Describe your suggestions, feature requests, or improvements...",
     suggestions_title: "Feedback & Suggestions", suggestions_subtitle: "Share your feedback to help improve Task Tracker",
     weekends: "Weekends", daily_slash_month: "Daily/Month", weekly_slash_year: "Weekly/Year",
-    work_week: "Work Week", select_time: "Select time", switch_format: "Switch between AM/PM and 24-hour format"
+    work_week: "Work Week", select_time: "Select time", switch_format: "Switch between AM/PM and 24-hour format",
+    // Additional missing translations
+    quick_presets: "Quick Presets", active_tasks: "Active Tasks"
   },
   es: {
     view_day: "Día", view_week: "Semana", view_month: "Mes", add_task: "Agregar Tarea", cancel: "Cancelar",
@@ -129,7 +131,9 @@ const translations = {
     describe_suggestions: "Describe tus sugerencias, solicitudes de funciones o mejoras...",
     suggestions_title: "Comentarios y Sugerencias", suggestions_subtitle: "Comparte tus comentarios para ayudar a mejorar Task Tracker",
     weekends: "Fines de Semana", daily_slash_month: "Diario/Mes", weekly_slash_year: "Semanal/Año",
-    work_week: "Semana Laboral", select_time: "Seleccionar hora", switch_format: "Cambiar entre formato AM/PM y 24 horas"
+    work_week: "Semana Laboral", select_time: "Seleccionar hora", switch_format: "Cambiar entre formato AM/PM y 24 horas",
+    // Additional missing translations
+    quick_presets: "Preajustes Rápidos", active_tasks: "Tareas Activas"
   },
   fr: {
     view_day: "Jour", view_week: "Semaine", view_month: "Mois", add_task: "Ajouter Tâche", cancel: "Annuler",
@@ -183,7 +187,9 @@ const translations = {
     describe_suggestions: "Décrivez vos suggestions, demandes de fonctionnalités ou améliorations...",
     suggestions_title: "Commentaires et Suggestions", suggestions_subtitle: "Partagez vos commentaires pour aider à améliorer Task Tracker",
     weekends: "Week-ends", daily_slash_month: "Quotidien/Mois", weekly_slash_year: "Hebdomadaire/Année",
-    work_week: "Semaine de Travail", select_time: "Sélectionner l'heure", switch_format: "Basculer entre le format AM/PM et 24 heures"
+    work_week: "Semaine de Travail", select_time: "Sélectionner l'heure", switch_format: "Basculer entre le format AM/PM et 24 heures",
+    // Additional missing translations
+    quick_presets: "Préréglages Rapides", active_tasks: "Tâches Actives"
   },
   de: {
     view_day: "Tag", view_week: "Woche", view_month: "Monat", add_task: "Aufgabe hinzufügen", cancel: "Abbrechen",
@@ -238,7 +244,9 @@ const translations = {
     describe_suggestions: "Beschreiben Sie Ihre Vorschläge, Feature-Anfragen oder Verbesserungen...",
     suggestions_title: "Feedback und Vorschläge", suggestions_subtitle: "Teilen Sie Ihr Feedback mit, um Task Tracker zu verbessern",
     weekends: "Wochenenden", daily_slash_month: "Täglich/Monat", weekly_slash_year: "Wöchentlich/Jahr",
-    work_week: "Arbeitswoche", select_time: "Zeit auswählen", switch_format: "Zwischen AM/PM und 24-Stunden-Format wechseln"
+    work_week: "Arbeitswoche", select_time: "Zeit auswählen", switch_format: "Zwischen AM/PM und 24-Stunden-Format wechseln",
+    // Additional missing translations
+    quick_presets: "Schnelleinstellungen", active_tasks: "Aktive Aufgaben"
   },
   zh: {
     view_day: "日", view_week: "周", view_month: "月", add_task: "添加任务", cancel: "取消",
@@ -292,7 +300,9 @@ const translations = {
     describe_suggestions: "描述您的建议、功能请求或改进...",
     suggestions_title: "反馈和建议", suggestions_subtitle: "分享您的反馈以帮助改进任务跟踪器",
     weekends: "周末", daily_slash_month: "每日/月", weekly_slash_year: "每周/年",
-    work_week: "工作周", select_time: "选择时间", switch_format: "在AM/PM和24小时格式之间切换"
+    work_week: "工作周", select_time: "选择时间", switch_format: "在AM/PM和24小时格式之间切换",
+    // Additional missing translations
+    quick_presets: "快速预设", active_tasks: "活动任务"
   },
   it: {
     view_day: "Giorno", view_week: "Settimana", view_month: "Mese", add_task: "Aggiungi Attività", cancel: "Annulla",
@@ -346,7 +356,9 @@ const translations = {
     describe_suggestions: "Descrivi i tuoi suggerimenti, richieste di funzionalità o miglioramenti...",
     suggestions_title: "Feedback e Suggerimenti", suggestions_subtitle: "Condividi il tuo feedback per aiutare a migliorare Task Tracker",
     weekends: "Weekend", daily_slash_month: "Giornaliero/Mese", weekly_slash_year: "Settimanale/Anno",
-    work_week: "Settimana Lavorativa", select_time: "Seleziona orario", switch_format: "Passa tra formato AM/PM e 24 ore"
+    work_week: "Settimana Lavorativa", select_time: "Seleziona orario", switch_format: "Passa tra formato AM/PM e 24 ore",
+    // Additional missing translations
+    quick_presets: "Preset Rapidi", active_tasks: "Attività Attive"
   },
   ru: {
     view_day: "День", view_week: "Неделя", view_month: "Месяц", add_task: "Добавить Задачу", cancel: "Отмена",
@@ -394,7 +406,9 @@ const translations = {
     describe_suggestions: "Опишите ваши предложения, запросы функций или улучшения...",
     suggestions_title: "Отзывы и Предложения", suggestions_subtitle: "Поделитесь своими отзывами, чтобы помочь улучшить Task Tracker",
     weekends: "Выходные", daily_slash_month: "Ежедневно/Месяц", weekly_slash_year: "Еженедельно/Год",
-    work_week: "Рабочая Неделя", select_time: "Выбрать время", switch_format: "Переключение между AM/PM и 24-часовым форматом"
+    work_week: "Рабочая Неделя", select_time: "Выбрать время", switch_format: "Переключение между AM/PM и 24-часовым форматом",
+    // Additional missing translations
+    quick_presets: "Быстрые Пресеты", active_tasks: "Активные Задачи"
   },
   ja: {
     view_day: "日", view_week: "週", view_month: "月", add_task: "タスクを追加", cancel: "キャンセル",
@@ -442,7 +456,9 @@ const translations = {
     describe_suggestions: "ご提案、機能リクエスト、改善点をお聞かせください...",
     suggestions_title: "フィードバックと提案", suggestions_subtitle: "Task Trackerの改善にご協力ください",
     weekends: "週末", daily_slash_month: "毎日/月", weekly_slash_year: "毎週/年",
-    work_week: "平日", select_time: "時間を選択", switch_format: "AM/PMと24時間形式を切り替え"
+    work_week: "平日", select_time: "時間を選択", switch_format: "AM/PMと24時間形式を切り替え",
+    // Additional missing translations
+    quick_presets: "クイックプリセット", active_tasks: "アクティブなタスク"
   },
   tr: {
     view_day: "Gün", view_week: "Hafta", view_month: "Ay", add_task: "Görev Ekle", cancel: "İptal",
@@ -490,7 +506,9 @@ const translations = {
     describe_suggestions: "Önerilerinizi, özellik isteklerinizi veya iyileştirmelerinizi açıklayın...",
     suggestions_title: "Geri Bildirim ve Öneriler", suggestions_subtitle: "Task Tracker'ı geliştirmek için geri bildiriminizi paylaşın",
     weekends: "Hafta Sonları", daily_slash_month: "Günlük/Ay", weekly_slash_year: "Haftalık/Yıl",
-    work_week: "Çalışma Haftası", select_time: "Zaman seç", switch_format: "AM/PM ve 24 saat formatı arasında geçiş yap"
+    work_week: "Çalışma Haftası", select_time: "Zaman seç", switch_format: "AM/PM ve 24 saat formatı arasında geçiş yap",
+    // Additional missing translations
+    quick_presets: "Hızlı Ön Ayarlar", active_tasks: "Aktif Görevler"
   },
   ar: {
     view_day: "يوم", view_week: "أسبوع", view_month: "شهر", add_task: "إضافة مهمة", cancel: "إلغاء",
@@ -538,7 +556,9 @@ const translations = {
     describe_suggestions: "صف اقتراحاتك أو طلبات الميزات أو التحسينات...",
     suggestions_title: "التعليقات والاقتراحات", suggestions_subtitle: "شارك تعليقاتك لمساعدتنا في تحسين متتبع المهام",
     weekends: "عطلات نهاية الأسبوع", daily_slash_month: "يومي/شهر", weekly_slash_year: "أسبوعي/سنة",
-    work_week: "أسبوع العمل", select_time: "اختر الوقت", switch_format: "التبديل بين صيغة AM/PM وصيغة 24 ساعة"
+    work_week: "أسبوع العمل", select_time: "اختر الوقت", switch_format: "التبديل بين صيغة AM/PM وصيغة 24 ساعة",
+    // Additional missing translations
+    quick_presets: "الإعدادات السريعة", active_tasks: "المهام النشطة"
   }
 };
 
@@ -1611,23 +1631,37 @@ function translate(key) {
 
 function updateLanguage(langCode) {
     currentLanguage = langCode;
+    console.log('Updating language to:', langCode);
     
     // Update all elements with data-translate attribute
     document.querySelectorAll('[data-translate]').forEach(element => {
         const key = element.getAttribute('data-translate');
+        const translatedText = translate(key);
+        console.log(`Translating ${key} to: ${translatedText}`);
+        
         if (element.tagName === 'OPTION') {
-            element.textContent = translate(key);
-        } else if (element.innerHTML && element.innerHTML.includes('<')) {
-            // For elements with HTML content, preserve structure
-            const htmlContent = element.innerHTML;
-            const textNodes = element.childNodes;
-            textNodes.forEach(node => {
-                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-                    node.textContent = translate(key);
+            element.textContent = translatedText;
+        } else if (element.children.length > 0) {
+            // For elements with child elements, find and update only text nodes
+            const walker = document.createTreeWalker(
+                element,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+            
+            let textNode;
+            while (textNode = walker.nextNode()) {
+                if (textNode.textContent.trim() && 
+                    !textNode.parentElement.hasAttribute('data-translate') ||
+                    textNode.parentElement === element) {
+                    textNode.textContent = translatedText;
+                    break; // Only update the first meaningful text node
                 }
-            });
+            }
         } else {
-            element.textContent = translate(key);
+            // Simple text content
+            element.textContent = translatedText;
         }
     });
     
@@ -1796,16 +1830,26 @@ function updateDynamicTranslations() {
 
 function initializeLanguage() {
     const languageSelect = document.getElementById('language-select');
+    console.log('Initializing language system...');
     
-    // Load saved language
-    const savedLanguage = localStorage.getItem('task-tracker-language') || 'en';
+    // Set English as default
+    const defaultLanguage = 'en';
+    currentLanguage = defaultLanguage;
+    
     if (languageSelect) {
-        languageSelect.value = savedLanguage;
-        updateLanguage(savedLanguage);
+        console.log('Language select element found');
+        languageSelect.value = defaultLanguage;
         
+        // Initial translation to English
+        updateLanguage(defaultLanguage);
+        
+        // Add event listener for language changes
         languageSelect.addEventListener('change', (e) => {
+            console.log('Language changed to:', e.target.value);
             updateLanguage(e.target.value);
         });
+    } else {
+        console.error('Language select element not found!');
     }
 }
 

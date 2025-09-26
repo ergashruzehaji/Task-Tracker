@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Cache Buster: 1758919278 - JavaScript Bug Fixes -->
+<!-- Cache Buster: 1758920585 - Multilingual Interface Complete -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -7,10 +7,10 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <meta name="cache-buster" content="1758919278" />
+  <meta name="cache-buster" content="1758920585" />
   <title>Task Tracker - Production Ready</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
-  <link rel="stylesheet" href="style.css?v=1758919278&cb=bug-fixes" />
+  <link rel="stylesheet" href="style.css?v=1758920585&cb=multilingual" />
 </head>
 <body>
   <div class="app-container">
@@ -44,7 +44,7 @@
                 </div>
               </div>
               <div class="form-section">
-                <label class="form-label">⏰ Format:</label>
+                <label class="form-label" data-translate="time_format">Format:</label>
                 <button type="button" id="time-format-toggle" class="time-format-btn" title="Switch between AM/PM and 24-hour format">
                   AM/PM
                 </button>
@@ -144,7 +144,7 @@
 
                 <!-- Quick Presets -->
                 <div class="recurring-presets">
-                  <label class="form-label">⚡ Quick Presets:</label>
+                  <label class="form-label" data-translate="quick_presets">Quick Presets:</label>
                   <div class="preset-buttons">
                     <button type="button" class="preset-btn" data-preset="work-week" data-translate="weekdays_only">Work Week (Mon-Fri)</button>
                     <button type="button" class="preset-btn" data-preset="weekends" data-translate="weekends_only">Weekends</button>
@@ -180,11 +180,6 @@
                 </select>
               </div>
               <div class="header-controls">
-                <div class="demo-controls">
-                  <button id="demo-button" class="demo-launch-btn" onclick="window.open('demo.html', '_blank')" title="Open Interactive Demo">
-                    🎬 <span data-translate="explore_demo">Explore Demo</span>
-                  </button>
-                </div>
                 <div class="language-controls">
                   <select id="language-select" class="language-select" aria-label="Select language">
                     <option value="en">English</option>
@@ -205,9 +200,9 @@
             <!-- View Controls Below -->
             <div class="view-controls-section">
               <div class="view-controls">
-                <button class="view-btn" data-view="day" data-translate="view_day">📅 Day</button>
-                <button class="view-btn active" data-view="week" data-translate="view_week">📊 Week</button>
-                <button class="view-btn" data-view="month" data-translate="view_month">🗓 Month</button>
+                <button class="view-btn" data-view="day" data-translate="view_day">Day</button>
+                <button class="view-btn active" data-view="week" data-translate="view_week">Week</button>
+                <button class="view-btn" data-view="month" data-translate="view_month">Month</button>
               </div>
             </div>
 
@@ -313,7 +308,7 @@
 
               <!-- Time Format Toggle -->
               <div class="form-group">
-                <label class="form-label">⏰ Time Format</label>
+                <label class="form-label" data-translate="time_format">Time Format</label>
                 <button type="button" id="sidebar-time-format-toggle" class="format-toggle-btn">
                   AM/PM
                 </button>
@@ -353,54 +348,54 @@
                   
                   <!-- Weekly Options -->
                   <div id="sidebar-weekly-options" class="weekly-options" style="display: none;">
-                    <label class="form-label">📆 Select days to repeat</label>
+                    <label class="form-label" data-translate="select_days">Select days to repeat</label>
                     <div class="weekday-selector">
                       <label class="weekday-item">
                         <input type="checkbox" value="0">
                         <div class="weekday-content">
-                          <div class="weekday-label">Sun</div>
+                          <div class="weekday-label" data-translate="sun">Sun</div>
                           <div class="weekday-toggle"></div>
                         </div>
                       </label>
                       <label class="weekday-item">
                         <input type="checkbox" value="1">
                         <div class="weekday-content">
-                          <div class="weekday-label">Mon</div>
+                          <div class="weekday-label" data-translate="mon">Mon</div>
                           <div class="weekday-toggle"></div>
                         </div>
                       </label>
                       <label class="weekday-item">
                         <input type="checkbox" value="2">
                         <div class="weekday-content">
-                          <div class="weekday-label">Tue</div>
+                          <div class="weekday-label" data-translate="tue">Tue</div>
                           <div class="weekday-toggle"></div>
                         </div>
                       </label>
                       <label class="weekday-item">
                         <input type="checkbox" value="3">
                         <div class="weekday-content">
-                          <div class="weekday-label">Wed</div>
+                          <div class="weekday-label" data-translate="wed">Wed</div>
                           <div class="weekday-toggle"></div>
                         </div>
                       </label>
                       <label class="weekday-item">
                         <input type="checkbox" value="4">
                         <div class="weekday-content">
-                          <div class="weekday-label">Thu</div>
+                          <div class="weekday-label" data-translate="thu">Thu</div>
                           <div class="weekday-toggle"></div>
                         </div>
                       </label>
                       <label class="weekday-item">
                         <input type="checkbox" value="5">
                         <div class="weekday-content">
-                          <div class="weekday-label">Fri</div>
+                          <div class="weekday-label" data-translate="fri">Fri</div>
                           <div class="weekday-toggle"></div>
                         </div>
                       </label>
                       <label class="weekday-item">
                         <input type="checkbox" value="6">
                         <div class="weekday-content">
-                          <div class="weekday-label">Sat</div>
+                          <div class="weekday-label" data-translate="sat">Sat</div>
                           <div class="weekday-toggle"></div>
                         </div>
                       </label>
@@ -409,12 +404,12 @@
 
                   <!-- Quick Presets -->
                   <div class="recurring-presets">
-                    <label class="form-label">⚡ Quick Presets</label>
+                    <label class="form-label" data-translate="quick_presets">Quick Presets</label>
                     <div class="preset-buttons">
-                      <button type="button" class="preset-btn" data-preset="work-week">Work Week</button>
-                      <button type="button" class="preset-btn" data-preset="weekends">Weekends</button>
-                      <button type="button" class="preset-btn" data-preset="daily-month">Daily/Month</button>
-                      <button type="button" class="preset-btn" data-preset="weekly-year">Weekly/Year</button>
+                      <button type="button" class="preset-btn" data-preset="work-week" data-translate="weekdays_only">Work Week (Mon-Fri)</button>
+                      <button type="button" class="preset-btn" data-preset="weekends" data-translate="weekends_only">Weekends</button>
+                      <button type="button" class="preset-btn" data-preset="daily-month" data-translate="daily_month">Daily for Month</button>
+                      <button type="button" class="preset-btn" data-preset="weekly-year" data-translate="weekly_year">Weekly for Year</button>
                     </div>
                   </div>
                 </div>
@@ -451,7 +446,7 @@
     <!-- Dynamic Task Notification Sidebar - Only shows when tasks are active -->
     <div id="notification-sidebar" class="notification-sidebar" style="display: none;">
       <div class="notification-header">
-        <h3>🔔 Active Tasks</h3>
+        <h3 data-translate="active_tasks">🔔 Active Tasks</h3>
         <button id="close-notifications" class="close-btn">×</button>
       </div>
       <div id="active-notifications" class="notifications-list">
@@ -464,23 +459,23 @@
   <div id="quick-add-modal" class="quick-add-overlay" style="display: none;">
     <div class="quick-add-modal">
       <div class="modal-header">
-        <h3>⚡ Quick Add Task</h3>
+        <h3 data-translate="quick_add_task">Quick Add Task</h3>
         <button id="close-quick-add" class="close-btn">✕</button>
       </div>
       <div class="modal-content">
         <form id="quick-add-form">
-          <input type="text" id="quick-task-input" class="quick-input" placeholder="What needs to be done?" required />
+          <input type="text" id="quick-task-input" class="quick-input" data-translate-placeholder="what_needs_done" placeholder="What needs to be done?" required />
           <div class="quick-options">
             <input type="date" id="quick-date" class="quick-date" />
             <select id="quick-priority" class="quick-priority">
-              <option value="low">Low</option>
-              <option value="medium" selected>Medium</option>
-              <option value="high">High</option>
+              <option value="low" data-translate="low">Low</option>
+              <option value="medium" data-translate="medium" selected>Medium</option>
+              <option value="high" data-translate="high">High</option>
             </select>
           </div>
           <div class="modal-actions">
-            <button type="button" id="cancel-quick-add" class="cancel-btn">Cancel</button>
-            <button type="submit" class="add-btn">Add Task</button>
+            <button type="button" id="cancel-quick-add" class="cancel-btn" data-translate="cancel">Cancel</button>
+            <button type="submit" class="add-btn" data-translate="add_task">Add Task</button>
           </div>
         </form>
       </div>
@@ -513,14 +508,6 @@
 
   <!-- Floating Action Tabs -->
   <div class="floating-tabs">
-    <!-- Live Demo Tab -->
-    <div id="demo-tab" class="floating-tab">
-      <button id="demo-trigger" class="floating-tab-btn" onclick="window.open('demo.html', '_blank')" 
-              title="Watch live demo" data-translate="demo_button">
-        🎬 <span data-translate="demo">Demo</span>
-      </button>
-    </div>
-    
     <!-- Suggestions Tab -->
     <div id="suggestions-tab" class="floating-tab">
       <button id="suggestions-trigger" class="floating-tab-btn" 
@@ -610,16 +597,16 @@
     <div class="success-modal">
       <div class="success-content">
         <div class="success-icon">✅</div>
-        <h2>Thank You!</h2>
-        <p>Your message has been successfully sent.</p>
+        <h2 data-translate="thank_you">Thank You!</h2>
+        <p data-translate="success_message">Your message has been successfully sent.</p>
         <p class="success-subtitle">We appreciate your feedback and will review your suggestions carefully.</p>
-        <button id="close-success" class="btn-success">
+        <button id="close-success" class="btn-success" data-translate="perfect">
           Perfect!
         </button>
       </div>
     </div>
   </div>
 
-    <script src="script.js?v=1758919278"></script>
+    <script src="script.js?v=1758920811"></script>
 </body>
 </html>
