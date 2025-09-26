@@ -530,78 +530,80 @@
     </div>
   </div>
 
-  <!-- Suggestions Modal with GCT Backdrop -->
+  <!-- Professional Suggestions Modal -->
   <div id="suggestions-modal" class="suggestions-modal-overlay" style="display: none;">
     <div class="suggestions-modal">
       <div class="suggestions-header">
-        <h2 data-translate="suggestions_title">💡 Share Your Suggestions</h2>
-        <p data-translate="suggestions_subtitle">Help us improve Task Tracker with your valuable feedback</p>
-        <button id="close-suggestions" class="close-suggestions-btn">✕</button>
+        <h2 data-translate="suggestions_title">Feedback & Suggestions</h2>
+        <p data-translate="suggestions_subtitle">Share your feedback to help improve Task Tracker</p>
+        <button id="close-suggestions" class="close-suggestions-btn">×</button>
       </div>
       
-      <form id="suggestions-form" class="suggestions-form">
-        <div class="form-group">
-          <label for="suggestion-name" class="form-label" data-translate="name_label">
-            👤 <span data-translate="your_name">Your Name</span> <span class="required">*</span>
-          </label>
-          <input 
-            type="text" 
-            id="suggestion-name" 
-            name="name"
-            data-translate-placeholder="name_placeholder"
-            placeholder="Enter your full name"
-            required
-            maxlength="100"
-            class="form-input"
-          >
-        </div>
+      <div class="suggestions-content">
+        <form id="suggestions-form" class="suggestions-form">
+          <div class="form-row">
+            <div class="form-group form-half">
+              <label for="suggestion-name" class="form-label" data-translate="name_label">
+                <span data-translate="your_name">Name</span> <span class="required">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="suggestion-name" 
+                name="name"
+                data-translate-placeholder="name_placeholder"
+                placeholder="Enter your name"
+                required
+                maxlength="100"
+                class="form-input"
+              >
+            </div>
+            
+            <div class="form-group form-half">
+              <label for="suggestion-email" class="form-label" data-translate="email_label">
+                <span data-translate="email_address">Email</span> <span class="required">*</span>
+              </label>
+              <input 
+                type="email" 
+                id="suggestion-email" 
+                name="email"
+                data-translate-placeholder="email_placeholder"
+                placeholder="your.email@example.com"
+                required
+                maxlength="150"
+                class="form-input"
+              >
+            </div>
+          </div>
 
-        <div class="form-group">
-          <label for="suggestion-email" class="form-label" data-translate="email_label">
-            📧 <span data-translate="email_address">Email Address</span> <span class="required">*</span>
-          </label>
-          <input 
-            type="email" 
-            id="suggestion-email" 
-            name="email"
-            data-translate-placeholder="email_placeholder"
-            placeholder="your.email@example.com"
-            required
-            maxlength="150"
-            class="form-input"
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="suggestion-text" class="form-label" data-translate="suggestions_label">
-            💭 <span data-translate="your_suggestions">Your Suggestions</span> <span class="required">*</span>
-          </label>
-          <div class="textarea-wrapper">
+          <div class="form-group">
+            <label for="suggestion-text" class="form-label" data-translate="suggestions_label">
+              <span data-translate="your_suggestions">Feedback</span> <span class="required">*</span>
+            </label>
             <textarea 
               id="suggestion-text" 
               name="suggestion"
               data-translate-placeholder="suggestions_placeholder"
-              placeholder="Share your ideas, feature requests, improvements, or any feedback to help us make Task Tracker better..."
+              placeholder="Describe your suggestions, feature requests, or improvements..."
               required
               maxlength="500"
-              rows="8"
+              rows="6"
               class="form-textarea"
             ></textarea>
             <div class="character-count">
               <span id="char-count">0</span>/500 <span data-translate="characters">characters</span>
             </div>
           </div>
-        </div>
 
-        <div class="form-actions">
-          <button type="button" id="cancel-suggestions" class="btn-secondary" data-translate="cancel">
-            Cancel
-          </button>
-          <button type="submit" id="submit-suggestions" class="btn-primary" data-translate="submit_suggestion">
-            📤 <span data-translate="submit_suggestion_text">Submit Suggestion</span>
-          </button>
-        </div>
-      </form>
+          <div class="form-actions">
+            <button type="button" id="cancel-suggestions" class="btn-secondary" data-translate="cancel">
+              Cancel
+            </button>
+            <button type="submit" id="submit-suggestions" class="btn-primary" data-translate="submit_suggestion">
+              <span data-translate="submit_suggestion_text">Submit</span>
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -620,6 +622,6 @@
     </div>
   </div>
 
-    <script src="script.js?v=1758850300"></script>
+    <script src="script.js?v=1758851400"></script>
 </body>
 </html>
