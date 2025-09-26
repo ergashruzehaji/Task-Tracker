@@ -1,11 +1,5 @@
-<!DOCTYPE  <  <meta name="cache-buster" content="1758916189" />
-  <title>Task Tracker - Production Ready</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
-  <link rel="stylesheet" href="style.css?v=1758916189&cb=force-refresh" /> name="cache-buster" content="1758890926" />
-  <title>Task Tracker - Production Ready</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
-  <link rel="stylesheet" href="style.css?v=1758890926&cb=force-refresh" />l>
-<!-- Cache Buster: 1758845000 - Complete Interface Translation Update -->
+<!DOCTYPE html>
+<!-- Cache Buster: 1758919278 - JavaScript Bug Fixes -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -13,10 +7,10 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <meta name="cache-buster" content="1758845000" />
+  <meta name="cache-buster" content="1758919278" />
   <title>Task Tracker - Production Ready</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
-  <link rel="stylesheet" href="style.css?v=1758845000&cb=complete-translations" />
+  <link rel="stylesheet" href="style.css?v=1758919278&cb=bug-fixes" />
 </head>
 <body>
   <div class="app-container">
@@ -186,6 +180,11 @@
                 </select>
               </div>
               <div class="header-controls">
+                <div class="demo-controls">
+                  <button id="demo-button" class="demo-launch-btn" onclick="window.open('demo.html', '_blank')" title="Open Interactive Demo">
+                    🎬 <span data-translate="explore_demo">Explore Demo</span>
+                  </button>
+                </div>
                 <div class="language-controls">
                   <select id="language-select" class="language-select" aria-label="Select language">
                     <option value="en">English</option>
@@ -514,89 +513,95 @@
 
   <!-- Floating Action Tabs -->
   <div class="floating-tabs">
+    <!-- Live Demo Tab -->
+    <div id="demo-tab" class="floating-tab">
+      <button id="demo-trigger" class="floating-tab-btn" onclick="window.open('demo.html', '_blank')" 
+              title="Watch live demo" data-translate="demo_button">
+        🎬 <span data-translate="demo">Demo</span>
+      </button>
+    </div>
+    
     <!-- Suggestions Tab -->
     <div id="suggestions-tab" class="floating-tab">
       <button id="suggestions-trigger" class="floating-tab-btn" 
-              title="Share your suggestions">
+              title="Share your suggestions" data-translate="suggestions_button">
         💡 <span data-translate="suggestions">Suggestions</span>
       </button>
     </div>
   </div>
 
-  <!-- Professional Suggestions Modal -->
+  <!-- Suggestions Modal with GCT Backdrop -->
   <div id="suggestions-modal" class="suggestions-modal-overlay" style="display: none;">
     <div class="suggestions-modal">
       <div class="suggestions-header">
-        <h2 data-translate="suggestions_title">Feedback & Suggestions</h2>
-        <p data-translate="suggestions_subtitle">Share your feedback to help improve Task Tracker</p>
-        <button id="close-suggestions" class="close-suggestions-btn">×</button>
+        <h2 data-translate="suggestions_title">💡 Share Your Suggestions</h2>
+        <p data-translate="suggestions_subtitle">Help us improve Task Tracker with your valuable feedback</p>
+        <button id="close-suggestions" class="close-suggestions-btn">✕</button>
       </div>
       
-      <div class="suggestions-content">
-        <form id="suggestions-form" class="suggestions-form">
-          <div class="form-row">
-            <div class="form-group form-half">
-              <label for="suggestion-name" class="form-label" data-translate="name_label">
-                <span data-translate="your_name">Name</span> <span class="required">*</span>
-              </label>
-              <input 
-                type="text" 
-                id="suggestion-name" 
-                name="name"
-                data-translate-placeholder="name_placeholder"
-                placeholder="Enter your name"
-                required
-                maxlength="100"
-                class="form-input"
-              >
-            </div>
-            
-            <div class="form-group form-half">
-              <label for="suggestion-email" class="form-label" data-translate="email_label">
-                <span data-translate="email_address">Email</span> <span class="required">*</span>
-              </label>
-              <input 
-                type="email" 
-                id="suggestion-email" 
-                name="email"
-                data-translate-placeholder="email_placeholder"
-                placeholder="your.email@example.com"
-                required
-                maxlength="150"
-                class="form-input"
-              >
-            </div>
-          </div>
+      <form id="suggestions-form" class="suggestions-form">
+        <div class="form-group">
+          <label for="suggestion-name" class="form-label" data-translate="name_label">
+            👤 <span data-translate="your_name">Your Name</span> <span class="required">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="suggestion-name" 
+            name="name"
+            data-translate-placeholder="name_placeholder"
+            placeholder="Enter your full name"
+            required
+            maxlength="100"
+            class="form-input"
+          >
+        </div>
 
-          <div class="form-group">
-            <label for="suggestion-text" class="form-label" data-translate="suggestions_label">
-              <span data-translate="your_suggestions">Feedback</span> <span class="required">*</span>
-            </label>
+        <div class="form-group">
+          <label for="suggestion-email" class="form-label" data-translate="email_label">
+            📧 <span data-translate="email_address">Email Address</span> <span class="required">*</span>
+          </label>
+          <input 
+            type="email" 
+            id="suggestion-email" 
+            name="email"
+            data-translate-placeholder="email_placeholder"
+            placeholder="your.email@example.com"
+            required
+            maxlength="150"
+            class="form-input"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="suggestion-text" class="form-label" data-translate="suggestions_label">
+            💭 <span data-translate="your_suggestions">Your Suggestions</span> <span class="required">*</span>
+          </label>
+          <div class="textarea-wrapper">
             <textarea 
               id="suggestion-text" 
               name="suggestion"
               data-translate-placeholder="suggestions_placeholder"
-              placeholder="Describe your suggestions, feature requests, or improvements..."
+              placeholder="Share your ideas, feature requests, improvements, or any feedback to help us make Task Tracker better..."
               required
               maxlength="500"
-              rows="6"
+              rows="8"
               class="form-textarea"
             ></textarea>
             <div class="character-count">
               <span id="char-count">0</span>/500 <span data-translate="characters">characters</span>
             </div>
           </div>
+        </div>
 
-          <div class="form-actions">
-            <button type="button" id="cancel-suggestions" class="btn-secondary" data-translate="cancel">
-              Cancel
-            </button>
-            <button type="submit" id="submit-suggestions" class="btn-primary" data-translate="submit_suggestion">
-              <span data-translate="submit_suggestion_text">Submit</span>
-            </button>
-          </div>
-        </form>
-      </div>
+        <div class="form-actions">
+          <button type="button" id="cancel-suggestions" class="btn-secondary" data-translate="cancel">
+            Cancel
+          </button>
+          <button type="submit" id="submit-suggestions" class="btn-primary" data-translate="submit_suggestion">
+            📤 <span data-translate="submit_suggestion_text">Submit Suggestion</span>
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -615,6 +620,6 @@
     </div>
   </div>
 
-      <script src="script.js?v=1758916189"></script>
+    <script src="script.js?v=1758919278"></script>
 </body>
 </html>

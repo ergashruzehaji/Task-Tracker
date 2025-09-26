@@ -66,7 +66,15 @@ const translations = {
     // Additional form translations
     your_name: "Your Name", email_address: "Email Address", 
     your_suggestions: "Your Suggestions", characters: "characters", 
-    submit_suggestion: "Submit Suggestion"
+    submit_suggestion: "Submit Suggestion",
+    // Modal and overlay elements
+    quick_add_task: "Quick Add Task", what_needs_done: "What needs to be done?",
+    perfect: "Perfect!", thank_you: "Thank you!", feedback_suggestions: "Feedback & Suggestions",
+    share_feedback: "Share your feedback to help improve Task Tracker",
+    describe_suggestions: "Describe your suggestions, feature requests, or improvements...",
+    suggestions_title: "Feedback & Suggestions", suggestions_subtitle: "Share your feedback to help improve Task Tracker",
+    weekends: "Weekends", daily_slash_month: "Daily/Month", weekly_slash_year: "Weekly/Year",
+    work_week: "Work Week", select_time: "Select time", switch_format: "Switch between AM/PM and 24-hour format"
   },
   es: {
     view_day: "Día", view_week: "Semana", view_month: "Mes", add_task: "Agregar Tarea", cancel: "Cancelar",
@@ -113,7 +121,15 @@ const translations = {
     // Additional form translations
     your_name: "Su Nombre", email_address: "Dirección de Correo", 
     your_suggestions: "Sus Sugerencias", characters: "caracteres", 
-    submit_suggestion: "Enviar Sugerencia"
+    submit_suggestion: "Enviar Sugerencia",
+    // Modal and overlay elements
+    quick_add_task: "Agregar Tarea Rápida", what_needs_done: "¿Qué necesita hacerse?",
+    perfect: "¡Perfecto!", thank_you: "¡Gracias!", feedback_suggestions: "Comentarios y Sugerencias",
+    share_feedback: "Comparte tus comentarios para ayudar a mejorar Task Tracker",
+    describe_suggestions: "Describe tus sugerencias, solicitudes de funciones o mejoras...",
+    suggestions_title: "Comentarios y Sugerencias", suggestions_subtitle: "Comparte tus comentarios para ayudar a mejorar Task Tracker",
+    weekends: "Fines de Semana", daily_slash_month: "Diario/Mes", weekly_slash_year: "Semanal/Año",
+    work_week: "Semana Laboral", select_time: "Seleccionar hora", switch_format: "Cambiar entre formato AM/PM y 24 horas"
   },
   fr: {
     view_day: "Jour", view_week: "Semaine", view_month: "Mois", add_task: "Ajouter Tâche", cancel: "Annuler",
@@ -159,7 +175,15 @@ const translations = {
     // Additional form translations
     your_name: "Votre Nom", email_address: "Adresse E-mail", 
     your_suggestions: "Vos Suggestions", characters: "caractères", 
-    submit_suggestion: "Soumettre Suggestion"
+    submit_suggestion: "Soumettre Suggestion",
+    // Modal and overlay elements
+    quick_add_task: "Ajouter Tâche Rapide", what_needs_done: "Qu'est-ce qui doit être fait?",
+    perfect: "Parfait!", thank_you: "Merci!", feedback_suggestions: "Commentaires et Suggestions",
+    share_feedback: "Partagez vos commentaires pour aider à améliorer Task Tracker",
+    describe_suggestions: "Décrivez vos suggestions, demandes de fonctionnalités ou améliorations...",
+    suggestions_title: "Commentaires et Suggestions", suggestions_subtitle: "Partagez vos commentaires pour aider à améliorer Task Tracker",
+    weekends: "Week-ends", daily_slash_month: "Quotidien/Mois", weekly_slash_year: "Hebdomadaire/Année",
+    work_week: "Semaine de Travail", select_time: "Sélectionner l'heure", switch_format: "Basculer entre le format AM/PM et 24 heures"
   },
   de: {
     view_day: "Tag", view_week: "Woche", view_month: "Monat", add_task: "Aufgabe hinzufügen", cancel: "Abbrechen",
@@ -206,7 +230,15 @@ const translations = {
     // Additional form translations
     your_name: "Ihr Name", email_address: "E-Mail-Adresse", 
     your_suggestions: "Ihre Vorschläge", characters: "zeichen", 
-    submit_suggestion: "Vorschlag Senden"
+    submit_suggestion: "Vorschlag Senden",
+    // Modal and overlay elements
+    quick_add_task: "Schnelle Aufgabe hinzufügen", what_needs_done: "Was muss getan werden?",
+    perfect: "Perfekt!", thank_you: "Vielen Dank!", feedback_suggestions: "Feedback und Vorschläge",
+    share_feedback: "Teilen Sie Ihr Feedback mit, um Task Tracker zu verbessern",
+    describe_suggestions: "Beschreiben Sie Ihre Vorschläge, Feature-Anfragen oder Verbesserungen...",
+    suggestions_title: "Feedback und Vorschläge", suggestions_subtitle: "Teilen Sie Ihr Feedback mit, um Task Tracker zu verbessern",
+    weekends: "Wochenenden", daily_slash_month: "Täglich/Monat", weekly_slash_year: "Wöchentlich/Jahr",
+    work_week: "Arbeitswoche", select_time: "Zeit auswählen", switch_format: "Zwischen AM/PM und 24-Stunden-Format wechseln"
   },
   zh: {
     view_day: "日", view_week: "周", view_month: "月", add_task: "添加任务", cancel: "取消",
@@ -252,7 +284,15 @@ const translations = {
     // Additional form translations
     your_name: "您的姓名", email_address: "电子邮件地址", 
     your_suggestions: "您的建议", characters: "字符", 
-    submit_suggestion: "提交建议"
+    submit_suggestion: "提交建议",
+    // Modal and overlay elements
+    quick_add_task: "快速添加任务", what_needs_done: "需要做什么？",
+    perfect: "完美！", thank_you: "谢谢！", feedback_suggestions: "反馈和建议",
+    share_feedback: "分享您的反馈以帮助改进任务跟踪器",
+    describe_suggestions: "描述您的建议、功能请求或改进...",
+    suggestions_title: "反馈和建议", suggestions_subtitle: "分享您的反馈以帮助改进任务跟踪器",
+    weekends: "周末", daily_slash_month: "每日/月", weekly_slash_year: "每周/年",
+    work_week: "工作周", select_time: "选择时间", switch_format: "在AM/PM和24小时格式之间切换"
   },
   it: {
     view_day: "Giorno", view_week: "Settimana", view_month: "Mese", add_task: "Aggiungi Attività", cancel: "Annulla",
@@ -298,7 +338,15 @@ const translations = {
     // Additional form translations
     your_name: "Il Tuo Nome", email_address: "Indirizzo E-mail", 
     your_suggestions: "I Tuoi Suggerimenti", characters: "caratteri", 
-    submit_suggestion: "Invia Suggerimento"
+    submit_suggestion: "Invia Suggerimento",
+    // Modal and overlay elements
+    quick_add_task: "Aggiungi Attività Veloce", what_needs_done: "Cosa deve essere fatto?",
+    perfect: "Perfetto!", thank_you: "Grazie!", feedback_suggestions: "Feedback e Suggerimenti",
+    share_feedback: "Condividi il tuo feedback per aiutare a migliorare Task Tracker",
+    describe_suggestions: "Descrivi i tuoi suggerimenti, richieste di funzionalità o miglioramenti...",
+    suggestions_title: "Feedback e Suggerimenti", suggestions_subtitle: "Condividi il tuo feedback per aiutare a migliorare Task Tracker",
+    weekends: "Weekend", daily_slash_month: "Giornaliero/Mese", weekly_slash_year: "Settimanale/Anno",
+    work_week: "Settimana Lavorativa", select_time: "Seleziona orario", switch_format: "Passa tra formato AM/PM e 24 ore"
   },
   ru: {
     view_day: "День", view_week: "Неделя", view_month: "Месяц", add_task: "Добавить Задачу", cancel: "Отмена",
@@ -338,7 +386,15 @@ const translations = {
     // Additional form translations
     your_name: "Ваше Имя", email_address: "Адрес Электронной Почты", 
     your_suggestions: "Ваши Предложения", characters: "символов", 
-    submit_suggestion: "Отправить Предложение"
+    submit_suggestion: "Отправить Предложение",
+    // Modal and overlay elements
+    quick_add_task: "Быстро Добавить Задачу", what_needs_done: "Что нужно сделать?",
+    perfect: "Идеально!", thank_you: "Спасибо!", feedback_suggestions: "Отзывы и Предложения",
+    share_feedback: "Поделитесь своими отзывами, чтобы помочь улучшить Task Tracker",
+    describe_suggestions: "Опишите ваши предложения, запросы функций или улучшения...",
+    suggestions_title: "Отзывы и Предложения", suggestions_subtitle: "Поделитесь своими отзывами, чтобы помочь улучшить Task Tracker",
+    weekends: "Выходные", daily_slash_month: "Ежедневно/Месяц", weekly_slash_year: "Еженедельно/Год",
+    work_week: "Рабочая Неделя", select_time: "Выбрать время", switch_format: "Переключение между AM/PM и 24-часовым форматом"
   },
   ja: {
     view_day: "日", view_week: "週", view_month: "月", add_task: "タスクを追加", cancel: "キャンセル",
@@ -378,7 +434,15 @@ const translations = {
     // Additional form translations
     your_name: "お名前", email_address: "メールアドレス", 
     your_suggestions: "ご提案", characters: "文字", 
-    submit_suggestion: "提案を送信"
+    submit_suggestion: "提案を送信",
+    // Modal and overlay elements
+    quick_add_task: "クイックタスク追加", what_needs_done: "何をする必要がありますか？",
+    perfect: "完璧！", thank_you: "ありがとうございます！", feedback_suggestions: "フィードバックと提案",
+    share_feedback: "Task Trackerの改善にご協力ください",
+    describe_suggestions: "ご提案、機能リクエスト、改善点をお聞かせください...",
+    suggestions_title: "フィードバックと提案", suggestions_subtitle: "Task Trackerの改善にご協力ください",
+    weekends: "週末", daily_slash_month: "毎日/月", weekly_slash_year: "毎週/年",
+    work_week: "平日", select_time: "時間を選択", switch_format: "AM/PMと24時間形式を切り替え"
   },
   tr: {
     view_day: "Gün", view_week: "Hafta", view_month: "Ay", add_task: "Görev Ekle", cancel: "İptal",
@@ -418,7 +482,15 @@ const translations = {
     // Additional form translations
     your_name: "Adınız", email_address: "E-posta Adresi", 
     your_suggestions: "Önerileriniz", characters: "karakter", 
-    submit_suggestion: "Öneri Gönder"
+    submit_suggestion: "Öneri Gönder",
+    // Modal and overlay elements
+    quick_add_task: "Hızlı Görev Ekle", what_needs_done: "Ne yapılması gerekiyor?",
+    perfect: "Mükemmel!", thank_you: "Teşekkürler!", feedback_suggestions: "Geri Bildirim ve Öneriler",
+    share_feedback: "Task Tracker'ı geliştirmek için geri bildiriminizi paylaşın",
+    describe_suggestions: "Önerilerinizi, özellik isteklerinizi veya iyileştirmelerinizi açıklayın...",
+    suggestions_title: "Geri Bildirim ve Öneriler", suggestions_subtitle: "Task Tracker'ı geliştirmek için geri bildiriminizi paylaşın",
+    weekends: "Hafta Sonları", daily_slash_month: "Günlük/Ay", weekly_slash_year: "Haftalık/Yıl",
+    work_week: "Çalışma Haftası", select_time: "Zaman seç", switch_format: "AM/PM ve 24 saat formatı arasında geçiş yap"
   },
   ar: {
     view_day: "يوم", view_week: "أسبوع", view_month: "شهر", add_task: "إضافة مهمة", cancel: "إلغاء",
@@ -458,7 +530,15 @@ const translations = {
     // Additional form translations
     your_name: "اسمك", email_address: "عنوان البريد الإلكتروني", 
     your_suggestions: "اقتراحاتك", characters: "أحرف", 
-    submit_suggestion: "إرسال اقتراح"
+    submit_suggestion: "إرسال اقتراح",
+    // Modal and overlay elements
+    quick_add_task: "إضافة مهمة سريعة", what_needs_done: "ما الذي يحتاج إلى القيام به؟",
+    perfect: "مثالي!", thank_you: "شكراً لك!", feedback_suggestions: "التعليقات والاقتراحات",
+    share_feedback: "شارك تعليقاتك لمساعدتنا في تحسين متتبع المهام",
+    describe_suggestions: "صف اقتراحاتك أو طلبات الميزات أو التحسينات...",
+    suggestions_title: "التعليقات والاقتراحات", suggestions_subtitle: "شارك تعليقاتك لمساعدتنا في تحسين متتبع المهام",
+    weekends: "عطلات نهاية الأسبوع", daily_slash_month: "يومي/شهر", weekly_slash_year: "أسبوعي/سنة",
+    work_week: "أسبوع العمل", select_time: "اختر الوقت", switch_format: "التبديل بين صيغة AM/PM وصيغة 24 ساعة"
   }
 };
 
