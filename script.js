@@ -76,7 +76,8 @@ const translations = {
     weekends: "Weekends", daily_slash_month: "Daily/Month", weekly_slash_year: "Weekly/Year",
     work_week: "Work Week", select_time: "Select time", switch_format: "Switch between AM/PM and 24-hour format",
     // Additional missing translations
-    quick_presets: "Quick Presets", active_tasks: "Active Tasks"
+    quick_presets: "Quick Presets", active_tasks: "Active Tasks",
+    suggestions_button: "Suggestions", submit_suggestion_text: "Submit Suggestion"
   },
   es: {
     view_day: "Día", view_week: "Semana", view_month: "Mes", add_task: "Agregar Tarea", cancel: "Cancelar",
@@ -133,7 +134,8 @@ const translations = {
     weekends: "Fines de Semana", daily_slash_month: "Diario/Mes", weekly_slash_year: "Semanal/Año",
     work_week: "Semana Laboral", select_time: "Seleccionar hora", switch_format: "Cambiar entre formato AM/PM y 24 horas",
     // Additional missing translations
-    quick_presets: "Preajustes Rápidos", active_tasks: "Tareas Activas"
+    quick_presets: "Preajustes Rápidos", active_tasks: "Tareas Activas",
+    suggestions_button: "Sugerencias", submit_suggestion_text: "Enviar Sugerencia"
   },
   fr: {
     view_day: "Jour", view_week: "Semaine", view_month: "Mois", add_task: "Ajouter Tâche", cancel: "Annuler",
@@ -189,7 +191,8 @@ const translations = {
     weekends: "Week-ends", daily_slash_month: "Quotidien/Mois", weekly_slash_year: "Hebdomadaire/Année",
     work_week: "Semaine de Travail", select_time: "Sélectionner l'heure", switch_format: "Basculer entre le format AM/PM et 24 heures",
     // Additional missing translations
-    quick_presets: "Préréglages Rapides", active_tasks: "Tâches Actives"
+    quick_presets: "Préréglages Rapides", active_tasks: "Tâches Actives",
+    suggestions_button: "Suggestions", submit_suggestion_text: "Soumettre Suggestion"
   },
   de: {
     view_day: "Tag", view_week: "Woche", view_month: "Monat", add_task: "Aufgabe hinzufügen", cancel: "Abbrechen",
@@ -246,7 +249,8 @@ const translations = {
     weekends: "Wochenenden", daily_slash_month: "Täglich/Monat", weekly_slash_year: "Wöchentlich/Jahr",
     work_week: "Arbeitswoche", select_time: "Zeit auswählen", switch_format: "Zwischen AM/PM und 24-Stunden-Format wechseln",
     // Additional missing translations
-    quick_presets: "Schnelleinstellungen", active_tasks: "Aktive Aufgaben"
+    quick_presets: "Schnelleinstellungen", active_tasks: "Aktive Aufgaben",
+    suggestions_button: "Vorschläge", submit_suggestion_text: "Vorschlag Senden"
   },
   zh: {
     view_day: "日", view_week: "周", view_month: "月", add_task: "添加任务", cancel: "取消",
@@ -302,7 +306,8 @@ const translations = {
     weekends: "周末", daily_slash_month: "每日/月", weekly_slash_year: "每周/年",
     work_week: "工作周", select_time: "选择时间", switch_format: "在AM/PM和24小时格式之间切换",
     // Additional missing translations
-    quick_presets: "快速预设", active_tasks: "活动任务"
+    quick_presets: "快速预设", active_tasks: "活动任务",
+    suggestions_button: "建议", submit_suggestion_text: "提交建议"
   },
   it: {
     view_day: "Giorno", view_week: "Settimana", view_month: "Mese", add_task: "Aggiungi Attività", cancel: "Annulla",
@@ -358,7 +363,8 @@ const translations = {
     weekends: "Weekend", daily_slash_month: "Giornaliero/Mese", weekly_slash_year: "Settimanale/Anno",
     work_week: "Settimana Lavorativa", select_time: "Seleziona orario", switch_format: "Passa tra formato AM/PM e 24 ore",
     // Additional missing translations
-    quick_presets: "Preset Rapidi", active_tasks: "Attività Attive"
+    quick_presets: "Preset Rapidi", active_tasks: "Attività Attive",
+    suggestions_button: "Suggerimenti", submit_suggestion_text: "Invia Suggerimento"
   },
   ru: {
     view_day: "День", view_week: "Неделя", view_month: "Месяц", add_task: "Добавить Задачу", cancel: "Отмена",
@@ -408,7 +414,8 @@ const translations = {
     weekends: "Выходные", daily_slash_month: "Ежедневно/Месяц", weekly_slash_year: "Еженедельно/Год",
     work_week: "Рабочая Неделя", select_time: "Выбрать время", switch_format: "Переключение между AM/PM и 24-часовым форматом",
     // Additional missing translations
-    quick_presets: "Быстрые Пресеты", active_tasks: "Активные Задачи"
+    quick_presets: "Быстрые Пресеты", active_tasks: "Активные Задачи",
+    suggestions_button: "Предложения", submit_suggestion_text: "Отправить Предложение"
   },
   ja: {
     view_day: "日", view_week: "週", view_month: "月", add_task: "タスクを追加", cancel: "キャンセル",
@@ -458,7 +465,8 @@ const translations = {
     weekends: "週末", daily_slash_month: "毎日/月", weekly_slash_year: "毎週/年",
     work_week: "平日", select_time: "時間を選択", switch_format: "AM/PMと24時間形式を切り替え",
     // Additional missing translations
-    quick_presets: "クイックプリセット", active_tasks: "アクティブなタスク"
+    quick_presets: "クイックプリセット", active_tasks: "アクティブなタスク",
+    suggestions_button: "提案", submit_suggestion_text: "提案を送信"
   },
   tr: {
     view_day: "Gün", view_week: "Hafta", view_month: "Ay", add_task: "Görev Ekle", cancel: "İptal",
@@ -508,7 +516,8 @@ const translations = {
     weekends: "Hafta Sonları", daily_slash_month: "Günlük/Ay", weekly_slash_year: "Haftalık/Yıl",
     work_week: "Çalışma Haftası", select_time: "Zaman seç", switch_format: "AM/PM ve 24 saat formatı arasında geçiş yap",
     // Additional missing translations
-    quick_presets: "Hızlı Ön Ayarlar", active_tasks: "Aktif Görevler"
+    quick_presets: "Hızlı Ön Ayarlar", active_tasks: "Aktif Görevler",
+    suggestions_button: "Öneriler", submit_suggestion_text: "Öneri Gönder"
   },
   ar: {
     view_day: "يوم", view_week: "أسبوع", view_month: "شهر", add_task: "إضافة مهمة", cancel: "إلغاء",
@@ -558,7 +567,8 @@ const translations = {
     weekends: "عطلات نهاية الأسبوع", daily_slash_month: "يومي/شهر", weekly_slash_year: "أسبوعي/سنة",
     work_week: "أسبوع العمل", select_time: "اختر الوقت", switch_format: "التبديل بين صيغة AM/PM وصيغة 24 ساعة",
     // Additional missing translations
-    quick_presets: "الإعدادات السريعة", active_tasks: "المهام النشطة"
+    quick_presets: "الإعدادات السريعة", active_tasks: "المهام النشطة",
+    suggestions_button: "اقتراحات", submit_suggestion_text: "إرسال اقتراح"
   }
 };
 
@@ -1683,7 +1693,7 @@ function updateLanguage(langCode) {
     // Update calendar after language change
     updatePeriodDisplay();
     if (currentView === 'week' || currentView === 'day') {
-        renderTimeSlotCalendar();
+        renderCurrentView();
     }
     
     // Re-render sidebar tasks to update task displays
