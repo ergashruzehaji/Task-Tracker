@@ -63,7 +63,6 @@ const translations = {
     weekly_year: "Weekly for Year", time_format: "Time Format",
     // Calendar-specific translations
     tasks_for: "Tasks for", tasks: "Tasks", tomorrow: "Tomorrow",
-    explore_demo: "Explore Demo",
     // Additional form translations
     your_name: "Your Name", email_address: "Email Address", 
     your_suggestions: "Your Suggestions", characters: "characters", 
@@ -111,7 +110,6 @@ const translations = {
     weekly_year: "Semanal por Año", time_format: "Formato de Hora",
     // Calendar Translation Keys
     tasks_for: "Tareas para", tasks: "Tareas", tomorrow: "Mañana",
-    explore_demo: "Explorar Demo",
     // Additional form translations
     your_name: "Su Nombre", email_address: "Dirección de Correo", 
     your_suggestions: "Sus Sugerencias", characters: "caracteres", 
@@ -158,7 +156,6 @@ const translations = {
     weekly_year: "Hebdomadaire pour l'Année", time_format: "Format de l'Heure",
     // Calendar Translation Keys
     tasks_for: "Tâches pour", tasks: "Tâches", tomorrow: "Demain",
-    explore_demo: "Explorer Démo",
     // Additional form translations
     your_name: "Votre Nom", email_address: "Adresse E-mail", 
     your_suggestions: "Vos Suggestions", characters: "caractères", 
@@ -206,7 +203,6 @@ const translations = {
     weekly_year: "Wöchentlich für das Jahr", time_format: "Zeitformat",
     // Calendar Translation Keys
     tasks_for: "Aufgaben für", tasks: "Aufgaben", tomorrow: "Morgen",
-    explore_demo: "Demo Erkunden",
     // Additional form translations
     your_name: "Ihr Name", email_address: "E-Mail-Adresse", 
     your_suggestions: "Ihre Vorschläge", characters: "zeichen", 
@@ -253,7 +249,6 @@ const translations = {
     weekly_year: "每周一年", time_format: "时间格式",
     // Calendar Translation Keys
     tasks_for: "任务为", tasks: "任务", tomorrow: "明天",
-    explore_demo: "探索演示",
     // Additional form translations
     your_name: "您的姓名", email_address: "电子邮件地址", 
     your_suggestions: "您的建议", characters: "字符", 
@@ -300,7 +295,6 @@ const translations = {
     weekly_year: "Settimanale per Anno", time_format: "Formato Orario",
     // Calendar Translation Keys
     tasks_for: "Attività per", tasks: "Attività", tomorrow: "Domani",
-    explore_demo: "Esplora Demo",
     // Additional form translations
     your_name: "Il Tuo Nome", email_address: "Indirizzo E-mail", 
     your_suggestions: "I Tuoi Suggerimenti", characters: "caratteri", 
@@ -341,7 +335,6 @@ const translations = {
     weekly_year: "Еженедельно в течение года", time_format: "Формат времени",
     // Calendar Translation Keys
     tasks_for: "Задачи на", tasks: "Задачи", tomorrow: "Завтра",
-    explore_demo: "Исследовать Демо",
     // Additional form translations
     your_name: "Ваше Имя", email_address: "Адрес Электронной Почты", 
     your_suggestions: "Ваши Предложения", characters: "символов", 
@@ -382,7 +375,6 @@ const translations = {
     weekly_year: "年間毎週", time_format: "時刻形式",
     // Calendar Translation Keys
     tasks_for: "のタスク", tasks: "タスク", tomorrow: "明日",
-    explore_demo: "デモを探索",
     // Additional form translations
     your_name: "お名前", email_address: "メールアドレス", 
     your_suggestions: "ご提案", characters: "文字", 
@@ -423,7 +415,6 @@ const translations = {
     weekly_year: "Yıl için Haftalık", time_format: "Saat Formatı",
     // Calendar Translation Keys
     tasks_for: "Görevler için", tasks: "Görevler", tomorrow: "Yarın",
-    explore_demo: "Demoyu Keşfet",
     // Additional form translations
     your_name: "Adınız", email_address: "E-posta Adresi", 
     your_suggestions: "Önerileriniz", characters: "karakter", 
@@ -464,7 +455,6 @@ const translations = {
     weekly_year: "أسبوعياً للسنة", time_format: "صيغة الوقت",
     // Calendar Translation Keys
     tasks_for: "مهام لـ", tasks: "مهام", tomorrow: "غداً",
-    explore_demo: "استكشاف العرض",
     // Additional form translations
     your_name: "اسمك", email_address: "عنوان البريد الإلكتروني", 
     your_suggestions: "اقتراحاتك", characters: "أحرف", 
@@ -1655,11 +1645,6 @@ function updateUITexts() {
 
 function updateDynamicTranslations() {
     // Update floating tab titles
-    const demoTab = document.querySelector('.tab-btn[data-tab="demo"]');
-    if (demoTab) {
-        demoTab.textContent = translate('live_demo');
-    }
-    
     const suggestionsTab = document.querySelector('.tab-btn[data-tab="suggestions"]');
     if (suggestionsTab) {
         suggestionsTab.textContent = translate('suggestions');
